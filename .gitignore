@@ -72,3 +72,7 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+/RPG_Project/Binaries/Win64
+/RPG_Project/Intermediate
+/RPG_Project/Platforms/HoloLens/Config
+/RPG_Project/Saved
