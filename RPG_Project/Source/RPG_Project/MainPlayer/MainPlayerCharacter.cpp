@@ -2,13 +2,16 @@
 
 
 #include "MainPlayerCharacter.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 AMainPlayerCharacter::AMainPlayerCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	static ConstructorHelpers::FClassFinder<UUserWidget> ShopWidgetAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Level/Stage1/Shop/WBP_ShopUI.WBP_ShopUI_C'"));
+	if (ShopWidgetAsset.Succeeded())
+		ShopWidgetClass = ShopWidgetAsset.Class;
 }
 
 // Called when the game starts or when spawned
@@ -18,6 +21,7 @@ void AMainPlayerCharacter::BeginPlay()
 	JumpMaxCount = 2; // Jump Max Count = 2
 
 	//GetMesh()->GetAnimInstance()->OnMontageEnded.AddDynamic(this, &AMainPlayerCharacter::MontageEnd);
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainPlayerCharacter::BeginOverlap);
 
 }
 
@@ -37,7 +41,28 @@ void AMainPlayerCharacter::Tick(float DeltaTime)
 	//{
 	//	GetMesh()->GetAnimInstance()->Montage_Play(Montage, 1.0f);
 	//}
+	if (true == isOverlap)
+	{
+		if (IsValid(ShopWidgetClass))
+		{
+			ShopUIWidget = Cast<UTesShopWidget>(CreateWidget(GetWorld(), ShopWidgetClass));
 
+			if (IsValid(ShopUIWidget))
+			{
+				ShopUIWidget->AddToViewport();
+			}
+		}
+	}
+}
+
+void AMainPlayerCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->ActorHasTag("Cube"))
+	{
+		UE_LOG(LogTemp, Log, TEXT("overlap"), __FUNCTION__, __LINE__);
+		isOverlap = true;
+	}
 }
 
 void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

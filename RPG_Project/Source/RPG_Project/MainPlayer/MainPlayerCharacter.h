@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "../Global/GlobalEnums.h"
+#include "../TesShopWidget.h"
 #include "MainPlayerCharacter.generated.h"
 
 UCLASS()
@@ -60,7 +61,15 @@ public:
 	//UFUNCTION()
 	//	void MontageEnd(UAnimMontage* Anim, bool _Inter);
 
-	
+	UFUNCTION()
+	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	bool isOverlap = false;
+
+	TSubclassOf<UUserWidget> ShopWidgetClass;
+		UTesShopWidget* ShopUIWidget;
+		
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

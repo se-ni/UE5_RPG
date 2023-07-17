@@ -3,14 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameMode.h"
-#include "MainTownGameMode.generated.h"
+#include "Blueprint/UserWidget.h"
+#include "TesShopWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RPG_PROJECT_API AMainTownGameMode : public AGameMode
+class RPG_PROJECT_API UTesShopWidget : public UUserWidget
 {
 	GENERATED_BODY()
+	
 };
