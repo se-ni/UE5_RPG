@@ -14,7 +14,7 @@ AGlobalAIController::AGlobalAIController()
 
 void AGlobalAIController::OnPossess(APawn* _InPawn)
 {
-	// Super.OnPossess(_InPawn);
+	Super::OnPossess(_InPawn);
 
 	if (nullptr != BehaviorTreeComp && true == BehaviorTreeComp->IsValidLowLevel())
 	{
