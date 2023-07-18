@@ -12,6 +12,21 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 	static ConstructorHelpers::FClassFinder<UUserWidget> ShopWidgetAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Level/Stage1/Shop/WBP_ShopUI.WBP_ShopUI_C'"));
 	if (ShopWidgetAsset.Succeeded())
 		ShopWidgetClass = ShopWidgetAsset.Class;
+
+	WeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponMesh"));
+	// 컴포넌트는 언리얼의 CDO 때문에 무조건 생성자에서 만들어줘야한다
+	WeaponMesh->SetupAttachment(GetMesh(), TEXT("WeaponSocket")); // 생성한 무기 매쉬를 캐릭터 매쉬에 붙여준다
+
+	{
+		// 매쉬를 쓰겠다고 하는것.
+		static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshLoader(TEXT("/Script/Engine.StaticMesh'/Game/BattleWizardPolyart/Meshes/MagicStaffs/Staff03SM.Staff03SM'"));
+
+		if (true == MeshLoader.Succeeded())
+		{
+			WeaponArrays.Add(MeshLoader.Object);
+		}
+	}
+
 }
 
 // Called when the game starts or when spawned
@@ -23,24 +38,21 @@ void AMainPlayerCharacter::BeginPlay()
 	//GetMesh()->GetAnimInstance()->OnMontageEnded.AddDynamic(this, &AMainPlayerCharacter::MontageEnd);
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainPlayerCharacter::BeginOverlap);
 
+	UGlobalGameInstance* Inst = GetGameInstance<UGlobalGameInstance>();
+	WeaponArrays.Add(GetGameInstance<UGlobalGameInstance>()->GetMesh(TEXT("Staff01")));
+
+	WeaponArrays.Add(GetGameInstance<UGlobalGameInstance>()->GetMesh(TEXT("Staff02")));
+
+	WeaponArrays.Add(GetGameInstance<UGlobalGameInstance>()->GetMesh(TEXT("Staff03")));
+
+	WeaponMesh->SetStaticMesh(WeaponArrays[1]);
 }
 
 // Called every frame
 void AMainPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
-	//class UAnimMontage* Montage = AllAnimations[AniState];
 
-	//if (nullptr == Montage)
-	//{
-	//	return;
-	//}
-
-	//if (false == GetMesh()->GetAnimInstance()->Montage_IsPlaying(Montage))
-	//{
-	//	GetMesh()->GetAnimInstance()->Montage_Play(Montage, 1.0f);
-	//}
 	if (true == isOverlap)
 	{
 		if (IsValid(ShopWidgetClass))
@@ -97,9 +109,9 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	}
 
 	// 키와 함수를 연결합니다.
-	
+
 	PlayerInputComponent->BindAxis("PlayerMoveForward", this, &AMainPlayerCharacter::MoveForward);
-	
+
 	PlayerInputComponent->BindAxis("PlayerMoveRight", this, &AMainPlayerCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("PlayerTurn", this, &AMainPlayerCharacter::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("PlayerTurnRate", this, &AMainPlayerCharacter::TurnAtRate);
@@ -110,29 +122,7 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("PlayerAttack", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::AttackAction);
 	PlayerInputComponent->BindAction("PlayerJumpAction", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::JumpAction);
 
-	PlayerInputComponent->BindAction("PlayerJumpAction", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::Interaction);
-
 }
-
-void AMainPlayerCharacter::Interaction()
-{
-	// 상점 UI create
-}
-
-//void AMainPlayerCharacter::MontageEnd(UAnimMontage* Anim, bool _Inter)
-//{
-//		if (AllAnimations[EAniState::Attack] == Anim)
-//		{
-//			AniState = EAniState::Idle;
-//			GetMesh()->GetAnimInstance()->Montage_Play(AllAnimations[EAniState::Idle], 1.0f);
-//		}
-//	
-//		if (AllAnimations[EAniState::JumpStart] == Anim)
-//		{
-//			AniState = EAniState::Idle;
-//			GetMesh()->GetAnimInstance()->Montage_Play(AllAnimations[EAniState::Idle], 1.0f);
-//		}
-//}
 
 void AMainPlayerCharacter::MoveRight(float Val)
 {
@@ -148,9 +138,9 @@ void AMainPlayerCharacter::MoveRight(float Val)
 			UE_LOG(LogTemp, Log, TEXT("%S(%u) %f"), __FUNCTION__, __LINE__, Val);
 			FRotator const ControlSpaceRot = Controller->GetControlRotation();
 			// transform to world space and add it
-			// 현재 내 회전을 가져와서 y축에 해당하는 축벡터를 얻어오는 겁니다.
+			// 현재 내 회전을 가져와서 y축에 해당하는 축벡터를 얻어오는 것.
 			AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::Y), Val);
-		
+
 			AniState = Val > 0.f ? EAniState::RightMove : EAniState::LeftMove;
 			UE_LOG(LogTemp, Log, TEXT("%S(%u)  %d"), __FUNCTION__, __LINE__, AniState);
 			return;
@@ -184,7 +174,7 @@ void AMainPlayerCharacter::MoveForward(float Val)
 			// transform to world space and add it
 			AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::X), Val);
 			// 탑뷰게임이면 다르게 나오게 되는데.
-			// 지금은 E를 하고 있기 때문에 컨트롤러의 회전이나 액터의 회전이나 같아요.
+			// 지금은 E를 하고 있기 때문에 컨트롤러의 회전이나 액터의 회전이나 같다.
 			// AddMovementInput(GetActorForwardVector(), Val);
 
 			AniState = Val > 0.f ? EAniState::ForwardMove : EAniState::BackwardMove;
@@ -200,8 +190,6 @@ void AMainPlayerCharacter::MoveForward(float Val)
 		}
 	}
 
-	// 이런 느낌의 함수 즉 static함수를 의미한다.
-	// AEGLOBAL::DebugPrint("AAAAAAA");
 }
 
 

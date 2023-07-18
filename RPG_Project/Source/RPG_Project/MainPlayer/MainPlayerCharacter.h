@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "../Global/GlobalEnums.h"
+#include "../Global/GlobalGameInstance.h"
 #include "../TesShopWidget.h"
 #include "MainPlayerCharacter.generated.h"
 
@@ -21,7 +22,6 @@ public:
 	void JumpAction();
 	void JumpAxis(float Rate);
 
-	
 	void MoveRight(float Val);
 	void MoveLeft(float Val);
 	void MoveForward(float Val);
@@ -29,18 +29,11 @@ public:
 	void TurnAtRate(float Rate);
 	void LookUpAtRate(float Rate);
 
-	void Interaction();
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pawn")
 		float BaseTurnRate;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pawn")
 		float BaseLookUpRate;
-
-	bool AxisJump = false;
-
-	UPROPERTY(Category = "GameModeValue", EditAnywhere, BlueprintReadOnly)
-		bool isAttack = false;
 
 	UPROPERTY(Category = "AnimationValue", EditAnywhere, BlueprintReadWrite)
 		EAniState AniState = EAniState::Idle;
@@ -51,25 +44,16 @@ public:
 	UPROPERTY(Category = "AnimationValue", EditAnywhere, BlueprintReadWrite)
 		TMap<EAniState, class UAnimMontage*> AllAnimations;
 
-	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly)
-		float HP=0.9f;
-	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly)
-		float MP=1.f;
-	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly)
-		double Exp=1000;
-
 	//UFUNCTION()
 	//	void MontageEnd(UAnimMontage* Anim, bool _Inter);
 
 	UFUNCTION()
-	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	bool isOverlap = false;
+		void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+			int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	TSubclassOf<UUserWidget> ShopWidgetClass;
-		UTesShopWidget* ShopUIWidget;
-		
+	UTesShopWidget* ShopUIWidget;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -79,4 +63,20 @@ protected:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
+	bool AxisJump = false;
+	bool isOverlap = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UStaticMeshComponent* WeaponMesh;
+
+	UPROPERTY(Category = "WeaponValue", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TArray<UStaticMesh*> WeaponArrays; // WeaponMesh 컴포넌트에서 이용할 WeaponMesh(스태틱 매쉬) 배열
+
+	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		float HP = 0.9f;
+	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		float MP = 1.f;
+	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		double Exp = 1000;
 };
