@@ -7,10 +7,11 @@
 #include "../Global/GlobalEnums.h"
 #include "../Global/GlobalGameInstance.h"
 #include "../TesShopWidget.h"
+#include "../Global/GlobalCharacter.h"
 #include "MainPlayerCharacter.generated.h"
 
 UCLASS()
-class RPG_PROJECT_API AMainPlayerCharacter : public ACharacter
+class RPG_PROJECT_API AMainPlayerCharacter : public AGlobalCharacter
 {
 	GENERATED_BODY()
 public:
