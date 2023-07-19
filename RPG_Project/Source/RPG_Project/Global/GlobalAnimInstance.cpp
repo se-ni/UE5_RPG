@@ -1,13 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "MainPlayerAnimInstance.h"
-#include "MainPlayerCharacter.h"
+#include "GlobalAnimInstance.h"
+#include "../MainPlayer/MainPlayerCharacter.h"
 
-void UMainPlayerAnimInstance::NativeBeginPlay()
+void UGlobalAnimInstance::NativeBeginPlay()
 {
 	Super::NativeBeginPlay();
 
-	OnMontageBlendingOut.AddDynamic(this, &UMainPlayerAnimInstance::MontageEnd);
+	OnMontageBlendingOut.AddDynamic(this, &UGlobalAnimInstance::MontageEnd);
 
 	// 나를 가진 액터를 여기서 가져옵니다.
 	// TPS캐릭터에게 다 세팅을 해줬다.
@@ -22,7 +22,7 @@ void UMainPlayerAnimInstance::NativeBeginPlay()
 	AllAnimations = Chracter->AllAnimations;
 }
 
-void UMainPlayerAnimInstance::NativeUpdateAnimation(float _DeltaTime)
+void UGlobalAnimInstance::NativeUpdateAnimation(float _DeltaTime)
 {
 	Super::NativeUpdateAnimation(_DeltaTime);
 
@@ -53,9 +53,9 @@ void UMainPlayerAnimInstance::NativeUpdateAnimation(float _DeltaTime)
 	}
 }
 
-void UMainPlayerAnimInstance::MontageEnd(UAnimMontage* Anim, bool _Inter)
+void UGlobalAnimInstance::MontageEnd(UAnimMontage* Anim, bool _Inter)
 {
-	TSubclassOf<UAnimInstance> Inst = UMainPlayerAnimInstance::StaticClass();
+	TSubclassOf<UAnimInstance> Inst = UGlobalAnimInstance::StaticClass();
 
 	AMainPlayerCharacter* Chracter = Cast<AMainPlayerCharacter>(GetOwningActor());
 

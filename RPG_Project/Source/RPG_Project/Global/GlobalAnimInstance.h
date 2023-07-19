@@ -4,14 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "../Global/GlobalEnums.h"
-#include "MainPlayerAnimInstance.generated.h"
+#include "GlobalEnums.h"
+#include "GlobalAnimInstance.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RPG_PROJECT_API UMainPlayerAnimInstance : public UAnimInstance
+class RPG_PROJECT_API UGlobalAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
 public:
