@@ -8,11 +8,11 @@ UENUM(BlueprintType)
 enum class EAniState : uint8
 {
 	None,
-	Idle,
-	LeftMove,
-	RightMove,
-	ForwardMove,
-	BackwardMove,
-	JumpStart,
-	Attack
+	Idle, //0
+	LeftMove, //1
+	RightMove, //2
+	ForwardMove,  //3
+	BackwardMove,  //4
+	JumpStart, //5
+	Attack //6
 };

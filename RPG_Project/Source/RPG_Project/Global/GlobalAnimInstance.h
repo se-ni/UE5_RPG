@@ -16,9 +16,9 @@ class RPG_PROJECT_API UGlobalAnimInstance : public UAnimInstance
 	GENERATED_BODY()
 public:
 	UPROPERTY(Category = "GameModeValue", EditAnywhere, BlueprintReadWrite)
-		EAniState AniState = EAniState::Idle;
+		int AniState = 0;
 
-	TMap<EAniState, class UAnimMontage*> AllAnimations;
+	TMap<int, class UAnimMontage*> AllAnimations;
 
 	UFUNCTION()
 		void MontageEnd(UAnimMontage* Anim, bool _Inter);

@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "GlobalAnimInstance.h"
-#include "../MainPlayer/MainPlayerCharacter.h"
+#include "GlobalCharacter.h"
 
 void UGlobalAnimInstance::NativeBeginPlay()
 {
@@ -12,7 +12,7 @@ void UGlobalAnimInstance::NativeBeginPlay()
 	// 나를 가진 액터를 여기서 가져옵니다.
 	// TPS캐릭터에게 다 세팅을 해줬다.
 
-	AMainPlayerCharacter* Chracter = Cast<AMainPlayerCharacter>(GetOwningActor());
+	AGlobalCharacter* Chracter = Cast<AGlobalCharacter>(GetOwningActor());
 
 	if (nullptr == Chracter && false == Chracter->IsValidLowLevel())
 	{
@@ -31,14 +31,14 @@ void UGlobalAnimInstance::NativeUpdateAnimation(float _DeltaTime)
 		return;
 	}
 
-	AMainPlayerCharacter* Chracter = Cast<AMainPlayerCharacter>(GetOwningActor());
+	AGlobalCharacter* Chracter = Cast<AGlobalCharacter>(GetOwningActor());
 
 	if (nullptr == Chracter && false == Chracter->IsValidLowLevel())
 	{
 		return;
 	}
 
-	AniState = Chracter->AniState;
+	AniState = Chracter->GetAniState();
 
 	class UAnimMontage* Montage = AllAnimations[AniState];
 
@@ -57,7 +57,7 @@ void UGlobalAnimInstance::MontageEnd(UAnimMontage* Anim, bool _Inter)
 {
 	TSubclassOf<UAnimInstance> Inst = UGlobalAnimInstance::StaticClass();
 
-	AMainPlayerCharacter* Chracter = Cast<AMainPlayerCharacter>(GetOwningActor());
+	AGlobalCharacter* Chracter = Cast<AGlobalCharacter>(GetOwningActor());
 
 	if (nullptr == Chracter && false == Chracter->IsValidLowLevel())
 	{
@@ -65,18 +65,18 @@ void UGlobalAnimInstance::MontageEnd(UAnimMontage* Anim, bool _Inter)
 	}
 
 	// Anim 종료된 몽타주
-	if (AllAnimations[EAniState::Attack] == Anim)
+	if (AllAnimations[6] == Anim)
 	{
-		AniState = EAniState::Idle;
+		AniState = 0;
 		Chracter->AniState = AniState;
-		Montage_Play(AllAnimations[EAniState::Idle], 1.0f);
+		Montage_Play(AllAnimations[0], 1.0f);
 	}
 
-	if (AllAnimations[EAniState::JumpStart] == Anim)
+	if (AllAnimations[5] == Anim)
 	{
-		AniState = EAniState::Idle;
+		AniState = 0;
 		Chracter->AniState = AniState;
-		Montage_Play(AllAnimations[EAniState::Idle], 1.0f);
+		Montage_Play(AllAnimations[0], 1.0f);
 	}
 
 }

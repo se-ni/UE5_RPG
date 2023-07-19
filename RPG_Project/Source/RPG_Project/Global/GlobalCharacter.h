@@ -14,6 +14,10 @@ class RPG_PROJECT_API AGlobalCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AGlobalCharacter();
+	int GetAniState()
+	{
+		return AniState;
+	}
 
 protected:
 	// Called when the game starts or when spawned
@@ -25,5 +29,13 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UPROPERTY(Category = "AnimationValue", EditAnywhere, BlueprintReadWrite)
+		/*EAniState AniState = EAniState::Idle;*/
+		int AniState = 0;
+
+	UPROPERTY(Category = "AnimationValue", EditAnywhere, BlueprintReadWrite)
+		/*TMap<EAniState, class UAnimMontage*> AllAnimations;*/
+		TMap<int, class UAnimMontage*> AllAnimations;
 
 };

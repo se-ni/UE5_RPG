@@ -126,7 +126,7 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 void AMainPlayerCharacter::MoveRight(float Val)
 {
-	if (AniState == EAniState::Attack || AniState == EAniState::JumpStart)
+	if (AniState == 6 || AniState == 5)
 	{
 		return;
 	}
@@ -141,23 +141,23 @@ void AMainPlayerCharacter::MoveRight(float Val)
 			// 현재 내 회전을 가져와서 y축에 해당하는 축벡터를 얻어오는 것.
 			AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::Y), Val);
 
-			AniState = Val > 0.f ? EAniState::RightMove : EAniState::LeftMove;
+			AniState = Val > 0.f ? 2 : 1;
 			UE_LOG(LogTemp, Log, TEXT("%S(%u)  %d"), __FUNCTION__, __LINE__, AniState);
 			return;
 		}
 	}
 	else
 	{
-		if (AniState == EAniState::RightMove || AniState == EAniState::LeftMove)
+		if (AniState == 2 || AniState == 1)
 		{
-			AniState = EAniState::Idle;
+			AniState = 0;
 		}
 	}
 }
 
 void AMainPlayerCharacter::MoveForward(float Val)
 {
-	if (AniState == EAniState::Attack || AniState == EAniState::JumpStart)
+	if (AniState == 6 || AniState == 5)
 	{
 		return;
 	}
@@ -177,16 +177,16 @@ void AMainPlayerCharacter::MoveForward(float Val)
 			// 지금은 E를 하고 있기 때문에 컨트롤러의 회전이나 액터의 회전이나 같다.
 			// AddMovementInput(GetActorForwardVector(), Val);
 
-			AniState = Val > 0.f ? EAniState::ForwardMove : EAniState::BackwardMove;
+			AniState = Val > 0.f ? 3 : 4 ;
 			UE_LOG(LogTemp, Log, TEXT("%S(%u) %d"), __FUNCTION__, __LINE__, AniState);
 			return;
 		}
 	}
 	else
 	{
-		if (AniState == EAniState::ForwardMove || AniState == EAniState::BackwardMove)
+		if (AniState == 3 || AniState == 4)
 		{
-			AniState = EAniState::Idle;
+			AniState = 0;
 		}
 	}
 
@@ -226,11 +226,11 @@ void AMainPlayerCharacter::JumpAction()
 	UE_LOG(LogTemp, Log, TEXT("%S(%u)> %d"), __FUNCTION__, __LINE__, JumpCurrentCount);
 	Jump();
 
-	AniState = EAniState::JumpStart;
+	AniState = 5;
 }
 
 void AMainPlayerCharacter::AttackAction()
 {
-	AniState = EAniState::Attack;
+	AniState = 6;
 }
 
