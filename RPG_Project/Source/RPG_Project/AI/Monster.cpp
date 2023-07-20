@@ -13,7 +13,7 @@ void AMonster::BeginPlay()
 	// UGlobalGameInstance* Inst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 	UGlobalGameInstance* Inst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
-	CurMonsterData = Inst->GetMonsterData(DataName);
+	// CurMonsterData = Inst->GetMonsterData(DataName);
 
 	Super::BeginPlay();
 

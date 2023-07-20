@@ -23,6 +23,11 @@ public:
 	void JumpAction();
 	void JumpAxis(float Rate);
 
+	void SetWeapon1();
+	void SetWeapon2();
+	void SetWeapon3();
+
+
 	void MoveRight(float Val);
 	void MoveLeft(float Val);
 	void MoveForward(float Val);

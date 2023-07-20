@@ -18,7 +18,7 @@ UGlobalGameInstance::UGlobalGameInstance()
 	}
 
 	{
-		static ConstructorHelpers::FObjectFinder<UDataTable>MonsterDataTable(TEXT("/Script/Engine.DataTable'/Game/Global/Data/DT_MonsterData.DT_MonsterData_C'"));
+		static ConstructorHelpers::FObjectFinder<UDataTable>MonsterDataTable(TEXT("/Script/Engine.DataTable'/Game/Global/Data/DT_MonsterData.DT_MonsterData'"));
 		if (true == MonsterDataTable.Succeeded())
 		{
 			MonsterDatas = MonsterDataTable.Object;
