@@ -3,17 +3,29 @@
 
 #include "GlobalGameInstance.h"
 #include "PlayerWeaponData.h"
+#include "UObject/ConstructorHelpers.h"
 
 UGlobalGameInstance::UGlobalGameInstance() 
 {
-	FString DataPath = TEXT("/Script/Engine.DataTable'/Game/Global/Data/DT_PlayerWeaponData.DT_PlayerWeaponData'");
-	ConstructorHelpers::FObjectFinder<UDataTable> DataTable(*DataPath);
-
-	if (DataTable.Succeeded())
 	{
-		MeshDatas = DataTable.Object;
+		FString DataPath = TEXT("/Script/Engine.DataTable'/Game/Global/Data/DT_PlayerWeaponData.DT_PlayerWeaponData'");
+		static ConstructorHelpers::FObjectFinder<UDataTable> MeshDataTable(*DataPath);
+
+		if (true == MeshDataTable.Succeeded())
+		{
+			MeshDatas = MeshDataTable.Object;
+		}
+	}
+
+	{
+		static ConstructorHelpers::FObjectFinder<UDataTable>MonsterDataTable(TEXT("/Script/Engine.DataTable'/Game/Global/Data/DT_MonsterData.DT_MonsterData_C'"));
+		if (true == MonsterDataTable.Succeeded())
+		{
+			MonsterDatas = MonsterDataTable.Object;
+		}
 	}
 }
+
 UGlobalGameInstance::~UGlobalGameInstance() 
 {
 
@@ -34,4 +46,21 @@ UStaticMesh* UGlobalGameInstance::GetMesh(FName _Name)
 	}
 	
 	return FindTable->Mesh;
+}
+
+struct FMonsterData* UGlobalGameInstance::GetMonsterData(FName _Name)
+{
+	if (nullptr == MonsterDatas)
+	{
+		return nullptr;
+	}
+
+	FMonsterData* FindTable = MonsterDatas->FindRow<FMonsterData>(_Name, _Name.ToString());
+
+	if (nullptr == FindTable)
+	{
+		return nullptr;
+	}
+
+	return FindTable;
 }

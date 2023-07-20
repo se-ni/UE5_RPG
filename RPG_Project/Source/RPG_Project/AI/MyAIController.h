@@ -4,23 +4,27 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
-#include "GlobalAIController.generated.h"
+#include "MyAIController.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RPG_PROJECT_API AGlobalAIController : public AAIController
+class RPG_PROJECT_API AMyAIController : public AAIController
 {
 	GENERATED_BODY()
 	
 public:
-	AGlobalAIController();
+	AMyAIController();
+
+protected:
+	void OnPossess(APawn* _InPawn) override;
+
 private:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
 		class UBlackboardComponent* BlackboardComp;
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		class UBehaviorTreeComponent* BehaviorTreeComp; 
 
-	void OnPossess(APawn* _InPawn);
+	
 };

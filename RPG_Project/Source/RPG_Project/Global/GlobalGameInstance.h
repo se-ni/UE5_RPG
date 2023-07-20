@@ -21,7 +21,13 @@ public:
 
 	UStaticMesh* GetMesh(FName _Name);
 
+	struct FMonsterData* GetMonsterData(FName _Name);
+
 private:
 	UPROPERTY()
 		UDataTable* MeshDatas;
+
+	UPROPERTY()
+		UDataTable* MonsterDatas;
+
 };
