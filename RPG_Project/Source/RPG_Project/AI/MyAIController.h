@@ -22,9 +22,9 @@ protected:
 
 private:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
-		class UBlackboardComponent* BlackboardComp;
+		class UBlackboardComponent* BlackboardComponent;
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		class UBehaviorTreeComponent* BehaviorTreeComp; 
+		class UBehaviorTreeComponent* BehaviorTreeComponent;
 
 	
 };

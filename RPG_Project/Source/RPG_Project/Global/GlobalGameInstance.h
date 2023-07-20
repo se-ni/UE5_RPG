@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
 #include "Engine/DataTable.h"
+#include "../AI/MonsterData.h"
 #include "GlobalGameInstance.generated.h"
 
 /**
@@ -21,7 +22,7 @@ public:
 
 	UStaticMesh* GetMesh(FName _Name);
 
-	// struct FMonsterData* GetMonsterData(FName _Name);
+	/*struct FMonsterData* GetMonsterData(FName _Name);*/
 
 private:
 	UPROPERTY()

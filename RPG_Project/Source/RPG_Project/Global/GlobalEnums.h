@@ -16,3 +16,15 @@ enum class EAniState : uint8
 	JumpStart, //5
 	Attack //6
 };
+
+UENUM(BlueprintType)
+enum class AIAniState : uint8
+{
+	None,
+	Idle,
+	Move,
+	Return,
+	Ratrol,
+	Attack,
+	Death
+};

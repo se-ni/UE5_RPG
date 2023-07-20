@@ -16,12 +16,16 @@ class RPG_PROJECT_API AMonster : public AAICharacter
 {
 	GENERATED_BODY()
 
-//	const struct FMonsterData* CurMonsterData;
-//
-//	void BeginPlay() override;
-//
-//
-//private:
-//	UPROPERTY(Category = " Monster Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-//	FName DataName = "NONE";
+	const struct FMonsterData* CurMonsterData;
+
+	void BeginPlay() override;
+
+
+private:
+	UPROPERTY(Category = " Monster Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	FName DataName = "NONE";
+
+
+	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		AIAniState AiState = AIAniState::Idle;
 };

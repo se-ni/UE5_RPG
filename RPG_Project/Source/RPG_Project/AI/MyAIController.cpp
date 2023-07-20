@@ -3,13 +3,16 @@
 
 #include "MyAIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
+#include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "AICharacter.h"
+
 
 AMyAIController::AMyAIController()
 {
 	// CreateDefaultSubobject // c++ 코드로 구현함으로써 기본값으로 설정
-	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardCompnent"));
-	BehaviorTreeComp = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorTreeComp"));;
+	BlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardCompnentonent"));
+	BehaviorTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorTreeComponent"));;
 }
 
 // 빙의 순간 
@@ -19,11 +22,23 @@ void AMyAIController::OnPossess(APawn* _InPawn)
 {
 	Super::OnPossess(_InPawn);
 
-	if (nullptr != BehaviorTreeComp && true == BehaviorTreeComp->IsValidLowLevel())
+	if (nullptr != BehaviorTreeComponent && true == BehaviorTreeComponent->IsValidLowLevel())
 	{
-		BehaviorTreeComp;
-		BlackboardComp;
+		AAICharacter* AIPawn = Cast<AAICharacter>(_InPawn);
 
+		UBehaviorTree* BehaviorTree = AIPawn->GetBehaviorTree();
+
+		if (nullptr == BehaviorTree || false == BehaviorTree->IsValidLowLevel())
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == BehaviorTree || false == BehaviorTree->IsValidLowLevel())"), __FUNCTION__, __LINE__);
+			return;
+		}
+
+		BlackboardComponent->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
+
+		BlackboardComponent->SetValueAsObject(TEXT("SelfActor"), _InPawn);
+
+		BehaviorTreeComponent->StartTree(*BehaviorTree);
 	}
 }
 
