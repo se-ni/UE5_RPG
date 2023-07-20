@@ -48,19 +48,19 @@ UStaticMesh* UGlobalGameInstance::GetMesh(FName _Name)
 	return FindTable->Mesh;
 }
 
-struct FMonsterData* UGlobalGameInstance::GetMonsterData(FName _Name)
-{
-	if (nullptr == MonsterDatas)
-	{
-		return nullptr;
-	}
-
-	FMonsterData* FindTable = MonsterDatas->FindRow<FMonsterData>(_Name, _Name.ToString());
-
-	if (nullptr == FindTable)
-	{
-		return nullptr;
-	}
-
-	return FindTable;
-}
+//FMonsterData* UGlobalGameInstance::GetMonsterData(FName _Name)
+//{
+//	if (nullptr == MonsterDatas)
+//	{
+//		return nullptr;
+//	}
+//
+//	FMonsterData* FindTable = MonsterDatas->FindRow<FMonsterData>(_Name, _Name.ToString());
+//
+//	if (nullptr == FindTable)
+//	{
+//		return nullptr;
+//	}
+//
+//	return FindTable;
+//}

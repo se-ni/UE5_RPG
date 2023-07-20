@@ -11,7 +11,7 @@
 #include "MainPlayerCharacter.generated.h"
 
 UCLASS()
-class RPG_PROJECT_API AMainPlayerCharacter : public AGlobalCharacter
+class RPG_PROJECT_API AMainPlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 public:
@@ -36,15 +36,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pawn")
 		float BaseLookUpRate;
 
-	//UPROPERTY(Category = "AnimationValue", EditAnywhere, BlueprintReadWrite)
-	//	int AniState = 0;
+	UPROPERTY(Category = "AnimationValue", EditAnywhere, BlueprintReadWrite)
+		EAniState MainPlayerAniState = EAniState::Idle;
 	// 기존에 정의되어 있는 클래스의 멤버변수인 AniState를 물려받아, cpp 파일에서 함수를 구현함.
 
 	//UPROPERTY(Category = "AnimationValue", EditAnywhere, BlueprintReadWrite)
 	//	class UAnimMontage* RunAnimation;
 
-	//UPROPERTY(Category = "AnimationValue", EditAnywhere, BlueprintReadWrite)
-	//	TMap<EAniState, class UAnimMontage*> AllAnimations;
+	UPROPERTY(Category = "AnimationValue", EditAnywhere, BlueprintReadWrite)
+		TMap<EAniState, class UAnimMontage*> MainPlayerAllAnimations ;
 
 	//UFUNCTION()
 	//	void MontageEnd(UAnimMontage* Anim, bool _Inter);

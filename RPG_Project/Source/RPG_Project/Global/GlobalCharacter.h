@@ -19,6 +19,22 @@ public:
 		return AniState;
 	}
 
+	TMap<int, class UAnimMontage*> GetAllAnimations()
+	{
+		return AllAnimations;
+	}
+
+	template<typename EnumType>
+	void SetAniState(EnumType _AniState)
+	{
+		AniState = static_cast<int>(_AniState);
+	}
+
+	void SetAniState(int _AniState)
+	{
+		AniState = _AniState;
+	}
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -8,7 +8,7 @@
 #include "GlobalGameInstance.generated.h"
 
 /**
- * 
+ * 게임 내에서 공통적으로(전역으로) 사용되는 변수들의 집합
  */
 UCLASS()
 class RPG_PROJECT_API UGlobalGameInstance : public UGameInstance
@@ -21,7 +21,7 @@ public:
 
 	UStaticMesh* GetMesh(FName _Name);
 
-	struct FMonsterData* GetMonsterData(FName _Name);
+	// struct FMonsterData* GetMonsterData(FName _Name);
 
 private:
 	UPROPERTY()

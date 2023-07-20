@@ -4,6 +4,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
 #include "UObject/NoExportTypes.h"
+#include "../Global/GlobalEnums.h"
 #include "MonsterData.generated.h"
 
 
@@ -23,4 +24,7 @@ struct RPG_PROJECT_API FMonsterData : public FTableRowBase
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		class UBehaviorTree* AI;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		TMap<EAniState, class UAnimMontage*> MapAnimation;
 };

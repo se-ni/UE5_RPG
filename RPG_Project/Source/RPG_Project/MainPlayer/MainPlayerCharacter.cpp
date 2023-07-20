@@ -126,7 +126,7 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 void AMainPlayerCharacter::MoveRight(float Val)
 {
-	if (AniState == 6 || AniState == 5)
+	if (MainPlayerAniState == EAniState::Attack || MainPlayerAniState == EAniState::JumpStart)
 	{
 		return;
 	}
@@ -141,23 +141,23 @@ void AMainPlayerCharacter::MoveRight(float Val)
 			// 현재 내 회전을 가져와서 y축에 해당하는 축벡터를 얻어오는 것.
 			AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::Y), Val);
 
-			AniState = Val > 0.f ? 2 : 1;
-			UE_LOG(LogTemp, Log, TEXT("%S(%u)  %d"), __FUNCTION__, __LINE__, AniState);
+			MainPlayerAniState = Val > 0.f ? EAniState::RightMove : EAniState::LeftMove;
+			UE_LOG(LogTemp, Log, TEXT("%S(%u)  %d"), __FUNCTION__, __LINE__, MainPlayerAniState);
 			return;
 		}
 	}
 	else
 	{
-		if (AniState == 2 || AniState == 1)
+		if (MainPlayerAniState == EAniState::RightMove || MainPlayerAniState == EAniState::LeftMove)
 		{
-			AniState = 0;
+			MainPlayerAniState = EAniState::Idle;
 		}
 	}
 }
 
 void AMainPlayerCharacter::MoveForward(float Val)
 {
-	if (AniState == 6 || AniState == 5)
+	if (MainPlayerAniState == EAniState::Attack || MainPlayerAniState == EAniState::JumpStart)
 	{
 		return;
 	}
@@ -177,16 +177,16 @@ void AMainPlayerCharacter::MoveForward(float Val)
 			// 지금은 E를 하고 있기 때문에 컨트롤러의 회전이나 액터의 회전이나 같다.
 			// AddMovementInput(GetActorForwardVector(), Val);
 
-			AniState = Val > 0.f ? 3 : 4 ;
-			UE_LOG(LogTemp, Log, TEXT("%S(%u) %d"), __FUNCTION__, __LINE__, AniState);
+			MainPlayerAniState = Val > 0.f ? EAniState::ForwardMove : EAniState::BackwardMove ;
+			UE_LOG(LogTemp, Log, TEXT("%S(%u) %d"), __FUNCTION__, __LINE__, MainPlayerAniState);
 			return;
 		}
 	}
 	else
 	{
-		if (AniState == 3 || AniState == 4)
+		if (MainPlayerAniState == EAniState::ForwardMove || MainPlayerAniState == EAniState::BackwardMove)
 		{
-			AniState = 0;
+			MainPlayerAniState = EAniState::Idle;
 		}
 	}
 
@@ -226,11 +226,11 @@ void AMainPlayerCharacter::JumpAction()
 	UE_LOG(LogTemp, Log, TEXT("%S(%u)> %d"), __FUNCTION__, __LINE__, JumpCurrentCount);
 	Jump();
 
-	AniState = 5;
+	MainPlayerAniState = EAniState::JumpStart;
 }
 
 void AMainPlayerCharacter::AttackAction()
 {
-	AniState = 6;
+	MainPlayerAniState = EAniState::Attack;
 }
 
