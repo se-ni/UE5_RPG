@@ -2,6 +2,7 @@
 
 #include "GlobalAnimInstance.h"
 #include "GlobalCharacter.h"
+#include "GlobalEnums.h"
 
 void UGlobalAnimInstance::NativeBeginPlay()
 {
@@ -55,28 +56,4 @@ void UGlobalAnimInstance::NativeUpdateAnimation(float _DeltaTime)
 
 void UGlobalAnimInstance::MontageEnd(UAnimMontage* Anim, bool _Inter)
 {
-	TSubclassOf<UAnimInstance> Inst = UGlobalAnimInstance::StaticClass();
-
-	AGlobalCharacter* Chracter = Cast<AGlobalCharacter>(GetOwningActor());
-
-	if (nullptr == Chracter && false == Chracter->IsValidLowLevel())
-	{
-		return;
-	}
-
-	// Anim 종료된 몽타주
-	if (AllAnimations[6] == Anim)
-	{
-		AniState = 0;
-		Chracter->AniState = AniState;
-		Montage_Play(AllAnimations[0], 1.0f);
-	}
-
-	if (AllAnimations[5] == Anim)
-	{
-		AniState = 0;
-		Chracter->AniState = AniState;
-		Montage_Play(AllAnimations[0], 1.0f);
-	}
-
 }

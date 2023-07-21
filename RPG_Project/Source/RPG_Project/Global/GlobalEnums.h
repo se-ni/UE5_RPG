@@ -18,13 +18,13 @@ enum class EAniState : uint8
 };
 
 UENUM(BlueprintType)
-enum class AIAniState : uint8
+enum class AIState : uint8
 {
-	None, // 0
+	//None, // 0
 	Idle, // 1
 	Move, // 2
-	Return, // 3
-	Ratrol, // 4
+	//Return, // 3
+	//Ratrol, // 4
 	Attack, // 5
-	Death // 6
+
 };

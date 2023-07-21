@@ -5,12 +5,13 @@
 #include "../Global/GlobalGameInstance.h"
 #include "MyAIController.h"
 #include "../Global/GlobalEnums.h"
+#include "MonsterData.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 void AMonster::BeginPlay()
 {
 
-	Super::BeginPlay();
+	
 
 	UGlobalGameInstance* GameInst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
@@ -19,13 +20,13 @@ void AMonster::BeginPlay()
 	{
 		CurMonsterData = GameInst->GetMonsterData(DataName); // 현재 몬스터데이터에 내용 넣어주고
 		
-		for (TPair<AIAniState, UAnimMontage*> Pair : CurMonsterData->MapAnimation)
+		for (TPair<AIState, UAnimMontage*> Pair : CurMonsterData->MapAnimation)
 		{
 			PushAnimation(Pair.Key, Pair.Value);
 		}
-		SetAniState(AIAniState::Idle);
+		SetAniState(0);
 	}
+	Super::BeginPlay();
 
-	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(AIAniState::Idle));
-	GetBlackboardComponent()->SetValueAsString(TEXT("TargetTag"), TEXT("Player"));
+	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIState"), static_cast<uint8>(AIState::Idle));
 }

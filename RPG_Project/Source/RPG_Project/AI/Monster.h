@@ -21,4 +21,8 @@ class RPG_PROJECT_API AMonster : public AAICharacter
 private:
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FName DataName = "NONE";
+
+	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		AIState AiAniState = AIState::Idle;
 };
+

@@ -31,13 +31,14 @@ void AMyAIController::OnPossess(APawn* _InPawn)
 		// 블랙보드의 변수인 SelfActor 할당
 		// 행동트리 컴포넌트를 StartTree 해준다.
 		
-		if (nullptr != BehaviorTree && true == BehaviorTree->IsValidLowLevel())
+		if (nullptr == BehaviorTree && false == BehaviorTree->IsValidLowLevel())
 		{
+			return;
+		}
 			BlackboardComponent->InitializeBlackboard(*BehaviorTree->GetBlackboardAsset());
 			BlackboardComponent->SetValueAsObject(TEXT("SelfActor"), _InPawn);
 		
 			BehaviorTreeComponent->StartTree(*BehaviorTree);
-		}
 
 
 	}
