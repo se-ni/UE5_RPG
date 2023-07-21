@@ -22,6 +22,8 @@ public:
 
 	UStaticMesh* GetMesh(FName _Name);
 
+	struct FMonsterData* GetMonsterData(FName _Name);
+
 	/*struct FMonsterData* GetMonsterData(FName _Name);*/
 
 private:

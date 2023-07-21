@@ -24,6 +24,25 @@ public:
 		return AllAnimations;
 	}
 
+	void PushAnimation(int _Index, class UAnimMontage* _Montage)
+	{
+		if (true == AllAnimations.Contains(_Index))
+		{
+			return;
+		}
+
+		AllAnimations.Add(_Index, _Montage);
+	}
+	template<typename EnumType>
+	void PushAnimation(EnumType _AIAniState, class UAnimMontage* _Montage)
+	{
+		if (true == AllAnimations.Contains(static_cast<int>(_AIAniState)))
+		{
+			return;
+		}
+		AllAnimations.Add(static_cast<int>(_AIAniState), _Montage);
+	}
+
 	template<typename EnumType>
 	void SetAniState(EnumType _AniState)
 	{

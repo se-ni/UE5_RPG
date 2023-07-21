@@ -19,6 +19,8 @@ public:
 		return BehaviorTree;
 	}
 
+	class UBlackboardComponent* GetBlackboardComponent();
+
 protected:
 	UPROPERTY(EditAnywhere , BlueprintReadWrite, Category="Data")
 		class UBehaviorTree* BehaviorTree;

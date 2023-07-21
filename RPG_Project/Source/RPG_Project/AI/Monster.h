@@ -15,7 +15,10 @@ class RPG_PROJECT_API AMonster : public AAICharacter
 {
 	GENERATED_BODY()
 
-public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		FMonsterData* CurMonsterData; // 현재 몬스터에 대한 데이터를 가지고 있음
+	const struct FMonsterData* CurMonsterData; // 현재 몬스터에 대한 데이터
+
+	void BeginPlay() override;
+private:
+	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		FName DataName = "NONE";
 };
