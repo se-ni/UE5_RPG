@@ -20,7 +20,7 @@ class RPG_PROJECT_API AMonster : public AAICharacter
 	void BeginPlay() override;
 private:
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		FName DataName = "NONE";
+		FName DataName = "Monster1";
 
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		AIState AiAniState = AIState::Idle;

@@ -3,6 +3,7 @@
 
 #include "GlobalGameInstance.h"
 #include "PlayerWeaponData.h"
+#include "../AI/MonsterData.h"
 #include "UObject/ConstructorHelpers.h"
 
 UGlobalGameInstance::UGlobalGameInstance() 
