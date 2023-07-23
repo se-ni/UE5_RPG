@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AICharacter.h"
 #include "MonsterData.h"
+#include "../Global/GlobalEnums.h"
 #include "Monster.generated.h"
 
 /**
@@ -23,6 +24,6 @@ private:
 		FName DataName = "Monster1";
 
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		AIState AiAniState = AIState::Idle;
+		EAniState AiAniState = EAniState::Idle;
 };
 

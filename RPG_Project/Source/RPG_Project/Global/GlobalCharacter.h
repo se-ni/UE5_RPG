@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GlobalAnimInstance.h"
 #include "GlobalCharacter.generated.h"
 
 UCLASS()
@@ -69,5 +70,6 @@ public:
 	UPROPERTY(Category = "AnimationValue", EditAnywhere, BlueprintReadWrite)
 		/*TMap<EAniState, class UAnimMontage*> AllAnimations;*/
 		TMap<int, class UAnimMontage*> AllAnimations;
-
+private:
+	class UGlobalAnimInstance* GlobalAnimInstance = nullptr;
 };

@@ -16,6 +16,9 @@ void AGlobalCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	GlobalAnimInstance = Cast<UGlobalAnimInstance>(GetMesh()->GetAnimInstance());
+
+	GlobalAnimInstance->AllAnimations = AllAnimations;
 }
 
 // Called every frame

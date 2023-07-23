@@ -26,5 +26,5 @@ struct RPG_PROJECT_API FMonsterData : public FTableRowBase
 		class UBehaviorTree* AI;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		TMap<AIState, class UAnimMontage*> MapAnimation;
+		TMap<EAniState, class UAnimMontage*> MapAnimation;
 };

@@ -9,9 +9,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 
 void AMonster::BeginPlay()
-{
-
-	
+{	
 
 	UGlobalGameInstance* GameInst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
@@ -20,13 +18,13 @@ void AMonster::BeginPlay()
 	{
 		CurMonsterData = GameInst->GetMonsterData(DataName); // 현재 몬스터데이터에 내용 넣어주고
 		
-		for (TPair<AIState, UAnimMontage*> Pair : CurMonsterData->MapAnimation)
+		for (TPair<EAniState, UAnimMontage*> Pair : CurMonsterData->MapAnimation)
 		{
 			PushAnimation(Pair.Key, Pair.Value);
 		}
-		SetAniState(0);
+		SetAniState(EAniState::Idle);
 	}
 	Super::BeginPlay();
 
-	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIState"), static_cast<uint8>(AIState::Idle));
+	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIState"), static_cast<uint8>(EAniState::Idle));
 }
