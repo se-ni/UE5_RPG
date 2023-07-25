@@ -15,6 +15,11 @@ class RPG_PROJECT_API AGlobalCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AGlobalCharacter();
+
+	AGlobalCharacter* GetGlobalCharacter()
+	{
+		return this;
+	}
 	int GetAniState()
 	{
 		return AniState;

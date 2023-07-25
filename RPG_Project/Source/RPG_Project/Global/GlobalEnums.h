@@ -14,17 +14,21 @@ enum class EAniState : uint8
 	ForwardMove,  //3
 	BackwardMove,  //4
 	JumpStart, //5
-	Attack //6
+	Attack, //6
+	Patrol, // 4
+	Return,
 };
 
-UENUM(BlueprintType)
-enum class AIState : uint8
-{
-	//None, // 0
-	Idle, // 1
-	Move, // 2
-	//Return, // 3
-	//Ratrol, // 4
-	Attack, // 5
-
-};
+//UENUM(BlueprintType)
+//enum class AIState : uint8
+//{
+//	//None, // 0
+//	Idle, // 1
+//	Move, // 2
+//	 // 3
+//	
+//	Attack, // 5
+//	Patrol, // 4
+//	Return,
+//
+//};

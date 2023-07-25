@@ -5,6 +5,8 @@
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "../MainPlayer/MainPlayerCharacter.h"
+#include "../Global/GlobalCharacter.h"
 #include "AICharacter.h"
 
 AMyAIController::AMyAIController()
@@ -12,6 +14,8 @@ AMyAIController::AMyAIController()
 	BehaviorTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorTreeComponent"));
 
 	BlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComponent"));
+
+	// AMainPlayerCharacter* CharacterMain = Cast<AMainPlayerCharacter>(AGlobalCharacter);
 }
 
 void AMyAIController::OnPossess(APawn* _InPawn)
@@ -22,10 +26,10 @@ void AMyAIController::OnPossess(APawn* _InPawn)
 	{
 		// 캐릭터를 가져온다
 		AAICharacter* CharacterAI = Cast<AAICharacter>(_InPawn);
-
 		// 새로 행동트리를 AI의 행동트리로 할당해주고
 		UBehaviorTree* BehaviorTree = CharacterAI->GetBehaviorTree();
-			
+		
+		
 		// 이 행동트리가 null이 아니면
 		// 블랙보드를 행동트리가 가지고 있는 블랙보드로 초기화
 		// 블랙보드의 변수인 SelfActor 할당
@@ -37,6 +41,7 @@ void AMyAIController::OnPossess(APawn* _InPawn)
 		}
 			BlackboardComponent->InitializeBlackboard(*BehaviorTree->GetBlackboardAsset());
 			BlackboardComponent->SetValueAsObject(TEXT("SelfActor"), _InPawn);
+			// BlackboardComponent->SetValueAsObject(TEXT("TargetActor"), _InPawn);
 		
 			BehaviorTreeComponent->StartTree(*BehaviorTree);
 
