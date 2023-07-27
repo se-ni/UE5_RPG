@@ -39,7 +39,7 @@ void AMyAIController::OnPossess(APawn* _InPawn)
 		{
 			return;
 		}
-			BlackboardComponent->InitializeBlackboard(*BehaviorTree->GetBlackboardAsset());
+			BlackboardComponent->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
 			BlackboardComponent->SetValueAsObject(TEXT("SelfActor"), _InPawn);
 			// BlackboardComponent->SetValueAsObject(TEXT("TargetActor"), _InPawn);
 		

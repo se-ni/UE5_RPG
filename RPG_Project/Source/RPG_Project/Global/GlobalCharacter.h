@@ -25,10 +25,12 @@ public:
 		return AniState;
 	}
 
-	TMap<int, class UAnimMontage*> GetAllAnimations()
+	template<typename EnumType>
+	EnumType GetAniState()
 	{
-		return AllAnimations;
+		return static_cast<EnumType>(AniState);
 	}
+
 
 	template<typename EnumType>
 	void SetAniState(EnumType _AniState)
@@ -39,8 +41,37 @@ public:
 	void SetAniState(int _AniState)
 	{
 		AniState = _AniState;
+
+	}
+	template<typename EnumType>
+	void SetAllAnimation(const TMap<EnumType, class UAnimMontage*>& _MapAnimation)
+	{
+		for (TPair<EnumType, UAnimMontage*> Pair : _MapAnimation)
+		{
+			AllAnimations.Add(static_cast<int>(Pair.Key), Pair.Value);
+		}
 	}
 
+	TMap<int, class UAnimMontage*> GetAllAnimations()
+	{
+		return AllAnimations;
+	}
+
+	template<typename EnumType>
+	class UAnimMontage* GetAnimMontage(EnumType _Index)
+	{
+		return GetAnimMontage(static_cast<int>(_Index));
+	}
+
+	class UAnimMontage* GetAnimMontage(int _Index)
+	{
+		if (false == AllAnimations.Contains(_Index))
+		{
+			return nullptr;
+		}
+
+		return AllAnimations[_Index];
+	}
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -60,6 +91,7 @@ protected:
 
 		AllAnimations.Add(_Index, _Montage);
 	}
+
 
 public:	
 	// Called every frame

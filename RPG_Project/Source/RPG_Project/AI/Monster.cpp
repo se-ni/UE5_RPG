@@ -17,14 +17,11 @@ void AMonster::BeginPlay()
 								// 애니스테이트와 애니메이션을 세팅해준다
 	{
 		CurMonsterData = GameInst->GetMonsterData(DataName); // 현재 몬스터데이터에 내용 넣어주고
-		
-		for (TPair<EAniState, UAnimMontage*> Pair : CurMonsterData->MapAnimation)
-		{
-			PushAnimation(Pair.Key, Pair.Value);
-		}
-		SetAniState(EAniState::Idle);
+
+		SetAllAnimation(CurMonsterData->MapAnimation);
+		SetAniState(EAniState::None);
 	}
 	Super::BeginPlay();
 
-	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIState"), static_cast<uint8>(EAniState::Idle));
+	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Idle));
 }

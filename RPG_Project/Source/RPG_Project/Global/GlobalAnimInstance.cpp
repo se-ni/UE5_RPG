@@ -13,14 +13,14 @@ void UGlobalAnimInstance::NativeBeginPlay()
 	// 나를 가진 액터를 여기서 가져옵니다.
 	// TPS캐릭터에게 다 세팅을 해줬다.
 
-	//AGlobalCharacter* Chracter = Cast<AGlobalCharacter>(GetOwningActor());
+	AGlobalCharacter* Chracter = Cast<AGlobalCharacter>(GetOwningActor());
 
-	//if (nullptr == Chracter && false == Chracter->IsValidLowLevel())
-	//{
-	//	return;
-	//}
+	if (nullptr == Chracter && false == Chracter->IsValidLowLevel())
+	{
+		return;
+	}
 
-	//AllAnimations = Chracter->AllAnimations;
+	AllAnimations = Chracter->AllAnimations;
 }
 
 void UGlobalAnimInstance::NativeUpdateAnimation(float _DeltaTime)

@@ -3,6 +3,7 @@
 
 #include "BTTask_IDLE.h"
 #include "../MyAIController.h"
+#include "../../Global/GlobalCharacter.h"
 #include "../../Global/GlobalEnums.h"
 
 UBTTask_IDLE::UBTTask_IDLE()
@@ -26,26 +27,36 @@ EBTNodeResult::Type UBTTask_IDLE::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 
 UBlackboardComponent* UBTTask_IDLE::GetBlackboardComponent(UBehaviorTreeComponent& OwnerComp)
 {
-	UBlackboardComponent* BlockBoard = OwnerComp.GetBlackboardComponent();
+	UBlackboardComponent* BlackBoard = OwnerComp.GetBlackboardComponent();
 
-	if (nullptr == BlockBoard)
+	if (nullptr == BlackBoard)
 	{
-		UE_LOG(LogTemp, Error, TEXT("if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
+		UE_LOG(LogTemp, Error, TEXT("if (nullptr == BlackBoard)"), __FUNCTION__, __LINE__);
 		return nullptr;
 	}
-
-	return BlockBoard;
+	return BlackBoard;
 }
-void UBTTask_IDLE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
-{
-	UBlackboardComponent* BlockBoard = OwnerComp.GetBlackboardComponent();
 
-	if (nullptr == BlockBoard)
+EAniState UBTTask_IDLE::GetAIState(UBehaviorTreeComponent& OwnerComp)
+{
+	UBlackboardComponent* BlackBoard = OwnerComp.GetBlackboardComponent();
+
+	if (nullptr == BlackBoard)
 	{
-		UE_LOG(LogTemp, Error, TEXT("if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
-		return;
+		UE_LOG(LogTemp, Error, TEXT("if (nullptr == BlackBoard)"), __FUNCTION__, __LINE__);
+		return EAniState::None;
 	}
 
+	uint8 Enum = BlackBoard->GetValueAsEnum(TEXT("AIAniState"));
+
+	return static_cast<EAniState>(Enum);
+}
+
+void UBTTask_IDLE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+{
+	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
+
+	UAnimMontage* Montage = GetGlobalCharacter(OwnerComp)->GetAnimMontage(GetAIState(OwnerComp));
 }
 
 AGlobalCharacter* UBTTask_IDLE::GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp)
