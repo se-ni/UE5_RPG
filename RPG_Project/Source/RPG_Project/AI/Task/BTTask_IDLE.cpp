@@ -57,6 +57,15 @@ void UBTTask_IDLE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory
 	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
 	//SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Idle));
 	UAnimMontage* Montage = GetGlobalCharacter(OwnerComp)->GetAnimMontage(GetAIState(OwnerComp));
+
+	StateTime += DeltaSeconds;
+
+	if (StateTime >= 5.0f)
+	{
+		int a = 0;
+		UE_LOG(LogTemp, Log, TEXT("%S(%u) %f"), __FUNCTION__, __LINE__, StateTime);
+
+	}
 }
 
 void UBTTask_IDLE::SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State)
@@ -97,6 +106,3 @@ AGlobalCharacter* UBTTask_IDLE::GetGlobalCharacter(UBehaviorTreeComponent& Owner
 	return Character;
 
 }
-
-
-

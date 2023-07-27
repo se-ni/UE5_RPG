@@ -30,6 +30,7 @@ public:
 		void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
 		EAniState GetAIState(UBehaviorTreeComponent& OwnerComp);
 
+		float StateTime=0.0f;
 
 	
 };
