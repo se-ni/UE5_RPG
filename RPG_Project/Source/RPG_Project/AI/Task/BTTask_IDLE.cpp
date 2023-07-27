@@ -79,9 +79,9 @@ AGlobalCharacter* UBTTask_IDLE::GetGlobalCharacter(UBehaviorTreeComponent& Owner
 		// 정상적이지 않은 뭔가
 		return nullptr;
 	}
-	
+
 	return Character;
-	
+
 }
 
 

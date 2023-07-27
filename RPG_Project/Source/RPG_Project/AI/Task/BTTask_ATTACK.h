@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "../../Global/GlobalCharacter.h"
+#include "GameplayTask.h"
 #include "BTTask_ATTACK.generated.h"
 
 /**
@@ -19,12 +20,8 @@ public:
 		UBTTask_ATTACK();
 		void OnGameplayTaskActivated(class UGameplayTask&) override;
 
-
 		EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 		void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
 
-
-
-	
 };

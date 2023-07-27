@@ -11,7 +11,7 @@ UBTTask_MOVE::UBTTask_MOVE()
 	bNotifyTaskFinished = true;
 }
 
-void UBTTask_MOVE::OnGameplayTaskActivated(class UGameplayTask& _Task)
+void UBTTask_MOVE::OnGameplayTaskActivated(UGameplayTask& _Task)
 {
 	Super::OnGameplayTaskActivated(_Task);
 }
