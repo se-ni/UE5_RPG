@@ -18,13 +18,9 @@ class RPG_PROJECT_API UBTTask_RETURN : public UBTTask_BlackboardBase
 
 public:
 		UBTTask_RETURN();
-		void OnGameplayTaskActivated(UGameplayTask&) override;
+		void OnGameplayTaskActivated(UGameplayTask& _Task) override;
 
 		EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 		void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
-
-
-
-	
 };

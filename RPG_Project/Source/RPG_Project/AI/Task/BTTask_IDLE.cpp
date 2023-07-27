@@ -12,7 +12,7 @@ UBTTask_IDLE::UBTTask_IDLE()
 	bNotifyTaskFinished = true;
 }
 
-void UBTTask_IDLE::OnGameplayTaskActivated(class UGameplayTask& _Task)
+void UBTTask_IDLE::OnGameplayTaskActivated(UGameplayTask& _Task)
 {
 	Super::OnGameplayTaskActivated(_Task);
 }
@@ -43,7 +43,7 @@ EAniState UBTTask_IDLE::GetAIState(UBehaviorTreeComponent& OwnerComp)
 
 	if (nullptr == BlackBoard)
 	{
-		UE_LOG(LogTemp, Error, TEXT("if (nullptr == BlackBoard)"), __FUNCTION__, __LINE__);
+		UE_LOG(LogTemp, Error, TEXT("if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
 		return EAniState::None;
 	}
 
@@ -55,8 +55,23 @@ EAniState UBTTask_IDLE::GetAIState(UBehaviorTreeComponent& OwnerComp)
 void UBTTask_IDLE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
-
+	//SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Idle));
 	UAnimMontage* Montage = GetGlobalCharacter(OwnerComp)->GetAnimMontage(GetAIState(OwnerComp));
+}
+
+void UBTTask_IDLE::SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State)
+{
+	UBlackboardComponent* BlackBoard = OwnerComp.GetBlackboardComponent();
+
+	if (nullptr == BlackBoard)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
+		return;
+	}
+
+	BlackBoard->SetValueAsEnum(TEXT("AIAniState"), _State);
+
+	FinishLatentTask(OwnerComp, EBTNodeResult::Type::Succeeded);
 }
 
 AGlobalCharacter* UBTTask_IDLE::GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp)
@@ -71,8 +86,7 @@ AGlobalCharacter* UBTTask_IDLE::GetGlobalCharacter(UBehaviorTreeComponent& Owner
 
 	// 컨트롤러에게 내가 조작하는 Pawn은 GetPawn을 사용한다.
 	AGlobalCharacter* Character = AICon->GetPawn<AGlobalCharacter>();
-	Character->AniState;
-	Character->AllAnimations;
+
 	if (nullptr == Character || false == Character->IsValidLowLevel())
 	{
 		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == Chracter || false == Chracter->IsValidLowLevel())"), __FUNCTION__, __LINE__);

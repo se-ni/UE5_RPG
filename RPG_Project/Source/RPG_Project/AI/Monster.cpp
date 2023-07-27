@@ -10,7 +10,7 @@
 
 void AMonster::BeginPlay()
 {	
-	Super::BeginPlay();
+	// Super::BeginPlay();
 
 	UGlobalGameInstance* GameInst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
@@ -22,7 +22,7 @@ void AMonster::BeginPlay()
 		SetAllAnimation(CurMonsterData->MapAnimation);
 		SetAniState(EAniState::None);
 	}
-	
+	Super::BeginPlay();
 
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Idle));
 }

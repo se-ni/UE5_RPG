@@ -24,6 +24,6 @@ private:
 		FName DataName = "Monster1";
 
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		EAniState AiAniState = EAniState::Idle;
+		EAniState AIAniState = EAniState::Idle;
 };
 

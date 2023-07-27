@@ -20,8 +20,7 @@ class RPG_PROJECT_API UBTTask_IDLE : public UBTTask_BlackboardBase
 public:
 		UBTTask_IDLE();
 
-		float StateTime = 0.0f;
-
+		void SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State);
 		void OnGameplayTaskActivated(class UGameplayTask&) override;
 		UBlackboardComponent* GetBlackboardComponent(UBehaviorTreeComponent& OwnerComp);
 		class AGlobalCharacter* GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp);
