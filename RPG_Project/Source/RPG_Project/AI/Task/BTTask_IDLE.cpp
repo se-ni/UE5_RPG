@@ -11,7 +11,7 @@ UBTTask_IDLE::UBTTask_IDLE()
 	bNotifyTaskFinished = true;
 }
 
-void UBTTask_IDLE::OnGameplayTaskActivated(class UGameplayTask& _Task)
+void UBTTask_IDLE::OnGameplayTaskActivated(UGameplayTask& _Task)
 {
 	Super::OnGameplayTaskActivated(_Task);
 }

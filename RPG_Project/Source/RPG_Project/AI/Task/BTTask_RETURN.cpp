@@ -3,6 +3,7 @@
 
 #include "BTTask_RETURN.h"
 #include "../MyAIController.h"
+
 #include "../../Global/GlobalEnums.h"
 
 UBTTask_RETURN::UBTTask_RETURN()
@@ -12,7 +13,7 @@ UBTTask_RETURN::UBTTask_RETURN()
 }
 
 
-void UBTTask_RETURN::OnGameplayTaskActivated(class UGameplayTask& _Task)
+void UBTTask_RETURN::OnGameplayTaskActivated(UGameplayTask& _Task)
 {
 	Super::OnGameplayTaskActivated(_Task);
 }

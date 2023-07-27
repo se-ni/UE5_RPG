@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "../../Global/GlobalCharacter.h"
+#include "GameplayTask.h"
 #include "BTTask_RETURN.generated.h"
 
 /**
@@ -17,9 +18,7 @@ class RPG_PROJECT_API UBTTask_RETURN : public UBTTask_BlackboardBase
 
 public:
 		UBTTask_RETURN();
-		void OnGameplayTaskActivated(class UGameplayTask&) override;
-		UBlackboardComponent* GetBlackboardComponent(UBehaviorTreeComponent& OwnerComp);
-		class AGlobalCharacter* GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp);
+		void OnGameplayTaskActivated(UGameplayTask&) override;
 
 		EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 

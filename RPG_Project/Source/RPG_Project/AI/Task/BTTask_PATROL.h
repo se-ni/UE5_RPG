@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "../../Global/GlobalCharacter.h"
+#include "GameplayTask.h"
 #include "BTTask_PATROL.generated.h"
 
 /**
