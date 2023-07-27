@@ -10,6 +10,7 @@
 
 void AMonster::BeginPlay()
 {	
+	Super::BeginPlay();
 
 	UGlobalGameInstance* GameInst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
@@ -24,7 +25,7 @@ void AMonster::BeginPlay()
 		}
 		SetAniState(EAniState::Idle);
 	}
-	Super::BeginPlay();
+	
 
-	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIState"), static_cast<uint8>(EAniState::Idle));
+	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Idle));
 }

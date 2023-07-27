@@ -11,7 +11,7 @@ UBTTask_IDLE::UBTTask_IDLE()
 	bNotifyTaskFinished = true;
 }
 
-void UBTTask_IDLE::OnGameplayTaskActivated(UGameplayTask& _Task)
+void UBTTask_IDLE::OnGameplayTaskActivated(class UGameplayTask& _Task)
 {
 	Super::OnGameplayTaskActivated(_Task);
 }
@@ -68,9 +68,9 @@ AGlobalCharacter* UBTTask_IDLE::GetGlobalCharacter(UBehaviorTreeComponent& Owner
 		// 정상적이지 않은 뭔가
 		return nullptr;
 	}
-	
+
 	return Character;
-	
+
 }
 
 
