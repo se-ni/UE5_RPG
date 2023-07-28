@@ -90,8 +90,8 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("PlayerMoveForward", EKeys::W, 1.f));
 		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("PlayerMoveForward", EKeys::S, -1.f));
 
-		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("PlayerMoveRight", EKeys::A, -1.f));
-		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("PlayerMoveRight", EKeys::D, 1.f));
+		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("PlayerMoveRight", EKeys::A, 1.f));
+		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("PlayerMoveRight", EKeys::D, -1.f));
 
 		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("PlayerTurn", EKeys::MouseX, 1.f));
 
@@ -165,9 +165,9 @@ void AMainPlayerCharacter::MoveRight(float Val)
 			FRotator const ControlSpaceRot = Controller->GetControlRotation();
 			// transform to world space and add it
 			// 현재 내 회전을 가져와서 y축에 해당하는 축벡터를 얻어오는 것.
-			AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::Y), Val);
+			AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::X), Val);
 
-			MainPlayerAniState = Val > 0.f ? EAniState::RightMove : EAniState::LeftMove;
+			MainPlayerAniState = Val > 0.f ? EAniState::LeftMove : EAniState::RightMove;
 			UE_LOG(LogTemp, Log, TEXT("%S(%u)  %d"), __FUNCTION__, __LINE__, MainPlayerAniState);
 			return;
 		}
@@ -198,7 +198,7 @@ void AMainPlayerCharacter::MoveForward(float Val)
 
 			// 이건 방향일 뿐입니다.
 			// transform to world space and add it
-			AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::X), Val);
+			AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::Y), Val);
 			// 탑뷰게임이면 다르게 나오게 되는데.
 			// 지금은 E를 하고 있기 때문에 컨트롤러의 회전이나 액터의 회전이나 같다.
 			// AddMovementInput(GetActorForwardVector(), Val);

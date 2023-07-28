@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "../../Global/GlobalCharacter.h"
+#include "BTTask_BASE.h"
 #include "GameplayTask.h"
 #include "BTTask_ATTACK.generated.h"
 
@@ -12,7 +13,7 @@
  * 
  */
 UCLASS()
-class RPG_PROJECT_API UBTTask_ATTACK : public UBTTask_BlackboardBase
+class RPG_PROJECT_API UBTTask_ATTACK : public UBTTask_BASE
 {
 	GENERATED_BODY()
 

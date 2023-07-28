@@ -20,6 +20,8 @@ EBTNodeResult::Type UBTTask_ATTACK::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
 
+	GetGlobalCharacter(OwnerComp)->SetAniState(EAniState::Attack);
+
 	return EBTNodeResult::Type::InProgress;
 }
 

@@ -1,0 +1,43 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#include "BTTask_BASE.h"
+#include "BTTask_RETURN.h"
+#include "../MyAIController.h"
+#include "../../Global/GlobalEnums.h"
+
+void UBTTask_BASE::OnGameplayTaskActivated(class UGameplayTask&)
+{
+
+}
+
+AGlobalCharacter* UBTTask_BASE::GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp)
+{
+	AMyAIController* AiCon = OwnerComp.GetOwner<AMyAIController>(); // 컨트롤러를 가져오고
+	if (nullptr == AiCon || false == AiCon->IsValidLowLevel())
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == Chracter || false == Chracter->IsValidLowLevel())"), __FUNCTION__, __LINE__);
+		// 정상적이지 않은 상태
+		return nullptr;
+	}
+
+	// 컨트롤러가 조작하는 Pawn은 GetPawn을 사용해서 가져온다.
+	AGlobalCharacter* Character = AiCon->GetPawn<AGlobalCharacter>();
+
+	if (nullptr == Character || false == Character->IsValidLowLevel())
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == Chracter || false == Chracter->IsValidLowLevel())"), __FUNCTION__, __LINE__);
+		// 정상적이지 않은 상태
+		return nullptr;
+	}
+
+	return Character;
+}
+
+UBlackboardComponent* UBTTask_BASE::GetBlackboardComponent(UBehaviorTreeComponent& OwnerComp)
+{
+	AMyAIController* AiCon = OwnerComp.GetOwner<AMyAIController>();
+	UBlackboardComponent* blackboard = AiCon->GetBlackboardComponent();
+	
+	return blackboard;
+}
+

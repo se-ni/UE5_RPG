@@ -6,6 +6,7 @@
 #include "AICharacter.h"
 #include "MonsterData.h"
 #include "../Global/GlobalEnums.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Monster.generated.h"
 
 /**
@@ -19,11 +20,15 @@ class RPG_PROJECT_API AMonster : public AAICharacter
 	const struct FMonsterData* CurMonsterData; // 현재 몬스터에 대한 데이터
 
 	void BeginPlay() override;
+public:
+	AMonster();
 private:
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FName DataName = "Monster1";
 
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		EAniState AIAniState = EAniState::Idle;
+
+	UCharacterMovementComponent* CharacterMovementComponent;
 };
 

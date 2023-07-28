@@ -8,6 +8,10 @@
 #include "MonsterData.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
+AMonster::AMonster()
+{
+	// GetCharacterMovement()->MaxWalkSpeed = 200.0f;
+}
 void AMonster::BeginPlay()
 {	
 	// Super::BeginPlay();
@@ -25,4 +29,7 @@ void AMonster::BeginPlay()
 	Super::BeginPlay();
 
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Idle));
+	GetBlackboardComponent()->SetValueAsString(TEXT("TargetTag"), TEXT("Player"));
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 100.0f);
+
 }

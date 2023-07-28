@@ -4,28 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "../../Global/GlobalCharacter.h"
-#include "BTTask_BASE.h"
 #include "GameplayTask.h"
-#include "BTTask_PATROL.generated.h"
+
+#include "BTTask_BASE.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RPG_PROJECT_API UBTTask_PATROL : public UBTTask_BASE
+class RPG_PROJECT_API UBTTask_BASE : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
 
 public:
-		UBTTask_PATROL();
 		void OnGameplayTaskActivated(class UGameplayTask&) override;
 
-		EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-
-		void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
-
-
-
-	
+		class AGlobalCharacter* GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp);
+		class UBlackboardComponent* GetBlackboardComponent(UBehaviorTreeComponent& OwnerComp);
 };

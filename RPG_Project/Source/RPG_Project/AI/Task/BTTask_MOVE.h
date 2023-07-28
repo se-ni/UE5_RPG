@@ -6,13 +6,14 @@
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "../../Global/GlobalCharacter.h"
 #include "GameplayTask.h"
+#include "BTTask_BASE.h"
 #include "BTTask_MOVE.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RPG_PROJECT_API UBTTask_MOVE : public UBTTask_BlackboardBase
+class RPG_PROJECT_API UBTTask_MOVE : public UBTTask_BASE
 {
 	GENERATED_BODY()
 
@@ -25,7 +26,8 @@ public:
 
 		void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
 
+		void SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State);
 
-
+		UCharacterMovementComponent* CharacterMovementComponent;
 	
 };
