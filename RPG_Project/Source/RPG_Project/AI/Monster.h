@@ -6,6 +6,7 @@
 #include "AICharacter.h"
 #include "MonsterData.h"
 #include "../Global/GlobalEnums.h"
+#include "../AI/MonsterPatrolData.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Monster.generated.h"
 
@@ -28,12 +29,20 @@ public:
 		return OriginPos;
 	}
 
+	FVector GetPatrolPointLocation()
+	{
+		return PatrolPointReference->GetActorLocation();
+	}
+
 private:
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FName DataName = "Monster1";
 
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		EAniState AIAniState = EAniState::Idle;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol", meta = (AllowPrivateAccess = "true"))
+		AActor* PatrolPointReference;
 
 	UCharacterMovementComponent* CharacterMovementComponent;
 

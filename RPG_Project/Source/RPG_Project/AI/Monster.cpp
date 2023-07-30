@@ -6,12 +6,28 @@
 #include "MyAIController.h"
 #include "../Global/GlobalEnums.h"
 #include "MonsterData.h"
+#include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 AMonster::AMonster()
 {
-	// GetCharacterMovement()->MaxWalkSpeed = 200.0f;
+	FString PathToPatrolPoint = TEXT("/Game/Global/Monster/PatrolPoint.PatrolPoint_C'");
 
+	// 패트롤포인트 블루프린트 클래스 로드
+	UClass* PatrolPointBPClass = LoadClass<AActor>(nullptr, *PathToPatrolPoint);
+	if (PatrolPointBPClass)
+	{
+		FVector SpawnLocation = FVector(0, 0, 0); // 원하는 위치 값으로 대체해주세요.
+		FRotator SpawnRotation = FRotator(0, 0, 0); // 원하는 회전 값으로 대체해주세요.
+
+		// 패트롤포인트 생성
+		PatrolPointReference = GetWorld()->SpawnActor<AActor>(PatrolPointBPClass, SpawnLocation, SpawnRotation);
+	}
+	else
+	{
+		// 로드 실패 시 에러 메시지 출력
+		UE_LOG(LogTemp, Error, TEXT("Failed to load PatrolPoint blueprint class."));
+	}
 }
 
 void AMonster::BeginPlay()
@@ -35,4 +51,5 @@ void AMonster::BeginPlay()
 	GetBlackboardComponent()->SetValueAsString(TEXT("TargetTag"), TEXT("Player"));
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 100.0f);
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 500.0f);
+
 }

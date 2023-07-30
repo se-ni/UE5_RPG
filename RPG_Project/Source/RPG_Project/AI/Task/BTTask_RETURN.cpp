@@ -53,7 +53,7 @@ void UBTTask_RETURN::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 
 		if (FMath::Abs(Angle0 - Angle1) >= 10.0f)
 		{
-			FRotator Rot = FRotator::MakeFromEuler({ 0, 0, Cross.Z * 10.0f * DeltaSeconds });
+			FRotator Rot = FRotator::MakeFromEuler({ 0, 0, Cross.Z * 50.0f * DeltaSeconds });
 			GetGlobalCharacter(OwnerComp)->AddActorWorldRotation(Rot);
 		}
 		else
