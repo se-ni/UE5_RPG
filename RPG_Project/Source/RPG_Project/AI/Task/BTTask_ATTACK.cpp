@@ -44,7 +44,7 @@ void UBTTask_ATTACK::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 
 	if (AttackRange < Dir.Size())
 	{
-		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Idle)); // 원래 자리로
+		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Return)); // 원래 자리로
 		return;
 	}
 }

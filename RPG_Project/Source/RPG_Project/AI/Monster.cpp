@@ -11,10 +11,13 @@
 AMonster::AMonster()
 {
 	// GetCharacterMovement()->MaxWalkSpeed = 200.0f;
+
 }
+
 void AMonster::BeginPlay()
 {	
 	// Super::BeginPlay();
+	OriginPos = GetActorLocation();
 
 	UGlobalGameInstance* GameInst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 

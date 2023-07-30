@@ -22,6 +22,12 @@ class RPG_PROJECT_API AMonster : public AAICharacter
 	void BeginPlay() override;
 public:
 	AMonster();
+
+	FVector GetOriginPos()
+	{
+		return OriginPos;
+	}
+
 private:
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FName DataName = "Monster1";
@@ -30,5 +36,7 @@ private:
 		EAniState AIAniState = EAniState::Idle;
 
 	UCharacterMovementComponent* CharacterMovementComponent;
+
+	FVector OriginPos;
 };
 

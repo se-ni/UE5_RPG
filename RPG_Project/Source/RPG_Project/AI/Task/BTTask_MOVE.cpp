@@ -65,7 +65,7 @@ void UBTTask_MOVE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory
 
 		if (FMath::Abs(Angle0 - Angle1) >= 10.0f)
 		{
-			FRotator Rot = FRotator::MakeFromEuler({ 0, 0, Cross.Z * 12.0f * DeltaSeconds });
+			FRotator Rot = FRotator::MakeFromEuler({ 0, 0, Cross.Z * 10.0f * DeltaSeconds });
 			GetGlobalCharacter(OwnerComp)->AddActorWorldRotation(Rot);
 		}
 		else {
@@ -90,7 +90,7 @@ void UBTTask_MOVE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory
 
 		if (SearchRange < Dir.Size())
 		{
-			SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Idle)); // 원래 자리로
+			SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Return)); // 원래 자리로
 			return;
 		}
 
