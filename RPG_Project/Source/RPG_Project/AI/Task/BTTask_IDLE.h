@@ -21,7 +21,7 @@ class RPG_PROJECT_API UBTTask_IDLE : public UBTTask_BASE
 public:
 		UBTTask_IDLE();
 
-		void SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State);
+		//void SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State);
 		void OnGameplayTaskActivated(class UGameplayTask&) override;
 		UBlackboardComponent* GetBlackboardComponent(UBehaviorTreeComponent& OwnerComp);
 		class AGlobalCharacter* GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp);
@@ -31,7 +31,7 @@ public:
 		void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
 		EAniState GetAIState(UBehaviorTreeComponent& OwnerComp);
 
-		float StateTime=0.0f;
+		//float StateTime=0.0f;
 
 	
 };

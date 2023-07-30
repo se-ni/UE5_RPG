@@ -10,6 +10,22 @@ void UBTTask_BASE::OnGameplayTaskActivated(class UGameplayTask&)
 
 }
 
+void UBTTask_BASE::SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State)
+{
+	UBlackboardComponent* BlackBoard = OwnerComp.GetBlackboardComponent();
+
+	if (nullptr == BlackBoard)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
+		return;
+	}
+
+	BlackBoard->SetValueAsEnum(TEXT("AIAniState"), _State);
+	StateTime = 0.0f;
+
+	FinishLatentTask(OwnerComp, EBTNodeResult::Type::Succeeded);
+}
+
 AGlobalCharacter* UBTTask_BASE::GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp)
 {
 	AMyAIController* AiCon = OwnerComp.GetOwner<AMyAIController>(); // 컨트롤러를 가져오고

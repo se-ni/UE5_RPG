@@ -26,7 +26,7 @@ public:
 
 		void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
 
-		void SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State);
+		//void SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State);
 
 		UCharacterMovementComponent* CharacterMovementComponent;
 	

@@ -92,6 +92,8 @@ void UBTTask_IDLE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory
 				if (nullptr != ResultActor)
 				{
 					GetBlackboardComponent(OwnerComp)->SetValueAsObject(TEXT("TargetActor"), ResultActor);
+					// SearchRange 안에 있다면
+
 					SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
 					return;
 				}
@@ -101,21 +103,21 @@ void UBTTask_IDLE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory
 
 }
 
-void UBTTask_IDLE::SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State)
-{
-	UBlackboardComponent* BlackBoard = OwnerComp.GetBlackboardComponent();
-
-	if (nullptr == BlackBoard)
-	{
-		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
-		return;
-	}
-
-	BlackBoard->SetValueAsEnum(TEXT("AIAniState"), _State);
-	StateTime = 0.0f;
-
-	FinishLatentTask(OwnerComp, EBTNodeResult::Type::Succeeded);
-}
+//void UBTTask_IDLE::SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State)
+//{
+//	UBlackboardComponent* BlackBoard = OwnerComp.GetBlackboardComponent();
+//
+//	if (nullptr == BlackBoard)
+//	{
+//		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
+//		return;
+//	}
+//
+//	BlackBoard->SetValueAsEnum(TEXT("AIAniState"), _State);
+//	StateTime = 0.0f;
+//
+//	FinishLatentTask(OwnerComp, EBTNodeResult::Type::Succeeded);
+//}
 
 AGlobalCharacter* UBTTask_IDLE::GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp)
 {

@@ -98,17 +98,17 @@ void UBTTask_MOVE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory
 	}
 }
 
-void UBTTask_MOVE::SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State)
-{
-	UBlackboardComponent* BlackBoard = OwnerComp.GetBlackboardComponent();
-
-	if (nullptr == BlackBoard)
-	{
-		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
-		return;
-	}
-
-	BlackBoard->SetValueAsEnum(TEXT("AIAniState"), _State);
-
-	FinishLatentTask(OwnerComp, EBTNodeResult::Type::Failed);
-}
+//void UBTTask_MOVE::SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State)
+//{
+//	UBlackboardComponent* BlackBoard = OwnerComp.GetBlackboardComponent();
+//
+//	if (nullptr == BlackBoard)
+//	{
+//		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
+//		return;
+//	}
+//
+//	BlackBoard->SetValueAsEnum(TEXT("AIAniState"), _State);
+//
+//	FinishLatentTask(OwnerComp, EBTNodeResult::Type::Failed);
+//}
