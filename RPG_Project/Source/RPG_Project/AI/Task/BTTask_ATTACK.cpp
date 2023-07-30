@@ -27,5 +27,24 @@ EBTNodeResult::Type UBTTask_ATTACK::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 
 void UBTTask_ATTACK::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
+	FVector PawnPos = GetGlobalCharacter(OwnerComp)->GetActorLocation();
 
+	UObject* TargetObject = GetBlackboardComponent(OwnerComp)->GetValueAsObject(TEXT("TargetActor"));
+	AActor* TargetActor = Cast<AActor>(TargetObject);
+
+	FVector TargetPos = TargetActor->GetActorLocation();
+
+	FVector Dir = TargetPos - PawnPos;
+
+	GetGlobalCharacter(OwnerComp)->AddMovementInput(Dir);
+	// GetGlobalCharacter(OwnerComp)->SetActorRotation(Dir.Rotation());
+
+	// AttackRange 보다 멀다면
+	float AttackRange = GetBlackboardComponent(OwnerComp)->GetValueAsFloat(TEXT("AttackRange"));
+
+	if (AttackRange < Dir.Size())
+	{
+		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Idle)); // 원래 자리로
+		return;
+	}
 }

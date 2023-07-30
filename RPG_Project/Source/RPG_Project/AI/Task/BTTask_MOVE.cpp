@@ -85,6 +85,15 @@ void UBTTask_MOVE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory
 		GetGlobalCharacter(OwnerComp)->AddMovementInput(Dir);
 		// GetGlobalCharacter(OwnerComp)->SetActorRotation(Dir.Rotation());
 
+		// SearchRange 안에 있다면
+		float SearchRange = GetBlackboardComponent(OwnerComp)->GetValueAsFloat(TEXT("SearchRange"));
+
+		if (SearchRange < Dir.Size())
+		{
+			SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Idle)); // 원래 자리로
+			return;
+		}
+
 		float AttackRange = GetBlackboardComponent(OwnerComp)->GetValueAsFloat(TEXT("AttackRange"));
 
 

@@ -92,10 +92,16 @@ void UBTTask_IDLE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory
 				if (nullptr != ResultActor)
 				{
 					GetBlackboardComponent(OwnerComp)->SetValueAsObject(TEXT("TargetActor"), ResultActor);
+					
 					// SearchRange 안에 있다면
+					float SearchRange = GetBlackboardComponent(OwnerComp)->GetValueAsFloat(TEXT("SearchRange"));
+					float Dis = (Pawn->GetActorLocation() - ResultActor->GetActorLocation()).Size();
 
-					SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
-					return;
+					if (SearchRange > Dis)
+					{
+						SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
+						return;
+					}
 				}
 		}
 
