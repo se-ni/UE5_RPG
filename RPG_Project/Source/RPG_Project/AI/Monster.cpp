@@ -14,20 +14,20 @@ AMonster::AMonster()
 	FString PathToPatrolPoint = TEXT("/Game/Global/Monster/PatrolPoint.PatrolPoint_C'");
 
 	// 패트롤포인트 블루프린트 클래스 로드
-	UClass* PatrolPointBPClass = LoadClass<AActor>(nullptr, *PathToPatrolPoint);
-	if (PatrolPointBPClass)
-	{
-		FVector SpawnLocation = FVector(0, 0, 0); // 원하는 위치 값으로 대체해주세요.
-		FRotator SpawnRotation = FRotator(0, 0, 0); // 원하는 회전 값으로 대체해주세요.
+	//UClass* PatrolPointBPClass = LoadClass<AActor>(nullptr, *PathToPatrolPoint);
+	//if (PatrolPointBPClass)
+	//{
+	//	FVector SpawnLocation = FVector(0, 0, 0); // 원하는 위치 값으로 대체해주세요.
+	//	FRotator SpawnRotation = FRotator(0, 0, 0); // 원하는 회전 값으로 대체해주세요.
 
-		// 패트롤포인트 생성
-		PatrolPointReference = GetWorld()->SpawnActor<AActor>(PatrolPointBPClass, SpawnLocation, SpawnRotation);
-	}
-	else
-	{
-		// 로드 실패 시 에러 메시지 출력
-		UE_LOG(LogTemp, Error, TEXT("Failed to load PatrolPoint blueprint class."));
-	}
+	//	// 패트롤포인트 생성
+	//	PatrolPointReference = GetWorld()->SpawnActor<AActor>(PatrolPointBPClass, SpawnLocation, SpawnRotation);
+	//}
+	//else
+	//{
+	//	// 로드 실패 시 에러 메시지 출력
+	//	UE_LOG(LogTemp, Error, TEXT("Failed to load PatrolPoint blueprint class."));
+	//}
 }
 
 void AMonster::BeginPlay()
