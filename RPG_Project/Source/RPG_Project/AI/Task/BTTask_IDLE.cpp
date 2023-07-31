@@ -68,44 +68,10 @@ void UBTTask_IDLE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory
 
 	if (StateTime >= 2.5f)
 	{
-		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
-			int a = 0;
-			UE_LOG(LogTemp, Log, TEXT("%S(%u) %f"), __FUNCTION__, __LINE__, StateTime);
-			// SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
-
-			FString TargetTag = GetBlackboardComponent(OwnerComp)->GetValueAsString(TEXT("TargetTag"));
-			TArray<AActor*> TargetActors;
-			UGameplayStatics::GetAllActorsWithTag(GetWorld(), *TargetTag, TargetActors);
-
-			AGlobalCharacter* Pawn = GetGlobalCharacter(OwnerComp);
-
-			if (0 != TargetActors.Num())
-			{
-				AActor* ResultActor = nullptr;
-				float Range = TNumericLimits<float>::Max();
-
-				for (size_t i = 0; i < TargetActors.Num(); i++)
-				{
-					float Dis = (Pawn->GetActorLocation() - TargetActors[i]->GetActorLocation()).Size();
-					ResultActor = TargetActors[i];
-
-				}
-					if (nullptr != ResultActor)
-					{
-						GetBlackboardComponent(OwnerComp)->SetValueAsObject(TEXT("TargetActor"), ResultActor);
-						
-						// SearchRange 안에 있다면
-						float SearchRange = GetBlackboardComponent(OwnerComp)->GetValueAsFloat(TEXT("SearchRange"));
-						float Dis = (Pawn->GetActorLocation() - ResultActor->GetActorLocation()).Size();
-
-						if (SearchRange > Dis)
-						{
-							SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
-							return;
-						}
-					}
-			}
-
+		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Patrol));
+		int a = 0;
+		// UE_LOG(LogTemp, Log, TEXT("%S(%u) %f"), __FUNCTION__, __LINE__, StateTime);
+		// SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
 	}
 }
 

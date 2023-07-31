@@ -25,7 +25,9 @@ public:
 
 		void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
 
+		void FindTarget(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
 
-
-	
+private:
+	void FindPoint1(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
+	void FindPoint2(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
 };
