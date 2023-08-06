@@ -16,7 +16,7 @@ UBTTask_PATROL::UBTTask_PATROL()
 
 EBTNodeResult::Type UBTTask_PATROL::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	GetGlobalCharacter(OwnerComp)->SetAniState(EAniState::Patrol);
+	/*GetGlobalCharacter(OwnerComp)->SetAniState(EAniState::Patrol);*/
 
 
 	int PatrolCount = UGlobalData::MainRandom.RandRange(3, 5);
@@ -37,7 +37,7 @@ EBTNodeResult::Type UBTTask_PATROL::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 		RandomDir.X = UGlobalData::MainRandom.FRandRange(-100.0f, 100.0f);
 		RandomDir.Y = UGlobalData::MainRandom.FRandRange(-100.0f, 100.0f);
 		RandomDir.Normalize();
-		RandomDir *= UGlobalData::MainRandom.FRandRange(SearchRange * 0.5f, SearchRange);
+		RandomDir *= UGlobalData::MainRandom.FRandRange(SearchRange * 0.6f, SearchRange);
 		RandomDir += OriginPos;
 		PP->Positions.Add(RandomDir);
 	}
@@ -53,6 +53,7 @@ EBTNodeResult::Type UBTTask_PATROL::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 void UBTTask_PATROL::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DelataSeconds)
 {
 	Super::TickTask(OwnerComp, NodeMemory, DelataSeconds);
+	GetGlobalCharacter(OwnerComp)->SetAniState(EAniState::Idle);
 
 	UObject* PPObject = GetBlackboardComponent(OwnerComp)->GetValueAsObject(TEXT("PatrolPositions"));
 
@@ -74,6 +75,7 @@ void UBTTask_PATROL::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 	}
 
 	FVector TargetPos = Positions[CurrentIndex];
+	TargetPos.Z = 0.0f;
 	FVector ThisPos = GetGlobalCharacter(OwnerComp)->GetActorLocation();
 
 
@@ -86,13 +88,13 @@ void UBTTask_PATROL::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 		return;
 	}
 
+	//{
 
-	TargetPos.Z = 0.0f;
-	ThisPos.Z = 0.0f;
+		ThisPos.Z = 0.0f;
 
-	FVector Dir = TargetPos - ThisPos;
-	Dir.Normalize();
-	{
+		FVector Dir = TargetPos - ThisPos;
+		Dir.Normalize();
+	
 		FVector OtherForward = GetGlobalCharacter(OwnerComp)->GetActorForwardVector();
 		OtherForward.Normalize();
 
@@ -101,38 +103,47 @@ void UBTTask_PATROL::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 		float Angle0 = Dir.Rotation().Yaw;
 		float Angle1 = OtherForward.Rotation().Yaw;
 
-		if (FMath::Abs(Angle0 - Angle1) >= 10.0f)
-		{
-			FRotator Rot = FRotator::MakeFromEuler({ 0, 0, Cross.Z * 50.0f * DelataSeconds });
-			GetGlobalCharacter(OwnerComp)->AddActorWorldRotation(Rot);
-		}
 
-		else
+		if (bReturning == false)
 		{
-			FRotator Rot = Dir.Rotation();
-			GetGlobalCharacter(OwnerComp)->SetActorRotation(Rot);
-			bReturning = true;
-		}
-	}
+			if (FMath::Abs(Angle0 - Angle1) >= 1.0f)
+			{
+				FRotator Rot = FRotator::MakeFromEuler({ 0, 0, Cross.Z * 50.0f * DelataSeconds });
+				GetGlobalCharacter(OwnerComp)->AddActorWorldRotation(Rot);
+				return;
+			}
+			else
+			{
+				FRotator Rot = Dir.Rotation();
+				GetGlobalCharacter(OwnerComp)->SetActorRotation(Rot);
 
-	if (bReturning == true)
-	{
+				bReturning = true;
+			}
+
+		}
+	//}
+
+	//{
 		FVector NowPos = GetGlobalCharacter(OwnerComp)->GetActorLocation();
-
+		NowPos.Z = 0.0f;
 		Dir = TargetPos - NowPos;
-		Dir.Normalize();
+		// Dir.Normalize();
 
-		GetGlobalCharacter(OwnerComp)->AddMovementInput(Dir);
-
-		if (Dir.X < 0.5f)
+		if (bReturning == true)
 		{
-			int a = 0;
-			++PP->CurrentIndex;
-			bReturning = false;
-			return;
-		}
-	}
+			GetGlobalCharacter(OwnerComp)->SetAniState(EAniState::Patrol);
 
+			GetGlobalCharacter(OwnerComp)->AddMovementInput(Dir);
+
+			if (5.0f >= Dir.Size())
+			{
+				int a = 0;
+				++PP->CurrentIndex;
+				bReturning = false;
+				return;
+			}
+		}
+	//}
 }
 
 
