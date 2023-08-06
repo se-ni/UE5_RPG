@@ -70,6 +70,7 @@ void UBTTask_IDLE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory
 	{
 		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Patrol));
 		int a = 0;
+		StateTime = 0.0f;
 		// UE_LOG(LogTemp, Log, TEXT("%S(%u) %f"), __FUNCTION__, __LINE__, StateTime);
 		// SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
 	}

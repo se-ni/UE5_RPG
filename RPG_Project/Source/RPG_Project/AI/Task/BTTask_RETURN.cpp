@@ -32,7 +32,7 @@ void UBTTask_RETURN::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 {
 	AMonster* Monster = Cast<AMonster>(OwnerComp.GetAIOwner()->GetPawn());
 
-	OriginAIPos = Monster->GetOriginPos();
+	OriginAIPos = GetBlackboardComponent(OwnerComp)->GetValueAsVector(TEXT("OriginPos"));
 
 	FVector TargetPos = OriginAIPos;
 	FVector ThisPos = GetGlobalCharacter(OwnerComp)->GetActorLocation();

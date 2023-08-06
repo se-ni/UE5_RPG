@@ -24,15 +24,10 @@ class RPG_PROJECT_API AMonster : public AAICharacter
 public:
 	AMonster();
 
-	FVector GetOriginPos()
-	{
-		return OriginPos;
-	}
-
-	FVector GetPatrolPointLocation()
-	{
-		return PatrolPointReference->GetActorLocation();
-	}
+	//FVector GetPatrolPointLocation()
+	//{
+	//	return PatrolPointReference->GetActorLocation();
+	//}
 
 private:
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -41,11 +36,10 @@ private:
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		EAniState AIAniState = EAniState::Idle;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol", meta = (AllowPrivateAccess = "true"))
-		AActor* PatrolPointReference;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol", meta = (AllowPrivateAccess = "true"))
+	//	AActor* PatrolPointReference;
 
 	UCharacterMovementComponent* CharacterMovementComponent;
 
-	FVector OriginPos;
 };
 

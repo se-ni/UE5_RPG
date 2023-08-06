@@ -3,10 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
-#include "../../Global/GlobalCharacter.h"
 #include "BTTask_BASE.h"
-#include "GameplayTask.h"
+#include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "BTTask_PATROL.generated.h"
 
 /**
@@ -17,17 +15,16 @@ class RPG_PROJECT_API UBTTask_PATROL : public UBTTask_BASE
 {
 	GENERATED_BODY()
 
+	UBTTask_PATROL();
+
 public:
-		UBTTask_PATROL();
-		void OnGameplayTaskActivated(class UGameplayTask&) override;
+	bool bReturning = false;
 
-		EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+protected:
 
-		void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
+	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory);
 
-		void FindTarget(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
+	void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DelataSeconds);
 
-private:
-	void FindPoint1(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
-	void FindPoint2(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
+	AActor* GetTargetSearch(UBehaviorTreeComponent& OwnerComp);
 };

@@ -17,7 +17,7 @@ AMonster::AMonster()
 void AMonster::BeginPlay()
 {	
 	// Super::BeginPlay();
-	OriginPos = GetActorLocation();
+
 
 	UGlobalGameInstance* GameInst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
@@ -33,13 +33,9 @@ void AMonster::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Idle));
 	GetBlackboardComponent()->SetValueAsString(TEXT("TargetTag"), TEXT("Player"));
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 100.0f);
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 500.0f);
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 200.0f);
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 1000.0f);
 
-	GetBlackboardComponent()->SetValueAsString(TEXT("PointTag1"), TEXT("Point1"));
-	GetBlackboardComponent()->SetValueAsString(TEXT("PointTag2"), TEXT("Point2"));
-
-	// GetBlackboardComponent()->SetValueAsVector(TEXT("Point1"),{ 100.f, 0.f, 0.0f });
-	// GetBlackboardComponent()->SetValueAsVector(TEXT("SearchRange"), 500.0f);
+	GetBlackboardComponent()->SetValueAsVector(TEXT("OriginPos"), GetActorLocation());
 
 }
