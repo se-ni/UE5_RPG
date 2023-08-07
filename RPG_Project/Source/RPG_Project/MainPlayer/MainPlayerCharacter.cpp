@@ -2,6 +2,8 @@
 
 
 #include "MainPlayerCharacter.h"
+#include "../AI/Monster.h"
+#include "../AI/MyAIController.h"
 #include "Components/CapsuleComponent.h"
 
 // Sets default values
@@ -36,7 +38,7 @@ void AMainPlayerCharacter::BeginPlay()
 	JumpMaxCount = 2; // Jump Max Count = 2
 
 	//GetMesh()->GetAnimInstance()->OnMontageEnded.AddDynamic(this, &AMainPlayerCharacter::MontageEnd);
-	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainPlayerCharacter::BeginOverlap);
+	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainPlayerCharacter::BeginOverlap);
 
 	UGlobalGameInstance* Inst = GetGameInstance<UGlobalGameInstance>();
 	WeaponArrays.Add(GetGameInstance<UGlobalGameInstance>()->GetMesh(TEXT("Staff03")));
@@ -46,6 +48,16 @@ void AMainPlayerCharacter::BeginPlay()
 	WeaponArrays.Add(GetGameInstance<UGlobalGameInstance>()->GetMesh(TEXT("Staff01")));
 
 	WeaponMesh->SetStaticMesh(WeaponArrays[0]);
+	//AMyAIController* AICon = Cast<AMyAIController>(GetController());
+	//AMonster* Mons = Cast<AMonster>(AICon->GetOwner());
+	//if (Mons)
+	//{
+	//	UPrimitiveComponent* CapsuleComp = Mons->GetCapsuleComponent();
+	//	if (CapsuleComp)
+	//	{
+	//		CapsuleComp->OnComponentBeginOverlap.AddDynamic(this, &AMonster::MonsterOverlap);
+	//	}
+	//}
 }
 
 // Called every frame
@@ -67,15 +79,6 @@ void AMainPlayerCharacter::Tick(float DeltaTime)
 	}
 }
 
-void AMainPlayerCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	if (OtherActor->ActorHasTag("Cube"))
-	{
-		UE_LOG(LogTemp, Log, TEXT("overlap"), __FUNCTION__, __LINE__);
-		isOverlap = true;
-	}
-}
 
 void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -101,13 +104,11 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("PlayerJumpAxis", EKeys::J, -1.f));
 
-		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("Interaction", EKeys::H));
-
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("Weapon1"), EKeys::One));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("Weapon2"), EKeys::Two));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("Weapon3"), EKeys::Three));
 
-		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAttack"), EKeys::RightMouseButton));
+		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAttack"), EKeys::LeftMouseButton));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerJumpAction"), EKeys::SpaceBar));
 
 
@@ -259,4 +260,3 @@ void AMainPlayerCharacter::AttackAction()
 {
 	MainPlayerAniState = EAniState::Attack;
 }
-

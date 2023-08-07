@@ -16,6 +16,7 @@ enum class EAniState : uint8
 	JumpStart, //5
 	Attack, //6
 	Patrol, // 4
+	Death,
 	Return,
 };
 

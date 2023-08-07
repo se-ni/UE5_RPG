@@ -54,9 +54,15 @@ public:
 	//UFUNCTION()
 	//	void MontageEnd(UAnimMontage* Anim, bool _Inter);
 
+	//UFUNCTION()
+	//	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	//		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
 	UFUNCTION()
-		void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-			int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	bool GetIsDeath()
+	{
+		return isDeath;
+	}
 
 	TSubclassOf<UUserWidget> ShopWidgetClass;
 	UTesShopWidget* ShopUIWidget;
@@ -73,6 +79,9 @@ protected:
 private:
 	bool AxisJump = false;
 	bool isOverlap = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		bool isDeath = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UStaticMeshComponent* WeaponMesh;
