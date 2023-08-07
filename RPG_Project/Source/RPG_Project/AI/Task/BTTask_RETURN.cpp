@@ -30,19 +30,21 @@ EBTNodeResult::Type UBTTask_RETURN::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 
 void UBTTask_RETURN::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
-	AMonster* Monster = Cast<AMonster>(OwnerComp.GetAIOwner()->GetPawn());
+	// GetGlobalCharacter(OwnerComp)->SetAniState(AIState::MOVE);
 
-	OriginAIPos = GetBlackboardComponent(OwnerComp)->GetValueAsVector(TEXT("OriginPos"));
+	// 기본 위치(OriginAIPos)를 가져옵니다.
+	FVector OriginPos = GetBlackboardComponent(OwnerComp)->GetValueAsVector(TEXT("OriginPos"));
 
-	FVector TargetPos = OriginAIPos;
-	FVector ThisPos = GetGlobalCharacter(OwnerComp)->GetActorLocation();
-	// 혹시라도 z축이 있을 가능성을 없애는게 보통입니다.
-	TargetPos.Z = 0.0f;
-	ThisPos.Z = 0.0f;
-
-	FVector Dir = TargetPos - ThisPos;
-	Dir.Normalize();
 	{
+		FVector TargetPos = OriginPos;
+		FVector ThisPos = GetGlobalCharacter(OwnerComp)->GetActorLocation();
+		// 혹시라도 z축이 있을 가능성을 없애는게 보통입니다.
+		TargetPos.Z = 0.0f;
+		ThisPos.Z = 0.0f;
+
+		FVector Dir = TargetPos - ThisPos;
+		Dir.Normalize();
+
 		FVector OtherForward = GetGlobalCharacter(OwnerComp)->GetActorForwardVector();
 		OtherForward.Normalize();
 
@@ -51,36 +53,33 @@ void UBTTask_RETURN::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 		float Angle0 = Dir.Rotation().Yaw;
 		float Angle1 = OtherForward.Rotation().Yaw;
 
-		if (FMath::Abs(Angle0 - Angle1) >= 15.0f)
+		if (FMath::Abs(Angle0 - Angle1) >= 10.0f)
 		{
-			FRotator Rot = FRotator::MakeFromEuler({ 0, 0, Cross.Z * 20.0f * DeltaSeconds });
+			FRotator Rot = FRotator::MakeFromEuler({ 0, 0, Cross.Z * 100.0f * DeltaSeconds });
 			GetGlobalCharacter(OwnerComp)->AddActorWorldRotation(Rot);
 		}
-		else
-		{
+		else {
 			FRotator Rot = Dir.Rotation();
 			GetGlobalCharacter(OwnerComp)->SetActorRotation(Rot);
 		}
 	}
 
-	FVector NowPos = GetGlobalCharacter(OwnerComp)->GetActorLocation();
-
-	Dir = TargetPos - NowPos;
-
-	GetGlobalCharacter(OwnerComp)->AddMovementInput(Dir);
-
-	if (Dir.X < 0.5f)
 	{
-		bReturning = true;
+		FVector PawnPos = GetGlobalCharacter(OwnerComp)->GetActorLocation();
+		FVector TargetPos = OriginPos;
+		PawnPos.Z = 0.0f;
+		TargetPos.Z = 0.0f;
+
+		FVector Dir = TargetPos - PawnPos;
+
+		GetGlobalCharacter(OwnerComp)->AddMovementInput(Dir);
+
+		if (10.0f >= Dir.Size())
+		{
+			SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Idle));
+			return;
+		}
 	}
 
-
-	if (bReturning)
-	{
-
-		GetGlobalCharacter(OwnerComp)->SetAniState(EAniState::Idle);
-		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Idle));
-		bReturning = false;
-	}
 }
 

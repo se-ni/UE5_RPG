@@ -16,6 +16,7 @@ public:
 	// Sets default values for this character's properties
 	AGlobalCharacter();
 
+	FVector OriginAIPos;
 	AGlobalCharacter* GetGlobalCharacter()
 	{
 		return this;

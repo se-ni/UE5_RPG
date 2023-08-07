@@ -44,7 +44,7 @@ void UBTTask_ATTACK::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 	StateTime += DeltaSeconds;
 	if (Time <= StateTime)
 	{
-		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Idle));
+		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
 		StateTime = 0.0f;
 	}
 

@@ -15,7 +15,7 @@ AGlobalCharacter::AGlobalCharacter()
 void AGlobalCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	OriginAIPos = GetActorLocation();
 	GlobalAnimInstance = Cast<UGlobalAnimInstance>(GetMesh()->GetAnimInstance());
 
 	GlobalAnimInstance->AllAnimations = AllAnimations;
