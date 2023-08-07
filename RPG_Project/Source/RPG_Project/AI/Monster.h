@@ -35,9 +35,8 @@ private:
 
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		EAniState AIAniState = EAniState::Idle;
-
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol", meta = (AllowPrivateAccess = "true"))
-	//	AActor* PatrolPointReference;
+	UPROPERTY(Category = "Monster", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		bool isDeath = false;
 
 	UCharacterMovementComponent* CharacterMovementComponent;
 
