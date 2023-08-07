@@ -3,6 +3,7 @@
 
 #include "BTTask_ATTACK.h"
 #include "../MyAIController.h"
+#include "../Monster.h"
 #include "../../Global/GlobalEnums.h"
 
 UBTTask_ATTACK::UBTTask_ATTACK()
@@ -22,29 +23,44 @@ EBTNodeResult::Type UBTTask_ATTACK::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 
 	GetGlobalCharacter(OwnerComp)->SetAniState(EAniState::Attack);
 
-	return EBTNodeResult::Type::Succeeded;
+	return EBTNodeResult::Type::InProgress;
 }
 
 void UBTTask_ATTACK::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
-	FVector PawnPos = GetGlobalCharacter(OwnerComp)->GetActorLocation();
+	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
+	
+	bool isDeath = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("bIsDeath"));
 
-	UObject* TargetObject = GetBlackboardComponent(OwnerComp)->GetValueAsObject(TEXT("TargetActor"));
-	AActor* TargetActor = Cast<AActor>(TargetObject);
-
-	FVector TargetPos = TargetActor->GetActorLocation();
-
-	FVector Dir = TargetPos - PawnPos;
-
-	GetGlobalCharacter(OwnerComp)->AddMovementInput(Dir);
-	// GetGlobalCharacter(OwnerComp)->SetActorRotation(Dir.Rotation());
-
-	// AttackRange 보다 멀다면
-	float AttackRange = GetBlackboardComponent(OwnerComp)->GetValueAsFloat(TEXT("AttackRange"));
-
-	if (AttackRange < Dir.Size())
+	if (isDeath)
 	{
-		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Return)); // 원래 자리로
+		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Death));
 		return;
 	}
+
+	UAnimMontage* Montage = GetGlobalCharacter(OwnerComp)->GetAnimMontage(GetAIState(OwnerComp));
+	float Time = Montage->CalculateSequenceLength();
+
+	StateTime += DeltaSeconds;
+	if (Time <= StateTime)
+	{
+		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Idle));
+		StateTime = 0.0f;
+	}
+
+}
+
+EAniState UBTTask_ATTACK::GetAIState(UBehaviorTreeComponent& OwnerComp)
+{
+	UBlackboardComponent* BlackBoard = OwnerComp.GetBlackboardComponent();
+
+	if (nullptr == BlackBoard)
+	{
+		UE_LOG(LogTemp, Error, TEXT("if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
+		return EAniState::None;
+	}
+
+	uint8 Enum = BlackBoard->GetValueAsEnum(TEXT("AIAniState"));
+
+	return static_cast<EAniState>(Enum);
 }

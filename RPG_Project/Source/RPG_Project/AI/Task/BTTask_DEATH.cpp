@@ -25,18 +25,24 @@ EBTNodeResult::Type UBTTask_DEATH::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 
 	GetGlobalCharacter(OwnerComp)->SetAniState(EAniState::Death);
 
-	return EBTNodeResult::Type::Succeeded;
+	return EBTNodeResult::Type::InProgress;
 }
 
 void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
+	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
 	UAnimMontage* Montage = GetGlobalCharacter(OwnerComp)->GetAnimMontage(GetAIState(OwnerComp));
 	float Time = Montage->CalculateSequenceLength();
 	StateTime += DeltaSeconds;
 	if (Time <= StateTime)
 	{
-		GetGlobalCharacter(OwnerComp)->Destroy();
+		AMonster* Monster = Cast<AMonster>(OwnerComp.GetAIOwner()->GetPawn());
+		if (nullptr != Monster)
+		{
+			Monster->Destroy();
+		}
 	}
+
 }
 
 EAniState UBTTask_DEATH::GetAIState(UBehaviorTreeComponent& OwnerComp)

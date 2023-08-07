@@ -74,15 +74,6 @@ void UBTTask_RETURN::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 		bReturning = true;
 	}
 
-	//UAnimMontage* Montage = GetGlobalCharacter(OwnerComp)->GetAnimMontage(UBTTask_AIBase::GetAiState(OwnerComp));
-	//float Time = Montage->CalculateSequenceLength();
-
-	//if (Time <= GetStateTime(OwnerComp))
-	//{
-	//	SetStateChange(OwnerComp, AIState::IDLE);
-	//	// GetGlobalCharacter(OwnerComp)->SetAniState(AIState::IDLE);
-	//	return;
-	//}
 
 	if (bReturning)
 	{

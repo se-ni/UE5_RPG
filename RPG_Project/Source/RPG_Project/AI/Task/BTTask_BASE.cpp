@@ -21,16 +21,15 @@ void UBTTask_BASE::SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _Stat
 	}
 
 	BlackBoard->SetValueAsEnum(TEXT("AIAniState"), _State);
-	StateTime = 0.0f;
 
 	FinishLatentTask(OwnerComp, EBTNodeResult::Type::Succeeded);
 }
 void UBTTask_BASE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
-	bool MonsterDeath = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("bIsDeath"));
-	if (MonsterDeath)
-	{
+	//bool MonsterDeath = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("bIsDeath"));
+	//if (MonsterDeath)
+	//{
 		int a = 0;
 		UBlackboardComponent* BlackBoard = OwnerComp.GetBlackboardComponent();
 
@@ -41,8 +40,7 @@ void UBTTask_BASE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory
 		}
 
 		BlackBoard->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Death));
-		StateTime = 0.0f;
-	}
+	//}
 }
 AGlobalCharacter* UBTTask_BASE::GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp)
 {
@@ -75,3 +73,17 @@ UBlackboardComponent* UBTTask_BASE::GetBlackboardComponent(UBehaviorTreeComponen
 	return blackboard;
 }
 
+//float UBTTask_BASE::GetStateTime(UBehaviorTreeComponent& OwnerComp)
+//{
+//	UBlackboardComponent* BlockBoard = OwnerComp.GetBlackboardComponent();
+//
+//	if (nullptr == BlockBoard)
+//	{
+//		UE_LOG(LogTemp, Error, TEXT("if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
+//		return 0.0f;
+//	}
+//
+//	StateTime = BlockBoard->GetValueAsFloat(TEXT("StateTime"));
+//
+//	return StateTime;
+//}

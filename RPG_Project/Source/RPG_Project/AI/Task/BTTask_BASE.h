@@ -25,5 +25,7 @@ public:
 		class AGlobalCharacter* GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp);
 		class UBlackboardComponent* GetBlackboardComponent(UBehaviorTreeComponent& OwnerComp);
 
-		float StateTime = 0.0f;
+		float GetStateTime(UBehaviorTreeComponent& OwnerComp);
+
+		//float StateTime = 0.0f;
 };
