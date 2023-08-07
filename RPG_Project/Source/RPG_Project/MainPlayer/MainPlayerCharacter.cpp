@@ -37,6 +37,8 @@ void AMainPlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 	JumpMaxCount = 2; // Jump Max Count = 2
 
+	MainPlayerAnimInstance = Cast<UMainPlayerAnimInstance>(GetMesh()->GetAnimInstance());
+
 	//GetMesh()->GetAnimInstance()->OnMontageEnded.AddDynamic(this, &AMainPlayerCharacter::MontageEnd);
 	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainPlayerCharacter::BeginOverlap);
 
@@ -260,3 +262,5 @@ void AMainPlayerCharacter::AttackAction()
 {
 	MainPlayerAniState = EAniState::Attack;
 }
+
+

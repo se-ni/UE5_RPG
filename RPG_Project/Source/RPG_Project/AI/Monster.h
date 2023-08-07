@@ -22,7 +22,7 @@ class RPG_PROJECT_API AMonster : public AAICharacter
 
 	void BeginPlay() override;
 
-	//void Tick(float DeltaSecond) override;
+	void Tick(float DeltaSecond) override;
 
 	void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 

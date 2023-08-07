@@ -22,7 +22,7 @@ void UBTTask_DEATH::OnGameplayTaskActivated(UGameplayTask& _Task)
 EBTNodeResult::Type UBTTask_DEATH::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
-
+	
 	GetGlobalCharacter(OwnerComp)->SetAniState(EAniState::Death);
 
 	return EBTNodeResult::Type::InProgress;
@@ -40,6 +40,7 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 		if (nullptr != Monster)
 		{
 			Monster->Destroy();
+			StateTime = 0.0f;
 		}
 	}
 

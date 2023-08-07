@@ -8,6 +8,7 @@
 #include "../Global/GlobalGameInstance.h"
 #include "../TesShopWidget.h"
 #include "../Global/GlobalCharacter.h"
+#include "MainPlayerAnimInstance.h"
 #include "MainPlayerCharacter.generated.h"
 
 UCLASS()
@@ -67,6 +68,9 @@ public:
 	TSubclassOf<UUserWidget> ShopWidgetClass;
 	UTesShopWidget* ShopUIWidget;
 
+	// 함수를 통해 애님 인스턴스를 가져옵니다.
+	UFUNCTION(BlueprintPure, Category = "Animation")
+		UMainPlayerAnimInstance* GetMainPlayerAnimInstance() const { return MainPlayerAnimInstance; }
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -76,6 +80,9 @@ protected:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// 애님 인스턴스를 저장할 변수
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Animation")
+		UMainPlayerAnimInstance* MainPlayerAnimInstance;
 private:
 	bool AxisJump = false;
 	bool isOverlap = false;

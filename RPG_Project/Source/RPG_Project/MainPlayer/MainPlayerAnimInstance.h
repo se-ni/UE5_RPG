@@ -20,6 +20,12 @@ public:
 	UFUNCTION()
 		void MontageEnd(UAnimMontage* Anim, bool _Inter);
 
+	// 플레이어의 현재 애니메이션 상태를 반환하는 함수
+	UFUNCTION(BlueprintCallable, Category = "Animation")
+		EAniState GetCurrentAnimationState() const
+	{
+		return AniState;
+	}
 	// 애님인스턴용 Tick과 BeginPlay
 
 protected:

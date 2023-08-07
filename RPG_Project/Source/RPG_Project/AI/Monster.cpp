@@ -9,6 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "../MainPlayer/MainPlayerCharacter.h"
 
 AMonster::AMonster()
 {
@@ -34,8 +35,8 @@ void AMonster::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Idle));
 	GetBlackboardComponent()->SetValueAsString(TEXT("TargetTag"), TEXT("Player"));
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 200.0f);
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 1000.0f);
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 100.0f);
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 500.0f);
 
 	GetBlackboardComponent()->SetValueAsVector(TEXT("OriginPos"), GetActorLocation());
 
@@ -46,17 +47,31 @@ void AMonster::BeginPlay()
 
 }
 
-//void AMonster::Tick(float DeltaSecond)
-//{
-//	Super::Tick(DeltaSecond);
-//}
+void AMonster::Tick(float DeltaSecond)
+{
+	Super::Tick(DeltaSecond);
+}
 
 void AMonster::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	int a = 0;
-	if (OtherComp->ComponentHasTag("PlayerAttack"))
 	{
-		GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true);
+		AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(OtherActor);
+		if (Player)
+		{
+			// 플레이어의 애님 인스턴스 가져오기
+			UMainPlayerAnimInstance* PlayerAnimInstance = Player->GetMainPlayerAnimInstance();
+			if (PlayerAnimInstance)
+			{
+				if (PlayerAnimInstance->GetCurrentAnimationState() == EAniState::Attack)
+				{
+					GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true);
+				}
+				else
+				{
+					GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), false);
+				}
+			}
+		}
 	}
 }
