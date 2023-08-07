@@ -20,6 +20,7 @@ class RPG_PROJECT_API UBTTask_BASE : public UBTTask_BlackboardBase
 
 public:
 		void OnGameplayTaskActivated(class UGameplayTask&) override;
+		void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
 		void SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State);
 		class AGlobalCharacter* GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp);
 		class UBlackboardComponent* GetBlackboardComponent(UBehaviorTreeComponent& OwnerComp);

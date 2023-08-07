@@ -25,7 +25,25 @@ void UBTTask_BASE::SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _Stat
 
 	FinishLatentTask(OwnerComp, EBTNodeResult::Type::Succeeded);
 }
+void UBTTask_BASE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+{
+	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
+	bool MonsterDeath = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("bIsDeath"));
+	if (MonsterDeath)
+	{
+		int a = 0;
+		UBlackboardComponent* BlackBoard = OwnerComp.GetBlackboardComponent();
 
+		if (nullptr == BlackBoard)
+		{
+			UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
+			return;
+		}
+
+		BlackBoard->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Death));
+		StateTime = 0.0f;
+	}
+}
 AGlobalCharacter* UBTTask_BASE::GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp)
 {
 	AMyAIController* AiCon = OwnerComp.GetOwner<AMyAIController>(); // 컨트롤러를 가져오고

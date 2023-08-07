@@ -8,6 +8,7 @@
 #include "MonsterData.h"
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Components/CapsuleComponent.h"
 
 AMonster::AMonster()
 {
@@ -38,4 +39,24 @@ void AMonster::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsVector(TEXT("OriginPos"), GetActorLocation());
 
+	GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), false);
+
+	CapsuleComp = GetCapsuleComponent();
+	CapsuleComp->OnComponentBeginOverlap.AddDynamic(this, &AMonster::BeginOverlap);
+
+}
+
+//void AMonster::Tick(float DeltaSecond)
+//{
+//	Super::Tick(DeltaSecond);
+//}
+
+void AMonster::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	int a = 0;
+	if (OtherComp->ComponentHasTag("PlayerAttack"))
+	{
+		GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true);
+	}
 }
