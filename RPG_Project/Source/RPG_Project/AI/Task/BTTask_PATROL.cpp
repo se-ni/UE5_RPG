@@ -75,7 +75,6 @@ void UBTTask_PATROL::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 	}
 
 	FVector TargetPos = Positions[CurrentIndex];
-	TargetPos.Z = 0.0f;
 	FVector ThisPos = GetGlobalCharacter(OwnerComp)->GetActorLocation();
 
 
@@ -88,8 +87,8 @@ void UBTTask_PATROL::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 		return;
 	}
 
-	//{
-
+	{
+		TargetPos.Z = 0.0f;
 		ThisPos.Z = 0.0f;
 
 		FVector Dir = TargetPos - ThisPos;
@@ -106,11 +105,10 @@ void UBTTask_PATROL::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 
 		if (bReturning == false)
 		{
-			if (FMath::Abs(Angle0 - Angle1) >= 1.0f)
+			if (FMath::Abs(Angle0 - Angle1) >= 10.0f)
 			{
-				FRotator Rot = FRotator::MakeFromEuler({ 0, 0, Cross.Z * 50.0f * DelataSeconds });
+				FRotator Rot = FRotator::MakeFromEuler({ 0, 0, Cross.Z * 100.0f * DelataSeconds });
 				GetGlobalCharacter(OwnerComp)->AddActorWorldRotation(Rot);
-				return;
 			}
 			else
 			{
@@ -118,16 +116,19 @@ void UBTTask_PATROL::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 				GetGlobalCharacter(OwnerComp)->SetActorRotation(Rot);
 
 				bReturning = true;
+				//return;
 			}
 
 		}
-	//}
+	}
 
-	//{
-		FVector NowPos = GetGlobalCharacter(OwnerComp)->GetActorLocation();
-		NowPos.Z = 0.0f;
-		Dir = TargetPos - NowPos;
-		// Dir.Normalize();
+	{
+		//FVector NowPos = GetGlobalCharacter(OwnerComp)->GetActorLocation();
+		//TargetPos.Z = 0.0f;
+		//NowPos.Z = 0.0f;
+
+		FVector Dir = TargetPos - ThisPos;
+		//Dir.Normalize();
 
 		if (bReturning == true)
 		{
@@ -135,15 +136,14 @@ void UBTTask_PATROL::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 
 			GetGlobalCharacter(OwnerComp)->AddMovementInput(Dir);
 
-			if (5.0f >= Dir.Size())
+			if (10.0f >= Dir.Size())
 			{
-				int a = 0;
 				++PP->CurrentIndex;
 				bReturning = false;
 				return;
 			}
 		}
-	//}
+	}
 }
 
 
