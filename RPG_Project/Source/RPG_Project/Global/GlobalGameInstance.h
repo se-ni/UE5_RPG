@@ -25,12 +25,23 @@ public:
 	struct FMonsterData* GetMonsterData(FName _Name);
 
 	/*struct FMonsterData* GetMonsterData(FName _Name);*/
-
+	int GetDeathMonster1()
+	{
+		return DeathMonster1;
+	}
+	void SetDeathMonster1(int _int)
+	{
+		DeathMonster1 = _int;
+	}
 private:
+	UPROPERTY()
+		int DeathMonster1;
+
 	UPROPERTY()
 		UDataTable* MeshDatas;
 
 	UPROPERTY()
 		UDataTable* MonsterDatas;
+
 
 };

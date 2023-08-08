@@ -6,6 +6,7 @@
 #include "../MyAIController.h"
 #include "../Monster.h"
 #include "../../Global/GlobalEnums.h"
+#include "Kismet/GameplayStatics.h"
 
 UBTTask_DEATH::UBTTask_DEATH()
 {
@@ -40,10 +41,17 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 		if (nullptr != Monster)
 		{
 			Monster->Destroy();
+			Deathcnt++;
+			GetGameInstance()->SetDeathMonster1(Deathcnt++);
+			if (Deathcnt == 1)
+			{
+				int a = 0;
+			}
 			StateTime = 0.0f;
 		}
 	}
-
+	
+	
 }
 
 EAniState UBTTask_DEATH::GetAIState(UBehaviorTreeComponent& OwnerComp)
@@ -59,4 +67,15 @@ EAniState UBTTask_DEATH::GetAIState(UBehaviorTreeComponent& OwnerComp)
 	uint8 Enum = BlackBoard->GetValueAsEnum(TEXT("AIAniState"));
 
 	return static_cast<EAniState>(Enum);
+}
+
+UGlobalGameInstance* UBTTask_DEATH::GetGameInstance()
+{
+	UGlobalGameInstance* inst = Cast<UGlobalGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	if (nullptr != inst)
+	{
+		int a = 0;
+		return inst;
+	}
+	return nullptr;
 }

@@ -6,6 +6,7 @@
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "BTTask_BASE.h"
 #include "../../Global/GlobalCharacter.h"
+#include "../../Global/GlobalGameInstance.h"
 #include "GameplayTask.h"
 #include "BTTask_DEATH.generated.h"
 
@@ -25,6 +26,8 @@ public:
 
 		void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
 		EAniState GetAIState(UBehaviorTreeComponent& OwnerComp);
+		UGlobalGameInstance* GetGameInstance();
 private:
 	float StateTime = 0.0f;
+	int Deathcnt = 0;
 };
