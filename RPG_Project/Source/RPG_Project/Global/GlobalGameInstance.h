@@ -25,17 +25,22 @@ public:
 	struct FMonsterData* GetMonsterData(FName _Name);
 
 	/*struct FMonsterData* GetMonsterData(FName _Name);*/
+	UFUNCTION()
 	int GetDeathMonster1()
 	{
 		return DeathMonster1;
 	}
+	UFUNCTION()
 	void SetDeathMonster1(int _int)
 	{
 		DeathMonster1 = _int;
 	}
 private:
-	UPROPERTY()
+	UPROPERTY(Category = "Monster", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int DeathMonster1;
+
+	UPROPERTY(Category = "Monster", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int Monster1Cnt = 3;
 
 	UPROPERTY()
 		UDataTable* MeshDatas;

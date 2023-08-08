@@ -40,13 +40,14 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 		AMonster* Monster = Cast<AMonster>(OwnerComp.GetAIOwner()->GetPawn());
 		if (nullptr != Monster)
 		{
-			Monster->Destroy();
-			Deathcnt++;
-			GetGameInstance()->SetDeathMonster1(Deathcnt++);
-			if (Deathcnt == 1)
-			{
-				int a = 0;
-			}
+			++Deathcnt;
+			GetGlobalGameInstance()->SetDeathMonster1(Deathcnt);
+			//if (Deathcnt == 2)
+			//{
+			//	int a = 0;
+			//}
+			Monster->Destroy();		
+
 			StateTime = 0.0f;
 		}
 	}
@@ -69,7 +70,7 @@ EAniState UBTTask_DEATH::GetAIState(UBehaviorTreeComponent& OwnerComp)
 	return static_cast<EAniState>(Enum);
 }
 
-UGlobalGameInstance* UBTTask_DEATH::GetGameInstance()
+UGlobalGameInstance* UBTTask_DEATH::GetGlobalGameInstance()
 {
 	UGlobalGameInstance* inst = Cast<UGlobalGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	if (nullptr != inst)

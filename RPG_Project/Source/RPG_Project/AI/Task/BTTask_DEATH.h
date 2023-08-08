@@ -26,8 +26,9 @@ public:
 
 		void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
 		EAniState GetAIState(UBehaviorTreeComponent& OwnerComp);
-		UGlobalGameInstance* GetGameInstance();
+		UGlobalGameInstance* GetGlobalGameInstance();
 private:
 	float StateTime = 0.0f;
+	UPROPERTY(Category = "Monster", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	int Deathcnt = 0;
 };
