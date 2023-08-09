@@ -11,9 +11,9 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	static ConstructorHelpers::FClassFinder<UUserWidget> ShopWidgetAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Level/Stage1/Shop/WBP_ShopUI.WBP_ShopUI_C'"));
-	if (ShopWidgetAsset.Succeeded())
-		ShopWidgetClass = ShopWidgetAsset.Class;
+	//static ConstructorHelpers::FClassFinder<UUserWidget> ShopWidgetAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Level/Stage1/Shop/WBP_ShopUI.WBP_ShopUI_C'"));
+	//if (ShopWidgetAsset.Succeeded())
+	//	ShopWidgetClass = ShopWidgetAsset.Class;
 
 	WeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponMesh"));
 	// 컴포넌트는 언리얼의 CDO 때문에 무조건 생성자에서 만들어줘야한다

@@ -47,7 +47,7 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 			//	int a = 0;
 			//}
 			Monster->Destroy();		
-
+			
 			StateTime = 0.0f;
 		}
 	}
