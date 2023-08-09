@@ -47,10 +47,5 @@ void AMyAIController::OnPossess(APawn* _InPawn)
 
 
 	}
-	
-
-	
-
-
 
 }

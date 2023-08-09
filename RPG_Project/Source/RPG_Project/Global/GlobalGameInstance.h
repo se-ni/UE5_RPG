@@ -35,6 +35,8 @@ public:
 	{
 		DeathMonster1 = _int;
 	}
+	UPROPERTY(Category = "Coin", EditAnywhere, BlueprintReadWrite)
+	int Coincnt = 0;
 private:
 	UPROPERTY(Category = "Monster", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int DeathMonster1;

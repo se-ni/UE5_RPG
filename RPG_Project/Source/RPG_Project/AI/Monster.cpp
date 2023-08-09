@@ -45,6 +45,8 @@ void AMonster::BeginPlay()
 	CapsuleComp = GetCapsuleComponent();
 	CapsuleComp->OnComponentBeginOverlap.AddDynamic(this, &AMonster::BeginOverlap);
 
+	GetBlackboardComponent()->SetValueAsBool(TEXT("SpawnCoin"), false);
+
 }
 
 void AMonster::Tick(float DeltaSecond)
@@ -74,4 +76,15 @@ void AMonster::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 			}
 		}
 	}
+}
+
+UGlobalGameInstance* AMonster::GetGlobalGameInstance()
+{
+	UGlobalGameInstance* inst = Cast<UGlobalGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	if (nullptr != inst)
+	{
+		int a = 0;
+		return inst;
+	}
+	return nullptr;
 }

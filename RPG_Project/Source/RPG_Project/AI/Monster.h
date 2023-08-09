@@ -6,8 +6,10 @@
 #include "AICharacter.h"
 #include "MonsterData.h"
 #include "../Global/GlobalEnums.h"
+#include "../Global/GlobalGameInstance.h"
 #include "../AI/MonsterPatrolData.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "../Global/GlobalCoin.h"
 #include "Monster.generated.h"
 
 /**
@@ -43,6 +45,16 @@ public:
 	UFUNCTION()
 		void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UGlobalGameInstance* GetGlobalGameInstance();
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnCoinActor(FVector _Loc)
+	{
+		FTransform Trans;
+		Trans.SetLocation(_Loc);
+		AActor* SpawnedActor0 = GetWorld()->SpawnActor<AActor>(CoinActor, Trans);
+	}
 private:
 
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -54,6 +66,9 @@ private:
 		bool isDeath = false;
 
 	UCharacterMovementComponent* CharacterMovementComponent;
+
+	UPROPERTY(Category = "Coin", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<AGlobalCoin> CoinActor;
 
 };
 
