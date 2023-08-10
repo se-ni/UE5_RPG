@@ -66,7 +66,7 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 			GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
 			bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
 			++Deathcnt;
-			GetGlobalGameInstance()->SetDeathMonster1(Deathcnt);
+			GetGlobalGameInstance()->SetDeathMonster2(Deathcnt);
 			if (b)
 			{
 				Monster2->SpawnCoinActor(Monster2->GetActorLocation());

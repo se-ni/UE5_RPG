@@ -35,14 +35,31 @@ public:
 	{
 		DeathMonster1 = _int;
 	}
+
+	int GetDeathMonster2()
+	{
+		return DeathMonster2;
+	}
+	UFUNCTION()
+		void SetDeathMonster2(int _int)
+	{
+		DeathMonster2 = _int;
+	}
+
 	UPROPERTY(Category = "Coin", EditAnywhere, BlueprintReadWrite)
 	int Coincnt = 0;
 private:
-	UPROPERTY(Category = "Monster", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = "Monster1", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int DeathMonster1;
 
-	UPROPERTY(Category = "Monster", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = "Monster1", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int Monster1Cnt = 3;
+
+	UPROPERTY(Category = "Monster2", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int DeathMonster2;
+
+	UPROPERTY(Category = "Monster2", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int Monster2Cnt = 3;
 
 	UPROPERTY()
 		UDataTable* MeshDatas;
