@@ -27,20 +27,14 @@ void UBTTask_BASE::SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _Stat
 void UBTTask_BASE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
-	//bool MonsterDeath = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("bIsDeath"));
-	//if (MonsterDeath)
-	//{
-		int a = 0;
-		UBlackboardComponent* BlackBoard = OwnerComp.GetBlackboardComponent();
 
-		if (nullptr == BlackBoard)
-		{
-			UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
-			return;
-		}
+	bool isDeath = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("bIsDeath"));
 
-		BlackBoard->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Death));
-	//}
+	if (isDeath)
+	{
+		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Death));
+		return;
+	}
 }
 AGlobalCharacter* UBTTask_BASE::GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp)
 {

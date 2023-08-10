@@ -5,6 +5,7 @@
 #include "../AICharacter.h"
 #include "../MyAIController.h"
 #include "../Monster.h"
+#include "../Monster2.h"
 #include "../../Global/GlobalEnums.h"
 #include "../../Global/GlobalCoin.h"
 #include "BehaviorTree/BlackboardComponent.h"
@@ -33,7 +34,7 @@ EBTNodeResult::Type UBTTask_DEATH::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 
 void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
-	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
+	//Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
 	/*ActorLoc = GetGlobalCharacter(OwnerComp)->GetActorLocation();*/
 	UAnimMontage* Montage = GetGlobalCharacter(OwnerComp)->GetAnimMontage(GetAIState(OwnerComp));
 	float Time = Montage->CalculateSequenceLength();
@@ -41,6 +42,7 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 	if (Time <= StateTime)
 	{
 		AMonster* Monster = Cast<AMonster>(OwnerComp.GetAIOwner()->GetPawn());
+		AMonster2* Monster2 = Cast<AMonster2>(OwnerComp.GetAIOwner()->GetPawn());
 		if (nullptr != Monster)
 		{
 			GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
@@ -56,6 +58,20 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 				Monster->SpawnCoinActor(Monster->GetActorLocation());
 			}
 			Monster->Destroy();		
+
+			StateTime = 0.0f;
+		}
+		else if (nullptr != Monster2)
+		{
+			GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
+			bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
+			++Deathcnt;
+			GetGlobalGameInstance()->SetDeathMonster1(Deathcnt);
+			if (b)
+			{
+				Monster2->SpawnCoinActor(Monster2->GetActorLocation());
+			}
+			Monster2->Destroy();
 
 			StateTime = 0.0f;
 		}

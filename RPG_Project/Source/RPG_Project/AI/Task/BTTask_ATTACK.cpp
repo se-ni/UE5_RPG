@@ -30,13 +30,13 @@ void UBTTask_ATTACK::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 {
 	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
 	
-	bool isDeath = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("bIsDeath"));
+	//bool isDeath = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("bIsDeath"));
 
-	if (isDeath)
-	{
-		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Death));
-		return;
-	}
+	//if (isDeath)
+	//{
+	//	SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Death));
+	//	return;
+	//}
 
 	UAnimMontage* Montage = GetGlobalCharacter(OwnerComp)->GetAnimMontage(GetAIState(OwnerComp));
 	float Time = Montage->CalculateSequenceLength();
