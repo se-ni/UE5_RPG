@@ -47,7 +47,10 @@ void AMonster2::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsBool(TEXT("SpawnCoin"), false);
 
-}
+	// CurMonsterData->HP
+	hp = CurMonsterData->HP;
+	GetBlackboardComponent()->SetValueAsInt(TEXT("Monster2HP"),hp);
+}	
 
 void AMonster2::Tick(float DeltaSecond)
 {

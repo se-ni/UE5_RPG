@@ -29,6 +29,8 @@ EBTNodeResult::Type UBTTask_DEATH::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 	
 	GetGlobalCharacter(OwnerComp)->SetAniState(EAniState::Death);
 
+	monster2hp = GetBlackboardComponent(OwnerComp)->GetValueAsInt(TEXT("Monster2HP"));
+
 	return EBTNodeResult::Type::InProgress;
 }
 
@@ -47,12 +49,8 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 		{
 			GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
 			bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
-			++Deathcnt;
-			GetGlobalGameInstance()->SetDeathMonster1(Deathcnt);
-			//if (Deathcnt == 2)
-			//{
-			//	int a = 0;
-			//}
+			++Deathcnt1;
+			GetGlobalGameInstance()->SetDeathMonster1(Deathcnt1);
 			if (b)
 			{
 				Monster->SpawnCoinActor(Monster->GetActorLocation());
@@ -63,16 +61,30 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 		}
 		else if (nullptr != Monster2)
 		{
-			GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
-			bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
-			++Deathcnt;
-			GetGlobalGameInstance()->SetDeathMonster2(Deathcnt);
-			if (b)
+			monster2hp -= 50; // 플레이어의 공격력 만큼 hp 감소
+			UE_LOG(LogTemp, Log, TEXT("%S(%u) Monster2 hp : %d"), __FUNCTION__, __LINE__, monster2hp);
+			GetBlackboardComponent(OwnerComp)->SetValueAsInt(TEXT("Monster2HP"),monster2hp); // 블랙보드 Monster2HP로 SET
+			if (GetBlackboardComponent(OwnerComp)->GetValueAsInt(TEXT("Monster2HP")) > 0) // 아직 Hp가 0보다 크다면
 			{
-				Monster2->SpawnCoinActor(Monster2->GetActorLocation());
+				StateTime = 0.0f;
+				SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
+				return;
 			}
-			Monster2->Destroy();
 
+			else if (GetBlackboardComponent(OwnerComp)->GetValueAsInt(TEXT("Monster2HP")) <= 0) // Hp가 0보다 작다면
+			{
+				// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
+				GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
+				// SpawnCoin을 GET 해준다
+				bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
+				if (b)
+				{
+					Monster2->SpawnCoinActor(Monster2->GetActorLocation());
+				}
+				++Deathcnt2;
+				GetGlobalGameInstance()->SetDeathMonster2(Deathcnt2);
+				Monster2->Destroy();
+			}
 			StateTime = 0.0f;
 		}
 	}

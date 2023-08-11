@@ -53,6 +53,7 @@ public:
 		Trans.SetLocation(_Loc);
 		AActor* SpawnedActor0 = GetWorld()->SpawnActor<AActor>(CoinActor, Trans);
 	}
+	int hp;
 private:
 
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -67,6 +68,7 @@ private:
 
 	UPROPERTY(Category = "Coin", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AGlobalCoin> CoinActor;
+
 
 };
 

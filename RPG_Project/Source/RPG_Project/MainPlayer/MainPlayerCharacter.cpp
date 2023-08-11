@@ -164,14 +164,14 @@ void AMainPlayerCharacter::MoveRight(float Val)
 	{
 		if (Controller)
 		{
-			UE_LOG(LogTemp, Log, TEXT("%S(%u) %f"), __FUNCTION__, __LINE__, Val);
+			//UE_LOG(LogTemp, Log, TEXT("%S(%u) %f"), __FUNCTION__, __LINE__, Val);
 			FRotator const ControlSpaceRot = Controller->GetControlRotation();
 			// transform to world space and add it
 			// 현재 내 회전을 가져와서 y축에 해당하는 축벡터를 얻어오는 것.
 			AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::X), Val);
 
 			MainPlayerAniState = Val > 0.f ? EAniState::LeftMove : EAniState::RightMove;
-			UE_LOG(LogTemp, Log, TEXT("%S(%u)  %d"), __FUNCTION__, __LINE__, MainPlayerAniState);
+			//UE_LOG(LogTemp, Log, TEXT("%S(%u)  %d"), __FUNCTION__, __LINE__, MainPlayerAniState);
 			return;
 		}
 	}
@@ -207,7 +207,7 @@ void AMainPlayerCharacter::MoveForward(float Val)
 			// AddMovementInput(GetActorForwardVector(), Val);
 
 			MainPlayerAniState = Val > 0.f ? EAniState::ForwardMove : EAniState::BackwardMove ;
-			UE_LOG(LogTemp, Log, TEXT("%S(%u) %d"), __FUNCTION__, __LINE__, MainPlayerAniState);
+			//UE_LOG(LogTemp, Log, TEXT("%S(%u) %d"), __FUNCTION__, __LINE__, MainPlayerAniState);
 			return;
 		}
 	}
@@ -252,7 +252,7 @@ void AMainPlayerCharacter::JumpAxis(float Rate)
 
 void AMainPlayerCharacter::JumpAction()
 {
-	UE_LOG(LogTemp, Log, TEXT("%S(%u)> %d"), __FUNCTION__, __LINE__, JumpCurrentCount);
+	//UE_LOG(LogTemp, Log, TEXT("%S(%u)> %d"), __FUNCTION__, __LINE__, JumpCurrentCount);
 	Jump();
 
 	MainPlayerAniState = EAniState::JumpStart;
