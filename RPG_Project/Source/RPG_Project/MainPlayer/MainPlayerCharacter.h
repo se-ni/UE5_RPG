@@ -9,6 +9,7 @@
 #include "../TesShopWidget.h"
 #include "../Global/GlobalCharacter.h"
 #include "MainPlayerAnimInstance.h"
+#include "../Global/PlayerWeaponData.h"
 #include "MainPlayerCharacter.generated.h"
 
 UCLASS()
@@ -97,9 +98,11 @@ private:
 		TArray<UStaticMesh*> WeaponArrays; // WeaponMesh 컴포넌트에서 이용할 WeaponMesh(스태틱 매쉬) 배열
 
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		float HP = 0.9f;
+		float HP = 1.f;
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		float MP = 1.f;
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		double Exp = 1000;
+
+	const struct FPlayerWeaponData* CurWeaponData;
 };

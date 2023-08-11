@@ -20,5 +20,8 @@ struct RPG_PROJECT_API FPlayerWeaponData : public FTableRowBase
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "MeshData")
 		UStaticMesh* Mesh;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "MeshData")
+		int WeaponATT;
 	
 };

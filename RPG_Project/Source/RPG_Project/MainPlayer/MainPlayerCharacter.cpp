@@ -50,6 +50,7 @@ void AMainPlayerCharacter::BeginPlay()
 	WeaponArrays.Add(GetGameInstance<UGlobalGameInstance>()->GetMesh(TEXT("Staff01")));
 
 	WeaponMesh->SetStaticMesh(WeaponArrays[0]);
+	
 	//AMyAIController* AICon = Cast<AMyAIController>(GetController());
 	//AMonster* Mons = Cast<AMonster>(AICon->GetOwner());
 	//if (Mons)
@@ -131,8 +132,8 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 	// Weapon Keys
 	PlayerInputComponent->BindAction("Weapon1", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::SetWeapon1);
-	PlayerInputComponent->BindAction("Weapon2", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::SetWeapon2);
-	PlayerInputComponent->BindAction("Weapon3", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::SetWeapon3);
+	//PlayerInputComponent->BindAction("Weapon2", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::SetWeapon2);
+	//PlayerInputComponent->BindAction("Weapon3", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::SetWeapon3);
 
 	PlayerInputComponent->BindAction("PlayerAttack", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::AttackAction);
 	PlayerInputComponent->BindAction("PlayerJumpAction", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::JumpAction);
@@ -142,6 +143,7 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 void AMainPlayerCharacter::SetWeapon1()
 {
 	WeaponMesh->SetStaticMesh(WeaponArrays[0]);
+	
 }
 void AMainPlayerCharacter::SetWeapon2()
 {
