@@ -66,6 +66,16 @@ public:
 		return isDeath;
 	}
 
+	int GetPlayerATT()
+	{
+		return PlayerATT;
+	}
+
+	void SetPlayerATT(int _ATT)
+	{
+		PlayerATT = _ATT;
+	}
+
 	TSubclassOf<UUserWidget> ShopWidgetClass;
 	UTesShopWidget* ShopUIWidget;
 
@@ -84,18 +94,20 @@ protected:
 	// 애님 인스턴스를 저장할 변수
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Animation")
 		UMainPlayerAnimInstance* MainPlayerAnimInstance;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UStaticMeshComponent* WeaponMesh;
+	UPROPERTY(Category = "WeaponValue", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TArray<UStaticMesh*> WeaponArrays; // WeaponMesh 컴포넌트에서 이용할 WeaponMesh(스태틱 매쉬) 배열
+	
+	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		int PlayerATT;
 private:
 	bool AxisJump = false;
 	bool isOverlap = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		bool isDeath = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UStaticMeshComponent* WeaponMesh;
-
-	UPROPERTY(Category = "WeaponValue", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		TArray<UStaticMesh*> WeaponArrays; // WeaponMesh 컴포넌트에서 이용할 WeaponMesh(스태틱 매쉬) 배열
+		bool isDeath = false; // 몬스터의 죽음 판별할 변수
 
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		float HP = 1.f;
@@ -104,5 +116,6 @@ private:
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		double Exp = 1000;
 
-	const struct FPlayerWeaponData* CurWeaponData;
+
+	// const struct FPlayerWeaponData* CurWeaponData;
 };

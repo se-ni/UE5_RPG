@@ -3,6 +3,12 @@
 
 #include "MainPlayerCharacter2.h"
 
+void AMainPlayerCharacter2::BeginPlay()
+{
+	Super::BeginPlay();
+	WeaponMesh->SetStaticMesh(WeaponArrays[1]);
+	PlayerATT = 50;
+}
 void AMainPlayerCharacter2::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);

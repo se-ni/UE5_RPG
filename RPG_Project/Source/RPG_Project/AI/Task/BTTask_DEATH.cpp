@@ -9,12 +9,14 @@
 #include "../../Global/GlobalEnums.h"
 #include "../../Global/GlobalCoin.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "../../MainPlayer/MainPlayerCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 UBTTask_DEATH::UBTTask_DEATH()
 {
 	bNotifyTick = true;
 	bNotifyTaskFinished = true;
+
 }
 
 
@@ -61,7 +63,9 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 		}
 		else if (nullptr != Monster2)
 		{
-			monster2hp -= 50; // 플레이어의 공격력 만큼 hp 감소
+			// 여기서 이제 플레이어의 PlayerATT를 가져와야한다
+			AMainPlayerCharacter* PlayerCh = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			monster2hp -= PlayerCh->GetPlayerATT(); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
 			UE_LOG(LogTemp, Log, TEXT("%S(%u) Monster2 hp : %d"), __FUNCTION__, __LINE__, monster2hp);
 			GetBlackboardComponent(OwnerComp)->SetValueAsInt(TEXT("Monster2HP"),monster2hp); // 블랙보드 Monster2HP로 SET
 			if (GetBlackboardComponent(OwnerComp)->GetValueAsInt(TEXT("Monster2HP")) > 0) // 아직 Hp가 0보다 크다면

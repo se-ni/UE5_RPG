@@ -13,9 +13,9 @@ UCLASS()
 class RPG_PROJECT_API AMainPlayerCharacter2 : public AMainPlayerCharacter
 {
 	GENERATED_BODY()
-public:
-	void SetWeapon2();
+
 protected:
+	void BeginPlay();
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
