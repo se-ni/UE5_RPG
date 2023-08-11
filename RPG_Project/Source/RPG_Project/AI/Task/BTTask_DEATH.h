@@ -32,6 +32,8 @@ private:
 	float StateTime = 0.0f;
 	UPROPERTY(Category = "Monster", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	int Deathcnt1 = 0;
+
+	UPROPERTY(Category = "Monster", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	int Deathcnt2 = 0;
 	bool SpawnBPCoin;
 	/*FVector ActorLoc;*/
