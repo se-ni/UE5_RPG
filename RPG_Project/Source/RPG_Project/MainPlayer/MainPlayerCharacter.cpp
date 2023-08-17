@@ -4,6 +4,7 @@
 #include "MainPlayerCharacter.h"
 #include "../AI/Monster.h"
 #include "../AI/MyAIController.h"
+#include "../UI/MainHUD.h"
 #include "Components/CapsuleComponent.h"
 
 // Sets default values
@@ -114,7 +115,8 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAttack"), EKeys::LeftMouseButton));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerJumpAction"), EKeys::SpaceBar));
 
-
+		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerStatusUI"), EKeys::P));
+		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("MinimapUI"), EKeys::M));
 
 	}
 
@@ -138,6 +140,33 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("PlayerAttack", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::AttackAction);
 	PlayerInputComponent->BindAction("PlayerJumpAction", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::JumpAction);
 
+	PlayerInputComponent->BindAction("PlayerStatusUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::PlayerStatusOnOff);
+	PlayerInputComponent->BindAction("MinimapUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::MinimapOnOff);
+
+}
+
+void AMainPlayerCharacter::PlayerStatusOnOff()
+{
+	APlayerController* MainCon = Cast<APlayerController>(GetController());
+	AMainHUD* HUD = MainCon->GetHUD<AMainHUD>();
+
+	if (nullptr == HUD && false == HUD->IsValidLowLevel())
+	{
+		return;
+	}
+	HUD->GetMainWidget()->SetPlayerStatusUIOnOffSwitch();
+}
+
+void AMainPlayerCharacter::MinimapOnOff()
+{
+	APlayerController* MainCon = Cast<APlayerController>(GetController());
+	AMainHUD* HUD = MainCon->GetHUD<AMainHUD>();
+
+	if (nullptr == HUD && false == HUD->IsValidLowLevel())
+	{
+		return;
+	}
+	HUD->GetMainWidget()->SetMinimapUIOnOffSwitch();
 }
 
 void AMainPlayerCharacter::SetWeapon1()
