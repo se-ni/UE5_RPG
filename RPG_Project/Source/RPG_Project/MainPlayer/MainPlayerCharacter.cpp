@@ -118,6 +118,8 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerStatusUI"), EKeys::P));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("MinimapUI"), EKeys::M));
 
+		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("InteractionKey"), EKeys::E));
+
 	}
 
 	// 키와 함수를 연결합니다.
@@ -130,7 +132,7 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAxis("PlayerLookUp", this, &AMainPlayerCharacter::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("PlayerLookUpRate", this, &AMainPlayerCharacter::LookUpAtRate);
 	PlayerInputComponent->BindAxis("PlayerJumpAxis", this, &AMainPlayerCharacter::JumpAxis);
-	
+
 
 	// Weapon Keys
 	PlayerInputComponent->BindAction("Weapon1", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::SetWeapon1);
@@ -142,8 +144,8 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 	PlayerInputComponent->BindAction("PlayerStatusUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::PlayerStatusOnOff);
 	PlayerInputComponent->BindAction("MinimapUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::MinimapOnOff);
-
 }
+
 
 void AMainPlayerCharacter::PlayerStatusOnOff()
 {
