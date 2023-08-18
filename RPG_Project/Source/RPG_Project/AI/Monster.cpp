@@ -61,6 +61,10 @@ void AMonster::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 		AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(OtherActor);
 		if (Player)
 		{
+			float hp = Player->GetPlayerHP();
+			hp = hp - 0.1;
+			Player->SetPlayerHP(hp);
+
 			// 플레이어의 애님 인스턴스 가져오기
 			UMainPlayerAnimInstance* PlayerAnimInstance = Player->GetMainPlayerAnimInstance();
 			if (PlayerAnimInstance)
@@ -74,17 +78,19 @@ void AMonster::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 					GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), false);
 				}
 			}
+
+			//static_cast<uint8>(EAniState::Attack)
 		}
 	}
 }
 
-UGlobalGameInstance* AMonster::GetGlobalGameInstance()
-{
-	UGlobalGameInstance* inst = Cast<UGlobalGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	if (nullptr != inst)
-	{
-		int a = 0;
-		return inst;
-	}
-	return nullptr;
-}
+//UGlobalGameInstance* AMonster::GetGlobalGameInstance()
+//{
+//	UGlobalGameInstance* inst = Cast<UGlobalGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+//	if (nullptr != inst)
+//	{
+//		int a = 0;
+//		return inst;
+//	}
+//	return nullptr;
+//}

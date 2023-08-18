@@ -297,5 +297,3 @@ void AMainPlayerCharacter::AttackAction()
 {
 	MainPlayerAniState = EAniState::Attack;
 }
-
-

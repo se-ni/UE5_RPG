@@ -7,15 +7,15 @@
 UENUM(BlueprintType)
 enum class EAniState : uint8
 {
-	None,
+	None, 
 	Idle, //0
-	LeftMove, //1
-	RightMove, //2
-	ForwardMove,  //3
-	BackwardMove,  //4
-	JumpStart, //5
+	LeftMove, 
+	RightMove, 
+	ForwardMove,  
+	BackwardMove,  
+	JumpStart, 
 	Attack, //6
-	Patrol, // 4
+	Patrol, 
 	Death,
 	Return,
 };

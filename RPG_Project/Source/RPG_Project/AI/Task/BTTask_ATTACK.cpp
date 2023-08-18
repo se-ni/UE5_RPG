@@ -4,6 +4,7 @@
 #include "BTTask_ATTACK.h"
 #include "../MyAIController.h"
 #include "../Monster.h"
+#include "../../MainPlayer/MainPlayerCharacter.h"
 #include "../../Global/GlobalEnums.h"
 
 UBTTask_ATTACK::UBTTask_ATTACK()
@@ -29,14 +30,6 @@ EBTNodeResult::Type UBTTask_ATTACK::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 void UBTTask_ATTACK::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
-	
-	//bool isDeath = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("bIsDeath"));
-
-	//if (isDeath)
-	//{
-	//	SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Death));
-	//	return;
-	//}
 
 	UAnimMontage* Montage = GetGlobalCharacter(OwnerComp)->GetAnimMontage(GetAIState(OwnerComp));
 	float Time = Montage->CalculateSequenceLength();

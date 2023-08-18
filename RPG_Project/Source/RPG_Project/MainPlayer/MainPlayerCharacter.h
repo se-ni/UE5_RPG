@@ -68,7 +68,7 @@ public:
 	{
 		return isDeath;
 	}
-
+	UFUNCTION()
 	int GetPlayerATT()
 	{
 		return PlayerATT;
@@ -77,6 +77,26 @@ public:
 	void SetPlayerATT(int _ATT)
 	{
 		PlayerATT = _ATT;
+	}
+	UFUNCTION()
+	float GetPlayerHP()
+	{
+		return HP;
+	}
+
+	void SetPlayerHP(float _HP)
+	{
+		HP = _HP;
+	}
+	UFUNCTION()
+	float GetPlayerMP()
+	{
+		return MP;
+	}
+
+	void SetPlayerMP(float _MP)
+	{
+		MP = _MP;
 	}
 
 	TSubclassOf<UUserWidget> ShopWidgetClass;
@@ -103,8 +123,7 @@ protected:
 	UPROPERTY(Category = "WeaponValue", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		TArray<UStaticMesh*> WeaponArrays; // WeaponMesh 컴포넌트에서 이용할 WeaponMesh(스태틱 매쉬) 배열
 	
-	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		int PlayerATT;
+
 private:
 	bool AxisJump = false;
 	bool isOverlap = false;
@@ -113,12 +132,17 @@ private:
 		bool isDeath = false; // 몬스터의 죽음 판별할 변수
 
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		int PlayerATT = 10;
+
+	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		float HP = 1.f;
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		float MP = 1.f;
-	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		double Exp = 1000;
 
+	/*UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		double Exp = 1000;*/
 
+	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	// const struct FPlayerWeaponData* CurWeaponData;
 };
