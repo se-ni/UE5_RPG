@@ -51,7 +51,7 @@ void AMainPlayerCharacter::BeginPlay()
 	WeaponArrays.Add(GetGameInstance<UGlobalGameInstance>()->GetMesh(TEXT("Staff01")));
 
 	WeaponMesh->SetStaticMesh(WeaponArrays[0]);
-	PlayerATT = 30;
+	PlayerATT = 0.3f;
 	//AMyAIController* AICon = Cast<AMyAIController>(GetController());
 	//AMonster* Mons = Cast<AMonster>(AICon->GetOwner());
 	//if (Mons)
@@ -174,17 +174,17 @@ void AMainPlayerCharacter::MinimapOnOff()
 void AMainPlayerCharacter::SetWeapon1()
 {
 	WeaponMesh->SetStaticMesh(WeaponArrays[0]);
-	PlayerATT = 30;
+	PlayerATT = 0.3f;
 }
 void AMainPlayerCharacter::SetWeapon2()
 {
 	WeaponMesh->SetStaticMesh(WeaponArrays[1]);
-	PlayerATT = 50;
+	PlayerATT = 0.5f;
 }
 void AMainPlayerCharacter::SetWeapon3()
 {
 	WeaponMesh->SetStaticMesh(WeaponArrays[2]);
-	PlayerATT = 70;
+	PlayerATT = 0.7f;
 }
 
 

@@ -13,7 +13,7 @@
 
 AMonster2::AMonster2()
 {
-
+	//hp = 1.0f;
 }
 
 void AMonster2::BeginPlay()
@@ -47,14 +47,14 @@ void AMonster2::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsBool(TEXT("SpawnCoin"), false);
 
-	// CurMonsterData->HP
-	hp = CurMonsterData->HP;
-	GetBlackboardComponent()->SetValueAsInt(TEXT("Monster2HP"),hp);
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("Monster2HP"), 1.0f); // 블랙보드 Monster2HP SET
+	
 }	
 
 void AMonster2::Tick(float DeltaSecond)
 {
 	Super::Tick(DeltaSecond);
+
 }
 
 void AMonster2::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -70,7 +70,7 @@ void AMonster2::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 			{
 				if (PlayerAnimInstance->GetCurrentAnimationState() == EAniState::Attack)
 				{
-					GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true);
+					GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true);	
 				}
 				else
 				{

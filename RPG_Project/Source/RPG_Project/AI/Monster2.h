@@ -53,7 +53,20 @@ public:
 		Trans.SetLocation(_Loc);
 		AActor* SpawnedActor0 = GetWorld()->SpawnActor<AActor>(CoinActor, Trans);
 	}
-	int hp;
+	UPROPERTY(Category = "monster2", EditAnywhere, BlueprintReadWrite)
+	float hp; // UI에게 넘겨주기 위해서 존재
+
+	UFUNCTION()
+	float Gethp()
+	{
+		return hp;
+	}
+	UFUNCTION()
+	void Sethp(float _hp)
+	{
+		hp = _hp;
+	}
+
 private:
 
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

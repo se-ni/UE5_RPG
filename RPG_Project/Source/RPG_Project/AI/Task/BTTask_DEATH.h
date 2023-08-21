@@ -37,5 +37,7 @@ private:
 	int Deathcnt2 = 0;
 	bool SpawnBPCoin;
 	/*FVector ActorLoc;*/
-	int monster2hp;
+	float hp2;
+
+	
 };

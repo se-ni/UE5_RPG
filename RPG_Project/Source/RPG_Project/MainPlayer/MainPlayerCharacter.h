@@ -69,12 +69,12 @@ public:
 		return isDeath;
 	}
 	UFUNCTION()
-	int GetPlayerATT()
+	float GetPlayerATT()
 	{
 		return PlayerATT;
 	}
 
-	void SetPlayerATT(int _ATT)
+	void SetPlayerATT(float _ATT)
 	{
 		PlayerATT = _ATT;
 	}
@@ -132,8 +132,8 @@ private:
 		bool isDeath = false; // 몬스터의 죽음 판별할 변수
 
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		int PlayerATT = 10;
-
+		/*int PlayerATT = 10;*/
+		float PlayerATT ; 
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		float HP = 1.f;
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))

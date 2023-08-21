@@ -8,7 +8,7 @@ void AMainPlayerCharacter2::BeginPlay()
 {
 	Super::BeginPlay();
 	WeaponMesh->SetStaticMesh(WeaponArrays[1]);
-	SetPlayerATT(50);
+	SetPlayerATT(0.5f);
 }
 void AMainPlayerCharacter2::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
