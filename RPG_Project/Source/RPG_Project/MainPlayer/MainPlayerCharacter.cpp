@@ -53,6 +53,7 @@ void AMainPlayerCharacter::BeginPlay()
 
 	WeaponMesh->SetStaticMesh(WeaponArrays[0]);
 	PlayerATT = 0.3f;
+
 	//AMyAIController* AICon = Cast<AMyAIController>(GetController());
 	//AMonster* Mons = Cast<AMonster>(AICon->GetOwner());
 	//if (Mons)

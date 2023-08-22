@@ -4,6 +4,7 @@
 #include "BTTask_ATTACK.h"
 #include "../MyAIController.h"
 #include "../Monster.h"
+#include "../Monster2.h"
 #include "../../MainPlayer/MainPlayerCharacter.h"
 #include "../../Global/GlobalEnums.h"
 #include "Kismet/GameplayStatics.h"
@@ -25,19 +26,41 @@ EBTNodeResult::Type UBTTask_ATTACK::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 
 	GetGlobalCharacter(OwnerComp)->SetAniState(EAniState::Attack);
 	AMonster* Mons = Cast<AMonster>(GetGlobalCharacter(OwnerComp));
-
-	if (Mons->isoverlap) // 플레이어와 몬스터가 overlap 됐을때
+	
+	if (nullptr != Mons)
 	{
-		// UGamplayStatics를 이용해서 MainPlayerCharacter 가져오는 법
-		AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-		if (Player)
+		if (Mons->isoverlap) // 플레이어와 몬스터가 overlap 됐을때
 		{
-			float playhp = Player->GetPlayerHP(); // 플레이어의 hp 가져와서
-			playhp = playhp - 0.1; // 0.1만큼 감소시키고
-			Player->SetPlayerHP(playhp); // hp로 set 해준다
+			// UGamplayStatics를 이용해서 MainPlayerCharacter 가져오는 법
+			AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			if (Player)
+			{
+				float playhp = Player->GetPlayerHP(); // 플레이어의 hp 가져와서
+				playhp = playhp - 0.1; // 0.1만큼 감소시키고
+				Player->SetPlayerHP(playhp); // hp로 set 해준다
+			}
+			Mons->isoverlap = false; // overlap bool 변수는 다시 false로.
 		}
-		Mons->isoverlap = false; // overlap bool 변수는 다시 false로.
 	}
+
+	AMonster2* Mons2 = Cast<AMonster2>(GetGlobalCharacter(OwnerComp));
+	if (nullptr != Mons2)
+	{
+		if (Mons2->isoverlap2) // 플레이어와 몬스터2가 overlap 됐을때
+		{
+			// UGamplayStatics를 이용해서 MainPlayerCharacter 가져오는 법
+			AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			if (Player)
+			{
+				float playhp = Player->GetPlayerHP(); // 플레이어의 hp 가져와서
+				playhp = playhp - 0.3; // 0.1만큼 감소시키고
+				Player->SetPlayerHP(playhp); // hp로 set 해준다
+			}
+			Mons2->isoverlap2 = false; // overlap bool 변수는 다시 false로.
+		}
+	}
+
+
 	return EBTNodeResult::Type::InProgress;
 }
 

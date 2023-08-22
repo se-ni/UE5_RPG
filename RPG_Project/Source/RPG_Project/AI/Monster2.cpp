@@ -9,7 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "../MainPlayer/MainPlayerCharacter.h"
+#include "../MainPlayer/MainPlayerCharacter2.h"
 
 AMonster2::AMonster2()
 {
@@ -61,16 +61,17 @@ void AMonster2::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	{
-		AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(OtherActor);
-		if (Player)
+		AMainPlayerCharacter2* Player2 = Cast<AMainPlayerCharacter2>(OtherActor);
+		if (Player2)
 		{
+			isoverlap2 = true;
 			// 플레이어의 애님 인스턴스 가져오기
-			UMainPlayerAnimInstance* PlayerAnimInstance = Player->GetMainPlayerAnimInstance();
+			UMainPlayerAnimInstance* PlayerAnimInstance = Player2->GetMainPlayerAnimInstance();
 			if (PlayerAnimInstance)
 			{
 				if (PlayerAnimInstance->GetCurrentAnimationState() == EAniState::Attack)
 				{
-					GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true);	
+					GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true);
 				}
 				else
 				{
