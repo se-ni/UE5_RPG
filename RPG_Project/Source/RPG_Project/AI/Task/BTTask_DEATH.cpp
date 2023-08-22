@@ -49,33 +49,70 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 		AMonster2* Monster2 = Cast<AMonster2>(OwnerComp.GetAIOwner()->GetPawn());
 		if (nullptr != Monster)
 		{
-			GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
-			bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
-			++Deathcnt1;
-			GetGlobalGameInstance()->SetDeathMonster1(Deathcnt1);
-			if (b)
-			{
-				Monster->SpawnCoinActor(Monster->GetActorLocation());
-			}
-			Monster->Destroy();		
+			// 여기서 이제 플레이어의 PlayerATT를 가져와야한다
+			AMainPlayerCharacter* PlayerCh = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 
+			hp1 = GetBlackboardComponent(OwnerComp)->GetValueAsFloat(TEXT("Monster1HP")); // hp 받아오기
+
+			hp1 = hp1 - (PlayerCh->GetPlayerATT()); // att만큼 빼준 hp 받아온다
+
+			GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster1HP"), hp1);
+
+			if (hp1 > 0.0f) // 아직 Hp가 0보다 크다면
+			{
+				int a = 0;
+				StateTime = 0.0f;
+				SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
+				return;
+			}
+
+			else if (hp1 <= 0.0f) // Hp가 0보다 작다면
+			{
+				int a = 0;
+				hp1 = 0.0f;
+				GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster1HP"), hp1); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
+				// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
+				GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
+				// SpawnCoin을 GET 해준다
+				bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
+				if (b)
+				{
+					Monster->SpawnCoinActor(Monster->GetActorLocation());
+				}
+				++Deathcnt1;
+				GetGlobalGameInstance()->SetDeathMonster2(Deathcnt1);
+				Monster->Destroy();
+			}
 			StateTime = 0.0f;
 		}
+
+		//	GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
+		//	bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
+		//	++Deathcnt1;
+		//	GetGlobalGameInstance()->SetDeathMonster1(Deathcnt1);
+		//	if (b)
+		//	{
+		//		Monster->SpawnCoinActor(Monster->GetActorLocation());
+		//	}
+		//	Monster->Destroy();		
+
+		//	StateTime = 0.0f;
+		//}
 		else if (nullptr != Monster2)
 		{
-			
+
 			// 여기서 이제 플레이어의 PlayerATT를 가져와야한다
 			AMainPlayerCharacter* PlayerCh = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 
 			hp2 = GetBlackboardComponent(OwnerComp)->GetValueAsFloat(TEXT("Monster2HP")); // hp 받아오기
-			Monster2->Sethp(hp2);
-			
-			hp2 = hp2-( PlayerCh->GetPlayerATT()); // att만큼 빼준 hp 받아온다
-			
+			//Monster2->Sethp(hp2);
+
+			hp2 = hp2 - (PlayerCh->GetPlayerATT()); // att만큼 빼준 hp 받아온다
+
 
 			GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster2HP"), hp2);
-			Monster2->Sethp(hp2); // 각각 set.
-			
+			//Monster2->Sethp(hp2); // 각각 set.
+
 			if (hp2 > 0.0f) // 아직 Hp가 0보다 크다면
 			{
 				int a = 0;
@@ -103,10 +140,10 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 			}
 			StateTime = 0.0f;
 		}
+
 	}
-	
-	
 }
+
 
 EAniState UBTTask_DEATH::GetAIState(UBehaviorTreeComponent& OwnerComp)
 {

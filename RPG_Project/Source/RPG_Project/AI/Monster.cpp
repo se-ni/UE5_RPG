@@ -47,6 +47,7 @@ void AMonster::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsBool(TEXT("SpawnCoin"), false);
 
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("Monster1HP"), 0.3f); // 블랙보드 Monster2HP SET
 }
 
 void AMonster::Tick(float DeltaSecond)
@@ -61,9 +62,9 @@ void AMonster::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 		AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(OtherActor);
 		if (Player)
 		{
-			float hp = Player->GetPlayerHP();
-			hp = hp - 0.1;
-			Player->SetPlayerHP(hp);
+			float playhp = Player->GetPlayerHP();
+			playhp = playhp - 0.1;
+			Player->SetPlayerHP(playhp);
 
 			// 플레이어의 애님 인스턴스 가져오기
 			UMainPlayerAnimInstance* PlayerAnimInstance = Player->GetMainPlayerAnimInstance();
