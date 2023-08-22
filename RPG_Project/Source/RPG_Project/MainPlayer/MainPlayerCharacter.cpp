@@ -6,6 +6,7 @@
 #include "../AI/MyAIController.h"
 #include "../UI/MainHUD.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AMainPlayerCharacter::AMainPlayerCharacter()
@@ -69,22 +70,24 @@ void AMainPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (true == isOverlap)
-	{
-		if (IsValid(ShopWidgetClass))
-		{
-			ShopUIWidget = Cast<UTesShopWidget>(CreateWidget(GetWorld(), ShopWidgetClass));
+	//if (true == isOverlap)
+	//{
+	//	if (IsValid(ShopWidgetClass))
+	//	{
+	//		ShopUIWidget = Cast<UTesShopWidget>(CreateWidget(GetWorld(), ShopWidgetClass));
 
-			if (IsValid(ShopUIWidget))
-			{
-				ShopUIWidget->AddToViewport();
-			}
-		}
-	}
+	//		if (IsValid(ShopUIWidget))
+	//		{
+	//			ShopUIWidget->AddToViewport();
+	//		}
+	//	}
+	//}
 	if (HP <= 0.0f)
 	{
+		int a = 0;
 		// 여기서 playerdeathuionoff 호출
-		PlayerDeathOnOff();
+		AMainPlayerCharacter::PauseGame();
+		AMainPlayerCharacter::PlayerDeathOnOff();
 	}
 }
 
@@ -186,6 +189,13 @@ void AMainPlayerCharacter::PlayerDeathOnOff()
 	}
 
 	HUD->GetMainWidget()->SetPlayerDeathUIOnOffSwitch();
+
+	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+
+    if (PlayerController)
+    {
+		PlayerController->SetShowMouseCursor(true);
+    }
 }
 
 
@@ -314,4 +324,9 @@ void AMainPlayerCharacter::JumpAction()
 void AMainPlayerCharacter::AttackAction()
 {
 	MainPlayerAniState = EAniState::Attack;
+}
+
+void AMainPlayerCharacter::PauseGame()
+{
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
 }

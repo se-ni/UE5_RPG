@@ -106,6 +106,8 @@ public:
 	// 함수를 통해 애님 인스턴스를 가져옵니다.
 	UFUNCTION(BlueprintPure, Category = "Animation")
 		UMainPlayerAnimInstance* GetMainPlayerAnimInstance() const { return MainPlayerAnimInstance; }
+
+	void PauseGame();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

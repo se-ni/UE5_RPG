@@ -80,7 +80,7 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 					Monster->SpawnCoinActor(Monster->GetActorLocation());
 				}
 				++Deathcnt1;
-				GetGlobalGameInstance()->SetDeathMonster2(Deathcnt1);
+				GetGlobalGameInstance()->SetDeathMonster1(Deathcnt1);
 				Monster->Destroy();
 			}
 			StateTime = 0.0f;

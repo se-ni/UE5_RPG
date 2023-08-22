@@ -13,4 +13,6 @@ UCLASS()
 class RPG_PROJECT_API AMainTownGameMode : public AGameMode
 {
 	GENERATED_BODY()
+public:
+	//void PauseGame();
 };
