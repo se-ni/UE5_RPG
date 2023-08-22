@@ -75,7 +75,7 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 
 			GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster2HP"), hp2);
 			Monster2->Sethp(hp2); // 각각 set.
-			int h = Monster2->Gethp();
+			
 			if (hp2 > 0.0f) // 아직 Hp가 0보다 크다면
 			{
 				int a = 0;
@@ -87,7 +87,8 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 			else if (hp2 <= 0.0f) // Hp가 0보다 작다면
 			{
 				int a = 0;
-				Monster2->Sethp(0.0f); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
+				hp2 = 0.0f;
+				GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster2HP"), hp2); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
 				// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
 				GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
 				// SpawnCoin을 GET 해준다
