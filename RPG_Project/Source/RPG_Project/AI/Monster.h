@@ -68,7 +68,7 @@ public:
 	{
 		hp = _hp;
 	}
-
+	bool isoverlap; // 플레이어와 몬스터가 오버랩 됐음을 판단하는 bool 변수 
 private:
 
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

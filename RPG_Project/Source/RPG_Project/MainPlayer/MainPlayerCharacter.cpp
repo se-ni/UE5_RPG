@@ -81,6 +81,11 @@ void AMainPlayerCharacter::Tick(float DeltaTime)
 			}
 		}
 	}
+	if (HP <= 0.0f)
+	{
+		// 여기서 playerdeathuionoff 호출
+		PlayerDeathOnOff();
+	}
 }
 
 
@@ -170,6 +175,19 @@ void AMainPlayerCharacter::MinimapOnOff()
 	}
 	HUD->GetMainWidget()->SetMinimapUIOnOffSwitch();
 }
+void AMainPlayerCharacter::PlayerDeathOnOff()
+{
+	APlayerController* MainCon = Cast<APlayerController>(GetController());
+	AMainHUD* HUD = MainCon->GetHUD<AMainHUD>();
+
+	if (nullptr == HUD && false == HUD->IsValidLowLevel())
+	{
+		return;
+	}
+
+	HUD->GetMainWidget()->SetPlayerDeathUIOnOffSwitch();
+}
+
 
 void AMainPlayerCharacter::SetWeapon1()
 {

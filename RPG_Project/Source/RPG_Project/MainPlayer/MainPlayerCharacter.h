@@ -39,6 +39,7 @@ public:
 
 	void PlayerStatusOnOff();
 	void MinimapOnOff();
+	void PlayerDeathOnOff();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pawn")
 		float BaseTurnRate;

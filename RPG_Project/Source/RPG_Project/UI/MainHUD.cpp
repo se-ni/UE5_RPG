@@ -25,10 +25,11 @@ void AMainHUD::BeginPlay()
 		UUserWidget* Minimap = Cast<UUserWidget>(MainWidget->GetWidgetFromName(TEXT("WBP_Minimap")));
 	}
 
-
+	{
+		UUserWidget* PlayerDeath = Cast<UUserWidget>(MainWidget->GetWidgetFromName(TEXT("WBP_PlayerDeath")));
+	}
 }
 void AMainHUD::Tick(float _Delta)
 {
 	Super::Tick(_Delta);
-
 }

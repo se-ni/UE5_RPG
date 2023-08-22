@@ -62,10 +62,7 @@ void AMonster::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 		AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(OtherActor);
 		if (Player)
 		{
-			float playhp = Player->GetPlayerHP();
-			playhp = playhp - 0.1;
-			Player->SetPlayerHP(playhp);
-
+			isoverlap = true;
 			// 플레이어의 애님 인스턴스 가져오기
 			UMainPlayerAnimInstance* PlayerAnimInstance = Player->GetMainPlayerAnimInstance();
 			if (PlayerAnimInstance)

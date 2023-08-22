@@ -6,6 +6,7 @@
 #include "../Monster.h"
 #include "../../MainPlayer/MainPlayerCharacter.h"
 #include "../../Global/GlobalEnums.h"
+#include "Kismet/GameplayStatics.h"
 
 UBTTask_ATTACK::UBTTask_ATTACK()
 {
@@ -23,7 +24,20 @@ EBTNodeResult::Type UBTTask_ATTACK::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	Super::ExecuteTask(OwnerComp, NodeMemory);
 
 	GetGlobalCharacter(OwnerComp)->SetAniState(EAniState::Attack);
+	AMonster* Mons = Cast<AMonster>(GetGlobalCharacter(OwnerComp));
 
+	if (Mons->isoverlap) // 플레이어와 몬스터가 overlap 됐을때
+	{
+		// UGamplayStatics를 이용해서 MainPlayerCharacter 가져오는 법
+		AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		if (Player)
+		{
+			float playhp = Player->GetPlayerHP(); // 플레이어의 hp 가져와서
+			playhp = playhp - 0.1; // 0.1만큼 감소시키고
+			Player->SetPlayerHP(playhp); // hp로 set 해준다
+		}
+		Mons->isoverlap = false; // overlap bool 변수는 다시 false로.
+	}
 	return EBTNodeResult::Type::InProgress;
 }
 
@@ -40,7 +54,6 @@ void UBTTask_ATTACK::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
 		StateTime = 0.0f;
 	}
-
 }
 
 EAniState UBTTask_ATTACK::GetAIState(UBehaviorTreeComponent& OwnerComp)
