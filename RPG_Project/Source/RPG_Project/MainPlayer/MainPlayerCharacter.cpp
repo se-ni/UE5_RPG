@@ -41,8 +41,25 @@ void AMainPlayerCharacter::BeginPlay()
 	PlayerATT = 0.3f;
 
 	Super::BeginPlay();
+
+	GetMainPlayerAnimInstance()->OnPlayMontageNotifyBegin.AddDynamic(this, &AMainPlayerCharacter::AnimNotifyBegin);
 }
 
+void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)
+{
+	int a = 0;
+	if (isweapon2 == true)
+	{
+		UGlobalGameInstance* Inst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
+
+		TSubclassOf<UObject> Effect = Inst->GetSubClass(TEXT("Effect"));
+		if (nullptr != Effect)
+		{
+			AActor* Actor = GetWorld()->SpawnActor<AActor>(Effect);
+			Actor->SetActorLocation(GetActorLocation());
+		}
+	}
+}
 // Called every frame
 void AMainPlayerCharacter::Tick(float DeltaTime)
 {
@@ -174,6 +191,7 @@ void AMainPlayerCharacter::SetWeapon2()
 {
 	WeaponMesh->SetStaticMesh(WeaponArrays[1]);
 	PlayerATT = 0.5f;
+	isweapon2 = true;
 }
 void AMainPlayerCharacter::SetWeapon3()
 {

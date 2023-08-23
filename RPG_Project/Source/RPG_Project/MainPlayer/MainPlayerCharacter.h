@@ -63,7 +63,7 @@ public:
 	//UFUNCTION()
 	//	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	//		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	
+
 	UFUNCTION()
 	bool GetIsDeath()
 	{
@@ -108,6 +108,18 @@ public:
 		UMainPlayerAnimInstance* GetMainPlayerAnimInstance() const { return MainPlayerAnimInstance; }
 
 	void PauseGame();
+
+	bool isweapon2 = false;
+
+	bool Getisweapon2()
+	{
+		return isweapon2;
+	}
+
+	void Setisweapon2(bool _b)
+	{
+		isweapon2 = _b;
+	}
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -116,6 +128,7 @@ protected:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
 
 	// 애님 인스턴스를 저장할 변수
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Animation")
@@ -131,7 +144,7 @@ private:
 	bool AxisJump = false;
 	bool isOverlap = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+
 		bool isDeath = false; // 몬스터의 죽음 판별할 변수
 
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
@@ -148,4 +161,6 @@ private:
 	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	// const struct FPlayerWeaponData* CurWeaponData;
+	UFUNCTION()
+		void AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload);
 };

@@ -4,6 +4,7 @@
 #include "GlobalGameInstance.h"
 #include "PlayerWeaponData.h"
 #include "../AI/MonsterData.h"
+#include "SubClassData.h"
 #include "UObject/ConstructorHelpers.h"
 
 UGlobalGameInstance::UGlobalGameInstance() 
@@ -25,6 +26,15 @@ UGlobalGameInstance::UGlobalGameInstance()
 			MonsterDatas = MonsterDataTable.Object;
 		}
 	}
+
+	{
+		static ConstructorHelpers::FObjectFinder<UDataTable>SubClassDataTable(TEXT("/Script/Engine.DataTable'/Game/Global/Data/DT_SubClassData.DT_SubClassData'"));
+		if (true == SubClassDataTable.Succeeded())
+		{
+			SubClassDatas = SubClassDataTable.Object;
+		}
+	}
+
 }
 
 UGlobalGameInstance::~UGlobalGameInstance() 
@@ -64,4 +74,22 @@ FMonsterData* UGlobalGameInstance::GetMonsterData(FName _Name)
 	}
 
 	return FindTable;
+}
+
+TSubclassOf<UObject> UGlobalGameInstance::GetSubClass(FName _Name)
+{
+	if (nullptr == SubClassDatas)
+	{
+		return nullptr;
+	}
+
+	FSubClassData* FindTable = SubClassDatas->FindRow<FSubClassData>(_Name, _Name.ToString());
+
+	if (nullptr == FindTable)
+	{
+		return nullptr;
+	}
+
+	return FindTable->Object;
+
 }

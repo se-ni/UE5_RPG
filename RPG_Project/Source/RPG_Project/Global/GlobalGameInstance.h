@@ -24,7 +24,10 @@ public:
 
 	struct FMonsterData* GetMonsterData(FName _Name);
 
+	TSubclassOf<UObject> GetSubClass(FName _Name);
+
 	/*struct FMonsterData* GetMonsterData(FName _Name);*/
+
 	UFUNCTION()
 	int GetDeathMonster1()
 	{
@@ -67,5 +70,6 @@ private:
 	UPROPERTY()
 		UDataTable* MonsterDatas;
 
-
+	UPROPERTY()
+		UDataTable* SubClassDatas;
 };

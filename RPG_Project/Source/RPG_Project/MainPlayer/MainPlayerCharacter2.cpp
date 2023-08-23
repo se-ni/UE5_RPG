@@ -2,15 +2,21 @@
 
 
 #include "MainPlayerCharacter2.h"
+#include "MainPlayerCharacter.h"
 #include "../UI/MainHUD.h"
 #include "Kismet/GameplayStatics.h"
+#include "../Global/GlobalGameInstance.h"
 
 void AMainPlayerCharacter2::BeginPlay()
 {
+	Super::BeginPlay();
+
 	WeaponMesh->SetStaticMesh(WeaponArrays[1]);
 	SetPlayerATT(0.5f);
 
-	Super::BeginPlay();
+	AMainPlayerCharacter* Main = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	Main->Setisweapon2(true);
+	int a = 0;
 }
 
 void AMainPlayerCharacter2::Tick(float DeltaTime)

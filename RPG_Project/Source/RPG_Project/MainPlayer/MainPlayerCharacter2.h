@@ -19,7 +19,11 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	
+	
 	void Minimap2OnOff();
 	void Player2DeathOnOff();
+
+private:
+
 };
