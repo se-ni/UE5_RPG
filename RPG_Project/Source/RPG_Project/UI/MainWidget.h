@@ -33,19 +33,27 @@ public:
 
 	void SetPlayerDeathUIOnOffSwitch()
 	{
-		SetPlayerDeathUIOnOff = Minimap2UIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
+		SetPlayerDeathUIOnOff = SetPlayerDeathUIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
+	}
+
+	void SetPlayer2DeathUIOnOffSwitch()
+	{
+		SetPlayer2DeathUIOnOff = SetPlayer2DeathUIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
 	}
 
 private:
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		ESlateVisibility StatusUIOnOff = ESlateVisibility::Hidden;
+		ESlateVisibility StatusUIOnOff = ESlateVisibility::Visible;
 
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		ESlateVisibility MinimapUIOnOff = ESlateVisibility::Hidden;
 	
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		ESlateVisibility Minimap2UIOnOff = ESlateVisibility::Hidden;
+
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		ESlateVisibility SetPlayerDeathUIOnOff = ESlateVisibility::Hidden;
-	
+
+	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		ESlateVisibility SetPlayer2DeathUIOnOff = ESlateVisibility::Hidden;
 };

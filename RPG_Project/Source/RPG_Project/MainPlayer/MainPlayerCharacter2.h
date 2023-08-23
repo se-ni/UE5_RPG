@@ -16,8 +16,10 @@ class RPG_PROJECT_API AMainPlayerCharacter2 : public AMainPlayerCharacter
 
 protected:
 	void BeginPlay();
+	virtual void Tick(float DeltaTime) override;
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void Minimap2OnOff();
+	void Player2DeathOnOff();
 };

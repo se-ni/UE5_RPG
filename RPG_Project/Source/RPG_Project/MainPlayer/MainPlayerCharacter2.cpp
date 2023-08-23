@@ -3,12 +3,25 @@
 
 #include "MainPlayerCharacter2.h"
 #include "../UI/MainHUD.h"
+#include "Kismet/GameplayStatics.h"
 
 void AMainPlayerCharacter2::BeginPlay()
 {
 	Super::BeginPlay();
 	WeaponMesh->SetStaticMesh(WeaponArrays[1]);
 	SetPlayerATT(0.5f);
+}
+
+void AMainPlayerCharacter2::Tick(float DeltaTime)
+{
+	float HP2 = GetPlayerHP();
+	if (HP2 <= 0.0f)
+	{
+		int a = 0;
+		// 여기서 playerdeathuionoff 호출
+		AMainPlayerCharacter::PauseGame();
+		AMainPlayerCharacter2::Player2DeathOnOff();
+	}
 }
 void AMainPlayerCharacter2::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
@@ -37,4 +50,23 @@ void AMainPlayerCharacter2::Minimap2OnOff()
 		return;
 	}
 	HUD->GetMainWidget()->SetMinimap2UIOnOffSwitch();
+}
+void AMainPlayerCharacter2::Player2DeathOnOff()
+{
+	APlayerController* MainCon = Cast<APlayerController>(GetController());
+	AMainHUD* HUD = MainCon->GetHUD<AMainHUD>();
+
+	if (nullptr == HUD && false == HUD->IsValidLowLevel())
+	{
+		return;
+	}
+
+	HUD->GetMainWidget()->SetPlayerDeathUIOnOffSwitch();
+
+	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+
+	if (PlayerController)
+	{
+		PlayerController->SetShowMouseCursor(true);
+	}
 }

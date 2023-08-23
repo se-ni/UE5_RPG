@@ -21,16 +21,6 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 	// 컴포넌트는 언리얼의 CDO 때문에 무조건 생성자에서 만들어줘야한다
 	WeaponMesh->SetupAttachment(GetMesh(), TEXT("WeaponSocket")); // 생성한 무기 매쉬를 캐릭터 매쉬에 붙여준다
 
-	{
-		// 매쉬를 쓰겠다고 하는것.
-		static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshLoader(TEXT("/Script/Engine.StaticMesh'/Game/BattleWizardPolyart/Meshes/MagicStaffs/Staff03SM.Staff03SM'"));
-
-		if (true == MeshLoader.Succeeded())
-		{
-			WeaponArrays.Add(MeshLoader.Object);
-		}
-	}
-
 }
 
 // Called when the game starts or when spawned
@@ -45,13 +35,12 @@ void AMainPlayerCharacter::BeginPlay()
 	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainPlayerCharacter::BeginOverlap);
 
 	UGlobalGameInstance* Inst = GetGameInstance<UGlobalGameInstance>();
-	WeaponArrays.Add(GetGameInstance<UGlobalGameInstance>()->GetMesh(TEXT("Staff03")));
+	WeaponArrays.Add(GetGameInstance<UGlobalGameInstance>()->GetMesh(TEXT("Weapon1")));
+	WeaponArrays.Add(GetGameInstance<UGlobalGameInstance>()->GetMesh(TEXT("Weapon2")));
+	WeaponArrays.Add(GetGameInstance<UGlobalGameInstance>()->GetMesh(TEXT("Weapon3")));
 
-	WeaponArrays.Add(GetGameInstance<UGlobalGameInstance>()->GetMesh(TEXT("Staff02")));
 
-	WeaponArrays.Add(GetGameInstance<UGlobalGameInstance>()->GetMesh(TEXT("Staff01")));
-
-	WeaponMesh->SetStaticMesh(WeaponArrays[0]);
+	WeaponMesh->SetStaticMesh(WeaponArrays[0]); // 첫번째 무기
 	PlayerATT = 0.3f;
 
 	//AMyAIController* AICon = Cast<AMyAIController>(GetController());
