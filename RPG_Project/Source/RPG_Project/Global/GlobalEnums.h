@@ -19,17 +19,3 @@ enum class EAniState : uint8
 	Death,
 	Return,
 };
-
-//UENUM(BlueprintType)
-//enum class AIState : uint8
-//{
-//	//None, // 0
-//	Idle, // 1
-//	Move, // 2
-//	 // 3
-//	
-//	Attack, // 5
-//	Patrol, // 4
-//	Return,
-//
-//};

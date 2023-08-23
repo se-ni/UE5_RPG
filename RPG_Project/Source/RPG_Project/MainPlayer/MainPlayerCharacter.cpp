@@ -26,13 +26,10 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 // Called when the game starts or when spawned
 void AMainPlayerCharacter::BeginPlay()
 {
-	Super::BeginPlay();
+	
 	JumpMaxCount = 2; // Jump Max Count = 2
 
 	MainPlayerAnimInstance = Cast<UMainPlayerAnimInstance>(GetMesh()->GetAnimInstance());
-
-	//GetMesh()->GetAnimInstance()->OnMontageEnded.AddDynamic(this, &AMainPlayerCharacter::MontageEnd);
-	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainPlayerCharacter::BeginOverlap);
 
 	UGlobalGameInstance* Inst = GetGameInstance<UGlobalGameInstance>();
 	WeaponArrays.Add(GetGameInstance<UGlobalGameInstance>()->GetMesh(TEXT("Weapon1")));
@@ -43,16 +40,7 @@ void AMainPlayerCharacter::BeginPlay()
 	WeaponMesh->SetStaticMesh(WeaponArrays[0]); // 첫번째 무기
 	PlayerATT = 0.3f;
 
-	//AMyAIController* AICon = Cast<AMyAIController>(GetController());
-	//AMonster* Mons = Cast<AMonster>(AICon->GetOwner());
-	//if (Mons)
-	//{
-	//	UPrimitiveComponent* CapsuleComp = Mons->GetCapsuleComponent();
-	//	if (CapsuleComp)
-	//	{
-	//		CapsuleComp->OnComponentBeginOverlap.AddDynamic(this, &AMonster::MonsterOverlap);
-	//	}
-	//}
+	Super::BeginPlay();
 }
 
 // Called every frame
@@ -60,18 +48,6 @@ void AMainPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//if (true == isOverlap)
-	//{
-	//	if (IsValid(ShopWidgetClass))
-	//	{
-	//		ShopUIWidget = Cast<UTesShopWidget>(CreateWidget(GetWorld(), ShopWidgetClass));
-
-	//		if (IsValid(ShopUIWidget))
-	//		{
-	//			ShopUIWidget->AddToViewport();
-	//		}
-	//	}
-	//}
 	if (HP <= 0.0f)
 	{
 		int a = 0;

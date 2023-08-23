@@ -9,8 +9,8 @@ void UMainPlayerAnimInstance::NativeBeginPlay()
 
 	OnMontageBlendingOut.AddDynamic(this, &UMainPlayerAnimInstance::MontageEnd);
 
-	// 나를 가진 액터를 여기서 가져옵니다.
-	// TPS캐릭터에게 다 세팅을 해줬다.
+	// 나를 가진 액터를 여기서 가져온다.
+	// 캐릭터에게 미리 세팅을 해줬다.
 
 	AMainPlayerCharacter* Chracter = Cast<AMainPlayerCharacter>(GetOwningActor());
 

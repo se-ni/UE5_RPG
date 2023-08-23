@@ -14,8 +14,6 @@ AMyAIController::AMyAIController()
 	BehaviorTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorTreeComponent"));
 
 	BlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComponent"));
-
-	// AMainPlayerCharacter* CharacterMain = Cast<AMainPlayerCharacter>(AGlobalCharacter);
 }
 
 void AMyAIController::OnPossess(APawn* _InPawn)

@@ -42,9 +42,9 @@ EBTNodeResult::Type UBTTask_PATROL::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 		PP->Positions.Add(RandomDir);
 	}
 
-	PP->Positions.Add(OriginPos);
+	PP->Positions.Add(OriginPos); // 내 원래 위치를 마지막에 add
 
-	// 최초에 포지션을 여러개 만들어서 넣었다.
+	// OriginPos 를 포함하여 여러 포지션을 만들어서 넣어줬다
 	// 여기에 넣었으므로 블랙보드 컴포넌트가 이 메모리를 지켜줄것이다를 생각하고 있다.
 
 	return EBTNodeResult::Type::InProgress;
@@ -88,6 +88,8 @@ void UBTTask_PATROL::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 	}
 
 	{
+		// Patrol Point를 향해 회전하는 함수
+
 		TargetPos.Z = 0.0f;
 		ThisPos.Z = 0.0f;
 
@@ -116,16 +118,13 @@ void UBTTask_PATROL::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 				GetGlobalCharacter(OwnerComp)->SetActorRotation(Rot);
 
 				bReturning = true;
-				//return;
 			}
 
 		}
 	}
 
 	{
-		//FVector NowPos = GetGlobalCharacter(OwnerComp)->GetActorLocation();
-		//TargetPos.Z = 0.0f;
-		//NowPos.Z = 0.0f;
+		// 앞으로 이동하는 함수
 
 		FVector Dir = TargetPos - ThisPos;
 		//Dir.Normalize();

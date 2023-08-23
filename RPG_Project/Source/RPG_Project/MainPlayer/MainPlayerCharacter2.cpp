@@ -7,9 +7,10 @@
 
 void AMainPlayerCharacter2::BeginPlay()
 {
-	Super::BeginPlay();
 	WeaponMesh->SetStaticMesh(WeaponArrays[1]);
 	SetPlayerATT(0.5f);
+
+	Super::BeginPlay();
 }
 
 void AMainPlayerCharacter2::Tick(float DeltaTime)
@@ -18,7 +19,7 @@ void AMainPlayerCharacter2::Tick(float DeltaTime)
 	if (HP2 <= 0.0f)
 	{
 		int a = 0;
-		// 여기서 playerdeathuionoff 호출
+		// 여기서 player2deathuionoff 호출
 		AMainPlayerCharacter::PauseGame();
 		AMainPlayerCharacter2::Player2DeathOnOff();
 	}
