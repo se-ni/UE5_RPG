@@ -15,7 +15,7 @@ void AMainPlayerCharacter2::BeginPlay()
 	SetPlayerATT(0.5f);
 
 	AMainPlayerCharacter* Main = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	Main->Setisweapon2(true);
+	// Main->Setisweapon2(true);
 	int a = 0;
 }
 

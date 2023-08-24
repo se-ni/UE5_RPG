@@ -109,17 +109,17 @@ public:
 
 	void PauseGame();
 
-	bool isweapon2 = false;
+	// bool isweapon2 = false;
 
-	bool Getisweapon2()
-	{
-		return isweapon2;
-	}
+	//bool Getisweapon2()
+	//{
+	//	return isweapon2;
+	//}
 
-	void Setisweapon2(bool _b)
-	{
-		isweapon2 = _b;
-	}
+	//void Setisweapon2(bool _b)
+	//{
+	//	isweapon2 = _b;
+	//}
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -161,6 +161,7 @@ private:
 	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	// const struct FPlayerWeaponData* CurWeaponData;
+	
 	UFUNCTION()
 		void AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload);
 };
