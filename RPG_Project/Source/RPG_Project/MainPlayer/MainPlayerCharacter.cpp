@@ -52,14 +52,28 @@ void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPoi
 		UGlobalGameInstance* Inst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
 		TSubclassOf<UObject> Effect = Inst->GetSubClass(TEXT("Effect"));
+
 		if (nullptr != Effect)
 		{
-			AActor* Actor = GetWorld()->SpawnActor<AActor>(Effect);
-			FVector effectloc = FVector(200.f,0.f,0.f) + GetActorLocation();
-			Actor->SetActorLocation(effectloc);
-			
+			FTransform Trans;
+			FVector Pos;
+			//TArray<UActorComponent*> MeshEffects = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponEffect"));
+			//TArray<UActorComponent*> StaticMeshs = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponMesh"));
+
+			//USceneComponent* EffectCom = Cast<USceneComponent>(MeshEffects[0]);
+			//Pos = EffectCom->GetComponentToWorld().GetLocation(); // BP_MainPlayerCharacter의 Weapon Effect의 position Get 
+
+			{
+				// 효과 만들기
+				AActor* Actor = GetWorld()->SpawnActor<AActor>(Effect);
+
+				Actor->SetActorLocation(Pos);
+				Actor->SetActorRotation(GetActorRotation());
+				Actor->Destroy();
+			}
 		}
 }
+
 // Called every frame
 void AMainPlayerCharacter::Tick(float DeltaTime)
 {
