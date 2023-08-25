@@ -38,12 +38,14 @@ void AMainPlayerCharacter::BeginPlay()
 
 
 	WeaponMesh->SetStaticMesh(WeaponArrays[0]); // 첫번째 무기
-	PlayerATT = 0.3f;
 
 	Super::BeginPlay();
 
 	// GetMainPlayerAnimInstance()->OnPlayMontageNotifyBegin.AddDynamic(this, &AMainPlayerCharacter::AnimNotifyBegin);
 	MainPlayerAnimInstance->OnPlayMontageNotifyBegin.AddDynamic(this, &AMainPlayerCharacter::AnimNotifyBegin);
+
+	PlayerATT = 0.3f;
+	isWeapon2 = false;
 }
 
 void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)
@@ -59,9 +61,12 @@ void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPoi
 		FVector Pos = EffectCom->GetComponentToWorld().GetLocation();
 		if (nullptr != Effect)
 		{
-			AActor* Actor = GetWorld()->SpawnActor<AActor>(Effect);
-			FVector effectloc = FVector(200.f, 0.f, 0.f) + GetActorLocation();
-			Actor->SetActorLocation(Pos);
+			if (true == isWeapon2)
+			{
+				AActor* Actor = GetWorld()->SpawnActor<AActor>(Effect);
+				FVector effectloc = FVector(200.f, 0.f, 0.f) + GetActorLocation();
+				Actor->SetActorLocation(Pos);
+			}
 
 		}
 
@@ -193,16 +198,19 @@ void AMainPlayerCharacter::SetWeapon1()
 {
 	WeaponMesh->SetStaticMesh(WeaponArrays[0]);
 	PlayerATT = 0.3f;
+	isWeapon2 = false;
 }
 void AMainPlayerCharacter::SetWeapon2()
 {
 	WeaponMesh->SetStaticMesh(WeaponArrays[1]);
 	PlayerATT = 0.5f;
+	isWeapon2 = true;
 }
 void AMainPlayerCharacter::SetWeapon3()
 {
 	WeaponMesh->SetStaticMesh(WeaponArrays[2]);
 	PlayerATT = 0.7f;
+	isWeapon2 = false;
 }
 
 

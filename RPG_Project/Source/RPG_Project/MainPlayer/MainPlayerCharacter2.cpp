@@ -13,7 +13,7 @@ void AMainPlayerCharacter2::BeginPlay()
 
 	WeaponMesh->SetStaticMesh(WeaponArrays[1]);
 	SetPlayerATT(0.5f);
-
+	isWeapon2 = true;
 	AMainPlayerCharacter* Main = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	// Main->Setisweapon2(true);
 	int a = 0;

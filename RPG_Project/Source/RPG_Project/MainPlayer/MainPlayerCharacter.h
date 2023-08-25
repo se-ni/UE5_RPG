@@ -100,6 +100,7 @@ public:
 		MP = _MP;
 	}
 
+	bool isWeapon2 = false;
 	TSubclassOf<UUserWidget> ShopWidgetClass;
 	UTesShopWidget* ShopUIWidget;
 
