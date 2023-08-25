@@ -52,11 +52,16 @@ void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPoi
 		UGlobalGameInstance* Inst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
 		TSubclassOf<UObject> Effect = Inst->GetSubClass(TEXT("Effect"));
+		TArray<UActorComponent*> StaticMeshs = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponMesh"));
+		TArray<UActorComponent*> MeshEffects = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponEffect"));
+		
+		USceneComponent* EffectCom = Cast<USceneComponent>(MeshEffects[0]);
+		FVector Pos = EffectCom->GetComponentToWorld().GetLocation();
 		if (nullptr != Effect)
 		{
 			AActor* Actor = GetWorld()->SpawnActor<AActor>(Effect);
 			FVector effectloc = FVector(200.f, 0.f, 0.f) + GetActorLocation();
-			Actor->SetActorLocation(effectloc);
+			Actor->SetActorLocation(Pos);
 
 		}
 
