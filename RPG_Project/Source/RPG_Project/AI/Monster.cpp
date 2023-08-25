@@ -10,6 +10,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "../MainPlayer/MainPlayerCharacter.h"
+#include "../Global/Projectile.h"
 
 AMonster::AMonster()
 {
@@ -60,8 +61,8 @@ void AMonster::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 {
 	{
 		AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(OtherActor);
-		if (Player)
-		{
+		if (nullptr != Player)
+		{t
 			isoverlap = true;
 			// 플레이어의 애님 인스턴스 가져오기
 			UMainPlayerAnimInstance* PlayerAnimInstance = Player->GetMainPlayerAnimInstance();
@@ -79,6 +80,11 @@ void AMonster::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 
 			//static_cast<uint8>(EAniState::Attack)
 		}
+		//TArray<AActor*> Projectile = GetActorsByTag(Actor::StaticClass(), TEXT("PlayerAttack"));
+		//if(Projectile == OtherActor)
+		//{
+		//	int a = 0;
+		//}
 	}
 }
 

@@ -6,6 +6,7 @@
 #include "../AI/MyAIController.h"
 #include "../UI/MainHUD.h"
 #include "Components/CapsuleComponent.h"
+#include "../Global/Projectile.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -54,6 +55,8 @@ void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPoi
 		UGlobalGameInstance* Inst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
 		TSubclassOf<UObject> Effect = Inst->GetSubClass(TEXT("Effect"));
+		TSubclassOf<UObject> ProjectileAttack = Inst->GetSubClass(TEXT("Projectile"));
+
 		TArray<UActorComponent*> StaticMeshs = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponMesh"));
 		TArray<UActorComponent*> MeshEffects = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponEffect"));
 		
@@ -61,13 +64,23 @@ void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPoi
 		FVector Pos = EffectCom->GetComponentToWorld().GetLocation();
 		if (nullptr != Effect)
 		{
-			if (true == isWeapon2)
-			{
+	
+			{ // 이펙트 만들기
 				AActor* Actor = GetWorld()->SpawnActor<AActor>(Effect);
 				FVector effectloc = FVector(200.f, 0.f, 0.f) + GetActorLocation();
 				Actor->SetActorLocation(Pos);
+				// Actor->SetActorScale3D(FVector(0.2f,0.2f,0.2f));
 			}
+			if(true == isWeapon2)
+			{ // 발사체 만들기
+				AActor* Actor = GetWorld()->SpawnActor<AActor>(ProjectileAttack);
+				AProjectile* Projectile = Cast<AProjectile>(Actor);
 
+				Projectile->SetActorLocation(Pos);
+				Projectile->SetActorRotation(GetActorRotation());
+				Projectile->GetSphereComponent()->ComponentTags.Add(FName("PlayerAttack"));
+				Projectile->GetSphereComponent()->SetCollisionProfileName(TEXT("PlayerAttack"), true);
+			}
 		}
 
 }
