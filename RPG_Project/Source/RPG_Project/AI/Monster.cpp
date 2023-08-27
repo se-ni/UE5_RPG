@@ -59,7 +59,7 @@ void AMonster::Tick(float DeltaSecond)
 void AMonster::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	{
+	
 		AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(OtherActor);
 		if (nullptr != Player)
 		{
@@ -77,15 +77,7 @@ void AMonster::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 					GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), false);
 				}
 			}
-
-			//static_cast<uint8>(EAniState::Attack)
 		}
-		//TArray<AActor*> Projectile = GetActorsByTag(Actor::StaticClass(), TEXT("PlayerAttack"));
-		//if(Projectile == OtherActor)
-		//{
-		//	int a = 0;
-		//}
-	}
 }
 
 //UGlobalGameInstance* AMonster::GetGlobalGameInstance()

@@ -2,6 +2,8 @@
 
 
 #include "Projectile.h"
+#include "../AI/Monster2.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -18,6 +20,9 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	OnDestroyed.AddDynamic(this, &AProjectile::DesytroyProjectile);
+	
+	SphereComp = GetSphereComponent();
+	SphereComp->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::BeginOverlap);
 }
 
 // Called every frame
@@ -48,3 +53,20 @@ void AProjectile::DesytroyProjectile(AActor* _Destroy)
 	Actor->SetActorLocation(GetActorLocation());
 	Actor->SetActorRotation(GetActorRotation());
 }
+
+void AProjectile::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	
+	AMonster2* Mons = Cast<AMonster2>(OtherActor);
+
+	// 몬스터2의 블랙보드 컴포넌트 가져오기
+	UBlackboardComponent* BlackboardComp = Mons->GetBlackboardComponent();
+
+	if (BlackboardComp)
+	{
+		// 블랙보드 변수 bIsDeath를 true로 설정
+		BlackboardComp->SetValueAsBool(TEXT("bIsDeath"), true);
+	}
+}
+

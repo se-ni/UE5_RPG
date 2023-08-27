@@ -32,10 +32,20 @@ public:
 	{
 		return SphereComponent;
 	}
+	UPROPERTY(VisibleAnywhere)
+		USphereComponent* SphereComp;
 
+	UFUNCTION()
+		void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	bool GetprojectileOverlap()
+	{
+		return projectileOverlap;
+	}
 private:
 	UPROPERTY(Category = "Projectile", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		float Speed = 300.0f;
+		float Speed = 600.0f;
 	UPROPERTY(Category = "Projectile", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		float DestroyTime = 5.0f;
 
@@ -45,4 +55,5 @@ private:
 	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		class USphereComponent* SphereComponent = nullptr;
 
+	bool projectileOverlap = false;
 };

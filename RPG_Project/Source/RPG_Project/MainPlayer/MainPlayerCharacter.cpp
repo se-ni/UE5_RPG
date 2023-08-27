@@ -79,7 +79,7 @@ void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPoi
 
 				Projectile->SetActorLocation(Pos);
 				Projectile->SetActorRotation(GetActorRotation());
-				Projectile->GetSphereComponent()->ComponentTags.Add(FName("PlayerAttack"));
+				Projectile->Tags.Add(FName("PlayerAttack"));
 				Projectile->GetSphereComponent()->SetCollisionProfileName(TEXT("PlayerAttack"), true);
 			}
 		}
