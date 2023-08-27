@@ -66,10 +66,11 @@ void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPoi
 		{
 	
 			{ // 이펙트 만들기
-				AActor* Actor = GetWorld()->SpawnActor<AActor>(Effect);
+				AttackEffect = GetWorld()->SpawnActor<AActor>(Effect);
 				FVector effectloc = FVector(200.f, 0.f, 0.f) + GetActorLocation();
-				Actor->SetActorLocation(Pos);
+				AttackEffect->SetActorLocation(Pos);
 				// Actor->SetActorScale3D(FVector(0.2f,0.2f,0.2f));
+				GetWorld()->GetTimerManager().SetTimer(EffectDestroyTimerHandle, this, &AMainPlayerCharacter::DestroyAttackEffect, 3.0f, false);
 			}
 			if(true == isWeapon2)
 			{ // 발사체 만들기
@@ -83,6 +84,15 @@ void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPoi
 			}
 		}
 
+}
+
+void AMainPlayerCharacter::DestroyAttackEffect()
+{
+	if (AttackEffect)
+	{
+		AttackEffect->Destroy();
+		AttackEffect = nullptr;
+	}
 }
 
 // Called every frame

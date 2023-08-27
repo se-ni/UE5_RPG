@@ -121,6 +121,9 @@ public:
 	//{
 	//	isweapon2 = _b;
 	//}
+
+	float destroyTime = 3.0f;
+	AActor* AttackEffect;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -140,8 +143,10 @@ protected:
 	UPROPERTY(Category = "WeaponValue", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		TArray<UStaticMesh*> WeaponArrays; // WeaponMesh 컴포넌트에서 이용할 WeaponMesh(스태틱 매쉬) 배열
 	
+	void DestroyAttackEffect();
 
 private:
+	FTimerHandle EffectDestroyTimerHandle; // 타이머 핸들변수
 	bool AxisJump = false;
 	bool isOverlap = false;
 
