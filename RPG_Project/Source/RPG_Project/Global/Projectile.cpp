@@ -69,4 +69,3 @@ void AProjectile::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor*
 		BlackboardComp->SetValueAsBool(TEXT("bIsDeath"), true);
 	}
 }
-
