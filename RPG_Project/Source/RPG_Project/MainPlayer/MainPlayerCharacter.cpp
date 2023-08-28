@@ -5,6 +5,8 @@
 #include "../AI/Monster.h"
 #include "../AI/MyAIController.h"
 #include "../UI/MainHUD.h"
+#include "../Global/GlobalEnums.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "../Global/Projectile.h"
 #include "Kismet/GameplayStatics.h"
@@ -99,6 +101,9 @@ void AMainPlayerCharacter::DestroyAttackEffect()
 void AMainPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	UCharacterMovementComponent* Move = Cast<UCharacterMovementComponent>(GetMovementComponent());
+	Move->MaxWalkSpeed = 1000.0f;
 
 	if (HP <= 0.0f)
 	{
@@ -255,7 +260,7 @@ void AMainPlayerCharacter::MoveRight(float Val)
 			AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::Y), Val);
 
 			MainPlayerAniState = Val > 0.f ? EAniState::LeftMove : EAniState::RightMove;
-			//UE_LOG(LogTemp, Log, TEXT("%S(%u)  %d"), __FUNCTION__, __LINE__, MainPlayerAniState);
+	
 			return;
 		}
 	}
@@ -291,6 +296,14 @@ void AMainPlayerCharacter::MoveForward(float Val)
 			// AddMovementInput(GetActorForwardVector(), Val);
 
 			MainPlayerAniState = Val > 0.f ? EAniState::ForwardMove : EAniState::BackwardMove ;
+
+			if (MainPlayerAniState == EAniState::BackwardMove)
+			{
+				UCharacterMovementComponent* Move = Cast<UCharacterMovementComponent>(GetMovementComponent());
+				
+				Move->MaxWalkSpeed = 500.0f;
+				UE_LOG(LogTemp, Log, TEXT("%f"), Move->MaxWalkSpeed);
+			}
 			//UE_LOG(LogTemp, Log, TEXT("%S(%u) %d"), __FUNCTION__, __LINE__, MainPlayerAniState);
 			return;
 		}

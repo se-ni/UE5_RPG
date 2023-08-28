@@ -5,6 +5,7 @@
 #include "MainPlayerCharacter.h"
 #include "../UI/MainHUD.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "../Global/GlobalGameInstance.h"
 
 void AMainPlayerCharacter2::BeginPlay()
