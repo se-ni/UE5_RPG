@@ -92,3 +92,8 @@ UGlobalGameInstance* AMonster2::GetGlobalGameInstance()
 	}
 	return nullptr;
 }
+
+void AMonster2::Setbdeathfalse()
+{
+	GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), false);
+}

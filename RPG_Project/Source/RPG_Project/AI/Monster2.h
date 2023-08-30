@@ -54,6 +54,8 @@ public:
 		AActor* SpawnedActor0 = GetWorld()->SpawnActor<AActor>(CoinActor, Trans);
 	}
 	bool isoverlap2;
+
+	void Setbdeathfalse();
 private:
 
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -68,6 +70,7 @@ private:
 
 	UPROPERTY(Category = "Coin", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AGlobalCoin> CoinActor;
+
 
 
 };

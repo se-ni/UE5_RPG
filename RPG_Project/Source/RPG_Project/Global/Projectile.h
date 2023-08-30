@@ -45,7 +45,7 @@ public:
 	}
 private:
 	UPROPERTY(Category = "Projectile", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		float Speed = 600.0f;
+		float Speed = 1000.0f;
 	UPROPERTY(Category = "Projectile", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		float DestroyTime = 5.0f;
 
@@ -56,4 +56,7 @@ private:
 		class USphereComponent* SphereComponent = nullptr;
 
 	bool projectileOverlap = false;
+
+	void Setdeathbool();
+	FTimerHandle bdeathTimerHandle;
 };

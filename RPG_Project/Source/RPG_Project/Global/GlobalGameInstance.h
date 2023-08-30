@@ -62,7 +62,7 @@ private:
 		int DeathMonster2 = 0;
 
 	UPROPERTY(Category = "Monster2", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		int Monster2Cnt = 3;
+		int Monster2Cnt = 2;
 
 	UPROPERTY()
 		UDataTable* MeshDatas;

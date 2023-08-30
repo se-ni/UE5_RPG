@@ -66,6 +66,12 @@ void AProjectile::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor*
 	if (BlackboardComp)
 	{
 		// 블랙보드 변수 bIsDeath를 true로 설정
-		BlackboardComp->SetValueAsBool(TEXT("bIsDeath"), true);
+		BlackboardComp->SetValueAsBool(TEXT("bIsDeath"), true);	
+		// AMonster2 클래스의 Setbdeathfalse 함수를 호출하기 위해 람다 함수 사용
+		FTimerManager& TimerManager = GetWorld()->GetTimerManager();
+		TimerManager.SetTimer(bdeathTimerHandle, [Mons]()
+			{
+				Mons->Setbdeathfalse();
+			}, 0.1f, false);
 	}
 }
