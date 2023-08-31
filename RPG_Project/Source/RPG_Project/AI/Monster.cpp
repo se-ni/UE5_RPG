@@ -63,17 +63,19 @@ void AMonster::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 		AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(OtherActor);
 		if (nullptr != Player)
 		{
-			isoverlap = true;
+			
 			// 플레이어의 애님 인스턴스 가져오기
 			UMainPlayerAnimInstance* PlayerAnimInstance = Player->GetMainPlayerAnimInstance();
 			if (PlayerAnimInstance)
 			{
 				if (PlayerAnimInstance->GetCurrentAnimationState() == EAniState::Attack)
 				{
+					isoverlap = false; // 플레이어가 공격중일때는, hp 감소 x
 					GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true);
 				}
 				else
 				{
+					isoverlap = true;
 					GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), false);
 				}
 			}
