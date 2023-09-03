@@ -48,6 +48,27 @@ public:
 	{
 		DeathMonster2 = _int;
 	}
+	UFUNCTION()
+		int GetStage3DeathMonster1()
+	{
+		return Stage3DeathMonster1Cnt;
+	}
+	UFUNCTION()
+		void SetStage3DeathMonster1(int _int)
+	{
+		Stage3DeathMonster1Cnt = _int;
+	}
+
+	int GetStage3DeathMonster2()
+	{
+		return Stage3DeathMonster2Cnt;
+	}
+	UFUNCTION()
+		void SetStage3DeathMonster2(int _int)
+	{
+		Stage3DeathMonster2Cnt = _int;
+	}
+
 
 	UPROPERTY(Category = "Coin", EditAnywhere, BlueprintReadWrite)
 	int Coincnt = 0;

@@ -30,16 +30,26 @@ public:
 
 private:
 	float StateTime = 0.0f;
-	UPROPERTY(Category = "Monster", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = "Monster1", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	int Deathcnt1 = 0;
 
-	UPROPERTY(Category = "Monster", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = "Monster2", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	int Deathcnt2 = 0;
+
+	UPROPERTY(Category = "Monster1", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int Stage3DeathMonster1cnt = 0;
+	UPROPERTY(Category = "Monster2", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int Stage3DeathMonster2cnt = 0;
+
 	bool SpawnBPCoin;
 	/*FVector ActorLoc;*/
 
 	float hp1;
 	float hp2;
 
+	UFUNCTION()
+		void MainPlayer1Attack(UBehaviorTreeComponent& OwnerComp);
+	UFUNCTION()
+		void MainPlayer2Attack(UBehaviorTreeComponent& OwnerComp);
 	
 };

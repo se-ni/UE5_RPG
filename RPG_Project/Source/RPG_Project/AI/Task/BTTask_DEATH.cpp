@@ -10,13 +10,13 @@
 #include "../../Global/GlobalCoin.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "../../MainPlayer/MainPlayerCharacter.h"
+#include "../../Stage3/MainPlayerCharacter3.h"
 #include "Kismet/GameplayStatics.h"
 
 UBTTask_DEATH::UBTTask_DEATH()
 {
 	bNotifyTick = true;
 	bNotifyTaskFinished = true;
-
 }
 
 
@@ -36,6 +36,7 @@ EBTNodeResult::Type UBTTask_DEATH::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 	return EBTNodeResult::Type::InProgress;
 }
 
+
 void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	//Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
@@ -47,100 +48,161 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 	{
 		AMonster* Monster = Cast<AMonster>(OwnerComp.GetAIOwner()->GetPawn());
 		AMonster2* Monster2 = Cast<AMonster2>(OwnerComp.GetAIOwner()->GetPawn());
-		if (nullptr != Monster)
+		if (nullptr != Monster)  // Stage 몬스터1
 		{
 			// 여기서 이제 플레이어의 PlayerATT를 가져와야한다
 			AMainPlayerCharacter* PlayerCh = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-
-			hp1 = GetBlackboardComponent(OwnerComp)->GetValueAsFloat(TEXT("Monster1HP")); // hp 받아오기
-
-			hp1 = hp1 - (PlayerCh->GetPlayerATT()); // att만큼 빼준 hp 받아온다
-
-			GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster1HP"), hp1);
-
-			if (hp1 > 0.0f) // 아직 Hp가 0보다 크다면
+			AMainPlayerCharacter3* PlayerCh3 = Cast<AMainPlayerCharacter3>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			if (nullptr != PlayerCh)
 			{
-				int a = 0;
-				StateTime = 0.0f;
-				SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
-				return;
-			}
+				hp1 = GetBlackboardComponent(OwnerComp)->GetValueAsFloat(TEXT("Monster1HP")); // hp 받아오기
 
-			else if (hp1 <= 0.0f) // Hp가 0보다 작다면
-			{
-				int a = 0;
-				hp1 = 0.0f;
-				GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster1HP"), hp1); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
-				// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
-				GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
-				// SpawnCoin을 GET 해준다
-				bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
-				if (b)
+				hp1 = hp1 - (PlayerCh->GetPlayerATT()); // att만큼 빼준 hp 받아온다
+
+				GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster1HP"), hp1);
+
+				if (hp1 > 0.0f) // 아직 Hp가 0보다 크다면
 				{
-					Monster->SpawnCoinActor(Monster->GetActorLocation());
+					int a = 0;
+					StateTime = 0.0f;
+					SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
+					return;
 				}
-				++Deathcnt1;
-				GetGlobalGameInstance()->SetDeathMonster1(Deathcnt1);
-				Monster->Destroy();
+
+				else if (hp1 <= 0.0f) // Hp가 0보다 작다면
+				{
+					int a = 0;
+					hp1 = 0.0f;
+					GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster1HP"), hp1); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
+					// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
+					GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
+					// SpawnCoin을 GET 해준다
+					bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
+					if (b)
+					{
+						Monster->SpawnCoinActor(Monster->GetActorLocation());
+					}
+					++Deathcnt1;
+					GetGlobalGameInstance()->SetDeathMonster1(Deathcnt1);
+					Monster->Destroy();
+				}
+				StateTime = 0.0f;
 			}
-			StateTime = 0.0f;
+
+			if (nullptr != PlayerCh3) // Stage3 몬스터1
+			{
+				hp1 = GetBlackboardComponent(OwnerComp)->GetValueAsFloat(TEXT("Monster1HP")); // hp 받아오기
+
+				hp1 = hp1 - (PlayerCh->GetPlayerATT()); // att만큼 빼준 hp 받아온다
+
+				GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster1HP"), hp1);
+
+				if (hp1 > 0.0f) // 아직 Hp가 0보다 크다면
+				{
+					int a = 0;
+					StateTime = 0.0f;
+					SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
+					return;
+				}
+
+				else if (hp1 <= 0.0f) // Hp가 0보다 작다면
+				{
+					int a = 0;
+					hp1 = 0.0f;
+					GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster1HP"), hp1); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
+					// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
+					GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
+					// SpawnCoin을 GET 해준다
+					bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
+					if (b)
+					{
+						Monster->SpawnCoinActor(Monster->GetActorLocation());
+					}
+					++Stage3DeathMonster1cnt;
+					GetGlobalGameInstance()->SetStage3DeathMonster1(Stage3DeathMonster1cnt);
+					Monster->Destroy();
+				}
+				StateTime = 0.0f;
+			}
 		}
 
-		//	GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
-		//	bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
-		//	++Deathcnt1;
-		//	GetGlobalGameInstance()->SetDeathMonster1(Deathcnt1);
-		//	if (b)
-		//	{
-		//		Monster->SpawnCoinActor(Monster->GetActorLocation());
-		//	}
-		//	Monster->Destroy();		
-
-		//	StateTime = 0.0f;
-		//}
 		else if (nullptr != Monster2)
 		{
-
 			// 여기서 이제 플레이어의 PlayerATT를 가져와야한다
 			AMainPlayerCharacter* PlayerCh = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-
-			hp2 = GetBlackboardComponent(OwnerComp)->GetValueAsFloat(TEXT("Monster2HP")); // hp 받아오기
-			//Monster2->Sethp(hp2);
-
-			hp2 = hp2 - (PlayerCh->GetPlayerATT()); // att만큼 빼준 hp 받아온다
-
-
-			GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster2HP"), hp2);
-			//Monster2->Sethp(hp2); // 각각 set.
-
-			if (hp2 > 0.0f) // 아직 Hp가 0보다 크다면
+			AMainPlayerCharacter3* PlayerCh3 = Cast<AMainPlayerCharacter3>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			if (nullptr != PlayerCh)
 			{
-				int a = 0;
-				StateTime = 0.0f;
-				SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
-				return;
-			}
+				hp2 = GetBlackboardComponent(OwnerComp)->GetValueAsFloat(TEXT("Monster2HP")); // hp 받아오기
 
-			else if (hp2 <= 0.0f) // Hp가 0보다 작다면
-			{
-				int a = 0;
-				hp2 = 0.0f;
-				GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster2HP"), hp2); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
-				// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
-				GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
-				// SpawnCoin을 GET 해준다
-				bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
-				if (b)
+				hp2 = hp2 - (PlayerCh->GetPlayerATT()); // att만큼 빼준 hp 받아온다
+
+				GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster2HP"), hp2);
+
+				if (hp2 > 0.0f) // 아직 Hp가 0보다 크다면
 				{
-					Monster2->SpawnCoinActor(Monster2->GetActorLocation());
+					int a = 0;
+					StateTime = 0.0f;
+					SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
+					return;
 				}
-				++Deathcnt2;
-				GetGlobalGameInstance()->SetDeathMonster2(Deathcnt2);
-				Monster2->Destroy();
-			}
-			StateTime = 0.0f;
-		}
 
+				else if (hp2 <= 0.0f) // Hp가 0보다 작다면
+				{
+					int a = 0;
+					hp2 = 0.0f;
+					GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster1HP"), hp2); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
+					// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
+					GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
+					// SpawnCoin을 GET 해준다
+					bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
+					if (b)
+					{
+						Monster2->SpawnCoinActor(Monster2->GetActorLocation());
+					}
+					++Deathcnt2;
+					GetGlobalGameInstance()->SetDeathMonster2(Deathcnt2);
+					Monster2->Destroy();
+				}
+				StateTime = 0.0f;
+			}
+
+			if (nullptr != PlayerCh3) // Stage3 몬스터1
+			{
+				hp2 = GetBlackboardComponent(OwnerComp)->GetValueAsFloat(TEXT("Monster2HP")); // hp 받아오기
+
+				hp2 = hp2 - (PlayerCh->GetPlayerATT()); // att만큼 빼준 hp 받아온다
+
+				GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster2HP"), hp2);
+
+				if (hp2 > 0.0f) // 아직 Hp가 0보다 크다면
+				{
+					int a = 0;
+					StateTime = 0.0f;
+					SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
+					return;
+				}
+
+				else if (hp2 <= 0.0f) // Hp가 0보다 작다면
+				{
+					int a = 0;
+					hp2 = 0.0f;
+					GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster2HP"), hp2); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
+					// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
+					GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
+					// SpawnCoin을 GET 해준다
+					bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
+					if (b)
+					{
+						Monster2->SpawnCoinActor(Monster2->GetActorLocation());
+					}
+					++Stage3DeathMonster2cnt;
+					GetGlobalGameInstance()->SetStage3DeathMonster2(Stage3DeathMonster2cnt);
+					Monster2->Destroy();
+				}
+				StateTime = 0.0f;
+			}
+		}
 	}
 }
 
