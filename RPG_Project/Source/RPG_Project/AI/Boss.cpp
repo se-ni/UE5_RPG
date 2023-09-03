@@ -36,8 +36,8 @@ void ABoss::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Idle));
 	GetBlackboardComponent()->SetValueAsString(TEXT("TargetTag"), TEXT("Player"));
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 100.0f);
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 500.0f);
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 500.0f);
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 3000.0f);
 
 	GetBlackboardComponent()->SetValueAsVector(TEXT("OriginPos"), GetActorLocation());
 

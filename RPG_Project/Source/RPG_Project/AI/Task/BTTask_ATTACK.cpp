@@ -77,6 +77,7 @@ void UBTTask_ATTACK::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
 		StateTime = 0.0f;
 	}
+	// 몬스터3일때 , 공격중이면 effect 만들기
 }
 
 EAniState UBTTask_ATTACK::GetAIState(UBehaviorTreeComponent& OwnerComp)
