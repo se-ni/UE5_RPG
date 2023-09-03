@@ -47,9 +47,9 @@ private:
 	float hp1;
 	float hp2;
 
-	UFUNCTION()
-		void MainPlayer1Attack(UBehaviorTreeComponent& OwnerComp);
-	UFUNCTION()
-		void MainPlayer2Attack(UBehaviorTreeComponent& OwnerComp);
+	//UFUNCTION()
+	//	void MainPlayer1Attack(UBehaviorTreeComponent& OwnerComp);
+	//UFUNCTION()
+	//	void MainPlayer2Attack(UBehaviorTreeComponent& OwnerComp);
 	
 };

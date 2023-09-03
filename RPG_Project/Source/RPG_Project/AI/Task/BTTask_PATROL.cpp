@@ -37,7 +37,7 @@ EBTNodeResult::Type UBTTask_PATROL::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 		RandomDir.X = UGlobalData::MainRandom.FRandRange(-100.0f, 100.0f);
 		RandomDir.Y = UGlobalData::MainRandom.FRandRange(-100.0f, 100.0f);
 		RandomDir.Normalize();
-		RandomDir *= UGlobalData::MainRandom.FRandRange(SearchRange * 1.2f, SearchRange);
+		RandomDir *= UGlobalData::MainRandom.FRandRange(SearchRange, SearchRange * 1.2f);
 		RandomDir += OriginPos;
 		PP->Positions.Add(RandomDir);
 	}
