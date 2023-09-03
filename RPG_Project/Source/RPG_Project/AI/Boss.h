@@ -7,6 +7,7 @@
 #include "MonsterData.h"
 #include "../Global/GlobalEnums.h"
 #include "../Global/GlobalGameInstance.h"
+#include "../Global/GlobalAnimInstance.h"
 #include "../AI/MonsterPatrolData.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "../Global/GlobalCoin.h"
@@ -46,7 +47,6 @@ public:
 		void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	UGlobalGameInstance* GetGlobalGameInstance();
 
 	UFUNCTION(BlueprintCallable)
 	void SpawnCoinActor(FVector _Loc)
@@ -69,6 +69,7 @@ public:
 		hp = _hp;
 	}
 	bool isoverlap; // 플레이어와 몬스터가 오버랩 됐음을 판단하는 bool 변수 
+
 private:
 
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -83,6 +84,14 @@ private:
 
 	UPROPERTY(Category = "Coin", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AGlobalCoin> CoinActor;
+	
+	UFUNCTION()
+	void AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload);
+	
+	FTimerHandle EffectDestroyTimerHandle; // 타이머 핸들변수
 
+	void DestroyAttackEffect();
+
+	AActor* AttackEffect = nullptr;
 };
 

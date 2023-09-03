@@ -21,6 +21,7 @@ void ABoss::BeginPlay()
 {	
 	// Super::BeginPlay();
 
+	GlobalAnimInstance = Cast<UGlobalAnimInstance>(GetMesh()->GetAnimInstance());
 
 	UGlobalGameInstance* GameInst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
@@ -36,7 +37,7 @@ void ABoss::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Idle));
 	GetBlackboardComponent()->SetValueAsString(TEXT("TargetTag"), TEXT("Player"));
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 500.0f);
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 700.0f);
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 3000.0f);
 
 	GetBlackboardComponent()->SetValueAsVector(TEXT("OriginPos"), GetActorLocation());
@@ -49,6 +50,8 @@ void ABoss::BeginPlay()
 	GetBlackboardComponent()->SetValueAsBool(TEXT("SpawnCoin"), false);
 
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("Boss1HP"), 0.3f); // 블랙보드 Boss2HP SET
+
+	GlobalAnimInstance->OnPlayMontageNotifyBegin.AddDynamic(this, &ABoss::AnimNotifyBegin);
 }
 
 void ABoss::Tick(float DeltaSecond)
@@ -59,25 +62,38 @@ void ABoss::Tick(float DeltaSecond)
 void ABoss::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	
-		AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(OtherActor);
-		if (nullptr != Player)
-		{
-			
-			// 플레이어의 애님 인스턴스 가져오기
-			UMainPlayerAnimInstance* PlayerAnimInstance = Player->GetMainPlayerAnimInstance();
-			if (PlayerAnimInstance)
-			{
-				if (PlayerAnimInstance->GetCurrentAnimationState() == EAniState::Attack)
-				{
-					isoverlap = false; // 플레이어가 공격중일때는, hp 감소 x
-					GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true);
-				}
-				else
-				{
-					isoverlap = true;
-					GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), false);
-				}
-			}
+	int a = 0;
+}
+void ABoss::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)
+{
+	int a = 0;
+	UGlobalGameInstance* Inst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
+
+	TSubclassOf<UObject> Fire = Inst->GetSubClass(TEXT("Fire"));
+	//TArray<UActorComponent*> StaticMeshs = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponMesh"));
+
+	TArray<UActorComponent*> FireEffects = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("FireEffect"));
+
+	USceneComponent* FireCom = Cast<USceneComponent>(FireEffects[0]);
+	FVector Pos = FireCom->GetComponentToWorld().GetLocation();
+	if (nullptr != Fire)
+	{
+
+		{ // 이펙트 만들기
+			AttackEffect = GetWorld()->SpawnActor<AActor>(Fire);
+			FVector effectloc = FVector(20.f, 0.f, 0.f) + GetActorLocation();
+			AttackEffect->SetActorLocation(Pos);
+			// Actor->SetActorScale3D(FVector(0.2f,0.2f,0.2f));
+			GetWorld()->GetTimerManager().SetTimer(EffectDestroyTimerHandle, this, &ABoss::DestroyAttackEffect, 5.0f, false);
 		}
+	}
+}
+
+void ABoss::DestroyAttackEffect()
+{
+	if (AttackEffect)
+	{
+		AttackEffect->Destroy();
+		AttackEffect = nullptr;
+	}
 }

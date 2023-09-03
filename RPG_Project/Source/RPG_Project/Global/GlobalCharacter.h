@@ -101,6 +101,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	class UGlobalAnimInstance* GlobalAnimInstance = nullptr;
+
 	UPROPERTY(Category = "AnimationValue", EditAnywhere, BlueprintReadWrite)
 		/*EAniState AniState = EAniState::Idle;*/
 		int AniState = 0;
@@ -109,5 +111,5 @@ public:
 		/*TMap<EAniState, class UAnimMontage*> AllAnimations;*/
 		TMap<int, class UAnimMontage*> AllAnimations;
 private:
-	class UGlobalAnimInstance* GlobalAnimInstance = nullptr;
+
 };

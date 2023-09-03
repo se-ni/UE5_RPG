@@ -5,6 +5,7 @@
 #include "../MyAIController.h"
 #include "../Monster.h"
 #include "../Monster2.h"
+#include "../Boss.h"
 #include "../../MainPlayer/MainPlayerCharacter.h"
 #include "../../Global/GlobalEnums.h"
 #include "Kismet/GameplayStatics.h"
@@ -78,6 +79,11 @@ void UBTTask_ATTACK::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 		StateTime = 0.0f;
 	}
 	// 몬스터3일때 , 공격중이면 effect 만들기
+	ABoss* Boss = Cast<ABoss>(GetGlobalCharacter(OwnerComp));
+	if (nullptr != Boss)
+	{
+		int a = 0;
+	}
 }
 
 EAniState UBTTask_ATTACK::GetAIState(UBehaviorTreeComponent& OwnerComp)
