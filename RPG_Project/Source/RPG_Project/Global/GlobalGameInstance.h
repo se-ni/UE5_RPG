@@ -64,6 +64,18 @@ private:
 	UPROPERTY(Category = "Monster2", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int Monster2Cnt = 2;
 
+	UPROPERTY(Category = "Stage3", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int Stage3Monster1Cnt = 2;
+
+	UPROPERTY(Category = "Stage3", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int Stage3Monster2Cnt = 2;
+
+	UPROPERTY(Category = "Stage3", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int Stage3DeathMonster1Cnt = 0;
+
+	UPROPERTY(Category = "Stage3", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int Stage3DeathMonster2Cnt = 0;
+
 	UPROPERTY()
 		UDataTable* MeshDatas;
 
