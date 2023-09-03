@@ -37,7 +37,7 @@ EBTNodeResult::Type UBTTask_PATROL::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 		RandomDir.X = UGlobalData::MainRandom.FRandRange(-100.0f, 100.0f);
 		RandomDir.Y = UGlobalData::MainRandom.FRandRange(-100.0f, 100.0f);
 		RandomDir.Normalize();
-		RandomDir *= UGlobalData::MainRandom.FRandRange(SearchRange, SearchRange * 1.2f);
+		RandomDir *= UGlobalData::MainRandom.FRandRange(SearchRange * 1.2f, SearchRange);
 		RandomDir += OriginPos;
 		PP->Positions.Add(RandomDir);
 	}
@@ -53,7 +53,7 @@ EBTNodeResult::Type UBTTask_PATROL::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 void UBTTask_PATROL::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DelataSeconds)
 {
 	Super::TickTask(OwnerComp, NodeMemory, DelataSeconds);
-	GetGlobalCharacter(OwnerComp)->SetAniState(EAniState::Idle);
+	GetGlobalCharacter(OwnerComp)->SetAniState(EAniState::Patrol);
 
 	UObject* PPObject = GetBlackboardComponent(OwnerComp)->GetValueAsObject(TEXT("PatrolPositions"));
 
@@ -107,7 +107,7 @@ void UBTTask_PATROL::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 
 		if (bReturning == false)
 		{
-			if (FMath::Abs(Angle0 - Angle1) >= 10.0f)
+			if (FMath::Abs(Angle0 - Angle1) >= 5.0f)
 			{
 				FRotator Rot = FRotator::MakeFromEuler({ 0, 0, Cross.Z * 100.0f * DelataSeconds });
 				GetGlobalCharacter(OwnerComp)->AddActorWorldRotation(Rot);
