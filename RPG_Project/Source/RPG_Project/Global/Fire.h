@@ -24,9 +24,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(Category = "Fire", EditAnywhere, BlueprintReadWrite)
-		TSubclassOf<AActor> DeathCreateObject = nullptr;
-
 	UFUNCTION()
 		FORCEINLINE USphereComponent* GetSphereComponent()
 	{
@@ -47,10 +44,7 @@ private:
 	UPROPERTY(Category = "Fire", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		float Speed = 1000.0f;
 	UPROPERTY(Category = "Fire", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		float DestroyTime = 5.0f;
-
-	UFUNCTION()
-	void DesytroyFire(AActor* _Destroy);
+		float DestroyTime = 3.0f;
 
 	UPROPERTY(Category = "Effect", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		class USphereComponent* SphereComponent = nullptr;

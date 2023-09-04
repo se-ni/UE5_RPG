@@ -84,7 +84,7 @@ void ABoss::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload
 			FVector effectloc = FVector(20.f, 0.f, 0.f) + GetActorLocation();
 			AttackEffect->SetActorLocation(Pos);
 			// Actor->SetActorScale3D(FVector(0.2f,0.2f,0.2f));
-			GetWorld()->GetTimerManager().SetTimer(EffectDestroyTimerHandle, this, &ABoss::DestroyAttackEffect, 5.0f, false);
+			// GetWorld()->GetTimerManager().SetTimer(EffectDestroyTimerHandle, this, &ABoss::DestroyAttackEffect, 5.0f, false);
 		}
 	}
 }

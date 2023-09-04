@@ -19,7 +19,6 @@ AFire::AFire()
 void AFire::BeginPlay()
 {
 	Super::BeginPlay();
-	OnDestroyed.AddDynamic(this, &AFire::DesytroyFire);
 	
 	SphereComp = GetSphereComponent();
 	SphereComp->OnComponentBeginOverlap.AddDynamic(this, &AFire::BeginOverlap);
@@ -39,19 +38,6 @@ void AFire::Tick(float DeltaTime)
 
 	AddActorWorldOffset(GetActorForwardVector() * DeltaTime * Speed);
 
-}
-
-void AFire::DesytroyFire(AActor* _Destroy)
-{
-	if (nullptr == DeathCreateObject)
-	{
-		return;
-	}
-
-	AActor* Actor = GetWorld()->SpawnActor<AActor>(DeathCreateObject);
-
-	Actor->SetActorLocation(GetActorLocation());
-	Actor->SetActorRotation(GetActorRotation());
 }
 
 void AFire::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

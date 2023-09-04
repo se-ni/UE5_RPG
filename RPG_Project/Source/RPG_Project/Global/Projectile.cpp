@@ -19,7 +19,6 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	OnDestroyed.AddDynamic(this, &AProjectile::DesytroyProjectile);
 	
 	SphereComp = GetSphereComponent();
 	SphereComp->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::BeginOverlap);
@@ -41,19 +40,6 @@ void AProjectile::Tick(float DeltaTime)
 
 }
 
-void AProjectile::DesytroyProjectile(AActor* _Destroy)
-{
-	if (nullptr == DeathCreateObject)
-	{
-		return;
-	}
-
-	AActor* Actor = GetWorld()->SpawnActor<AActor>(DeathCreateObject);
-
-	Actor->SetActorLocation(GetActorLocation());
-	Actor->SetActorRotation(GetActorRotation());
-}
-
 void AProjectile::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
@@ -72,6 +58,6 @@ void AProjectile::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor*
 		TimerManager.SetTimer(bdeathTimerHandle, [Mons]()
 			{
 				Mons->Setbdeathfalse();
-			}, 0.1f, false);
+			}, 2.0f, false);
 	}
 }
