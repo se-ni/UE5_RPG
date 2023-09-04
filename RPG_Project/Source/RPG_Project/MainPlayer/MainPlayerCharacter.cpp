@@ -146,8 +146,10 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAttack"), EKeys::LeftMouseButton));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerJumpAction"), EKeys::SpaceBar));
 
-		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerStatusUI"), EKeys::Tab));
+		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerStateUI"), EKeys::Tab));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("MinimapUI"), EKeys::M));
+
+		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("StatusUI"), EKeys::P));
 
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("InteractionKey"), EKeys::E));
 
@@ -173,12 +175,12 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("PlayerAttack", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::AttackAction);
 	PlayerInputComponent->BindAction("PlayerJumpAction", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::JumpAction);
 
-	PlayerInputComponent->BindAction("PlayerStatusUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::PlayerStatusOnOff);
+	PlayerInputComponent->BindAction("PlayerStateUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::PlayerStateOnOff);
 	PlayerInputComponent->BindAction("MinimapUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::MinimapOnOff);
+	PlayerInputComponent->BindAction("StatusUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::StatusOnOff);
 }
 
-
-void AMainPlayerCharacter::PlayerStatusOnOff()
+void AMainPlayerCharacter::PlayerStateOnOff()
 {
 	APlayerController* MainCon = Cast<APlayerController>(GetController());
 	AMainHUD* HUD = MainCon->GetHUD<AMainHUD>();
@@ -187,8 +189,22 @@ void AMainPlayerCharacter::PlayerStatusOnOff()
 	{
 		return;
 	}
-	HUD->GetMainWidget()->SetPlayerStatusUIOnOffSwitch();
+	HUD->GetMainWidget()->SetPlayerStateUIOnOffSwitch();
 }
+
+void AMainPlayerCharacter::StatusOnOff()
+{
+	APlayerController* MainCon = Cast<APlayerController>(GetController());
+	AMainHUD* HUD = MainCon->GetHUD<AMainHUD>();
+
+	if (nullptr == HUD && false == HUD->IsValidLowLevel())
+	{
+		return;
+	}
+	HUD->GetMainWidget()->SetStatusUIOnOffSwitch();
+}
+
+
 
 void AMainPlayerCharacter::MinimapOnOff()
 {

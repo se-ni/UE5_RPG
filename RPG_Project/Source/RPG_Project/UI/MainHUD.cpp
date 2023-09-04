@@ -32,6 +32,9 @@ void AMainHUD::BeginPlay()
 	{
 		UUserWidget* Player2Death = Cast<UUserWidget>(MainWidget->GetWidgetFromName(TEXT("WBP_Player2Death")));
 	}
+	{
+		UUserWidget* PlayerStatusUI = Cast<UUserWidget>(MainWidget->GetWidgetFromName(TEXT("WBP_PlayerStatus")));
+	}
 }
 void AMainHUD::Tick(float _Delta)
 {

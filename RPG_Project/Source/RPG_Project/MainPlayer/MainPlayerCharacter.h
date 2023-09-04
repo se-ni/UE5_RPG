@@ -37,9 +37,11 @@ public:
 	void TurnAtRate(float Rate);
 	void LookUpAtRate(float Rate);
 
-	void PlayerStatusOnOff();
+	void PlayerStateOnOff();
 	void MinimapOnOff();
 	void PlayerDeathOnOff();
+
+	void StatusOnOff();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pawn")
 		float BaseTurnRate;

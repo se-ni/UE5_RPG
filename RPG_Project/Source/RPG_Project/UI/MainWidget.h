@@ -16,9 +16,9 @@ class RPG_PROJECT_API UMainWidget : public UUserWidget
 
 public:
 
-	void SetPlayerStatusUIOnOffSwitch()
+	void SetPlayerStateUIOnOffSwitch()
 	{
-		StatusUIOnOff = StatusUIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
+		PlayerStateOnOff = PlayerStateOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
 	}
 
 	void SetMinimapUIOnOffSwitch()
@@ -38,17 +38,22 @@ public:
 
 	void SetPlayerDeathUIOnOffSwitch()
 	{
-		SetPlayerDeathUIOnOff = SetPlayerDeathUIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
+		PlayerDeathUIOnOff = PlayerDeathUIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
 	}
 
 	void SetPlayer2DeathUIOnOffSwitch()
 	{
-		SetPlayer2DeathUIOnOff = SetPlayer2DeathUIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
+		Player2DeathUIOnOff = Player2DeathUIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
+	}
+	
+	void SetStatusUIOnOffSwitch()
+	{
+		StatusUIOnOff = StatusUIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
 	}
 
 private:
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		ESlateVisibility StatusUIOnOff = ESlateVisibility::Visible;
+		ESlateVisibility PlayerStateOnOff = ESlateVisibility::Visible; // State UI
 
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		ESlateVisibility MinimapUIOnOff = ESlateVisibility::Hidden;
@@ -60,8 +65,11 @@ private:
 		ESlateVisibility Minimap3UIOnOff = ESlateVisibility::Hidden;
 
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		ESlateVisibility SetPlayerDeathUIOnOff = ESlateVisibility::Hidden;
+		ESlateVisibility PlayerDeathUIOnOff = ESlateVisibility::Hidden;
 
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		ESlateVisibility SetPlayer2DeathUIOnOff = ESlateVisibility::Hidden;
+		ESlateVisibility Player2DeathUIOnOff = ESlateVisibility::Hidden;
+
+	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		ESlateVisibility StatusUIOnOff = ESlateVisibility::Hidden; // Status UI
 };
