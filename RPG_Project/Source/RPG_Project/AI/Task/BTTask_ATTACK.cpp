@@ -5,6 +5,7 @@
 #include "../MyAIController.h"
 #include "../Monster.h"
 #include "../Monster2.h"
+#include "../Monster3.h"
 #include "../Boss.h"
 #include "../../MainPlayer/MainPlayerCharacter.h"
 #include "../../Global/GlobalEnums.h"
@@ -54,13 +55,29 @@ EBTNodeResult::Type UBTTask_ATTACK::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 			if (Player)
 			{
 				float playhp = Player->GetPlayerHP(); // 플레이어의 hp 가져와서
-				playhp = playhp - 0.3; // 0.1만큼 감소시키고
+				playhp = playhp - 0.2; // 0.3만큼 감소시키고
 				Player->SetPlayerHP(playhp); // hp로 set 해준다
 			}
 			Mons2->isoverlap2 = false; // overlap bool 변수는 다시 false로.
 		}
 	}
 
+	AMonster3* Mons3 = Cast<AMonster3>(GetGlobalCharacter(OwnerComp));
+	if (nullptr != Mons3)
+	{
+		if (Mons3->isoverlap3) // 플레이어와 몬스터2가 overlap 됐을때
+		{
+			// UGamplayStatics를 이용해서 MainPlayerCharacter 가져오는 법
+			AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			if (Player)
+			{
+				float playhp = Player->GetPlayerHP(); // 플레이어의 hp 가져와서
+				playhp = playhp - 0.3; // 0.3만큼 감소시키고
+				Player->SetPlayerHP(playhp); // hp로 set 해준다
+			}
+			Mons3->isoverlap3 = false; // overlap bool 변수는 다시 false로.
+		}
+	}
 
 	return EBTNodeResult::Type::InProgress;
 }
@@ -78,7 +95,8 @@ void UBTTask_ATTACK::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
 		StateTime = 0.0f;
 	}
-	// 몬스터3일때 , 공격중이면 effect 만들기
+	
+	//보스 몬스터 일 때 , 공격중이면 effect 만들기
 	ABoss* Boss = Cast<ABoss>(GetGlobalCharacter(OwnerComp));
 	if (nullptr != Boss)
 	{

@@ -48,7 +48,7 @@ void AMonster::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsBool(TEXT("SpawnCoin"), false);
 
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("Monster1HP"), 0.3f); // 블랙보드 Monster2HP SET
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("Monster1HP"), 0.3f); // 블랙보드 Monster1HP SET
 }
 
 void AMonster::Tick(float DeltaSecond)
@@ -71,7 +71,7 @@ void AMonster::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 				if (PlayerAnimInstance->GetCurrentAnimationState() == EAniState::Attack)
 				{
 					isoverlap = false; // 플레이어가 공격중일때는, hp 감소 x
-					GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true);
+					GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true); // BTTASK_BASE 에서 이 변수 값을 기준으로 BTTASK_DEATH 불러줌
 				}
 				else
 				{

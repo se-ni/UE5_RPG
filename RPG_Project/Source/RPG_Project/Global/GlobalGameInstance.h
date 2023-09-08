@@ -48,26 +48,18 @@ public:
 	{
 		DeathMonster2 = _int;
 	}
-	UFUNCTION()
-		int GetStage3DeathMonster1()
+
+	int GetDeathMonster3()
 	{
-		return Stage3DeathMonster1Cnt;
+		return DeathMonster3;
 	}
 	UFUNCTION()
-		void SetStage3DeathMonster1(int _int)
+		void SetDeathMonster3(int _int)
 	{
-		Stage3DeathMonster1Cnt = _int;
+		DeathMonster3 = _int;
 	}
 
-	int GetStage3DeathMonster2()
-	{
-		return Stage3DeathMonster2Cnt;
-	}
-	UFUNCTION()
-		void SetStage3DeathMonster2(int _int)
-	{
-		Stage3DeathMonster2Cnt = _int;
-	}
+
 
 
 	UPROPERTY(Category = "Coin", EditAnywhere, BlueprintReadWrite)
@@ -85,17 +77,12 @@ private:
 	UPROPERTY(Category = "Monster2", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int Monster2Cnt = 2;
 
-	UPROPERTY(Category = "Stage3", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		int Stage3Monster1Cnt = 2;
+	UPROPERTY(Category = "Monster2", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int DeathMonster3 = 0;
 
-	UPROPERTY(Category = "Stage3", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		int Stage3Monster2Cnt = 2;
+	UPROPERTY(Category = "Monster2", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int Monster3Cnt = 2;
 
-	UPROPERTY(Category = "Stage3", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		int Stage3DeathMonster1Cnt = 0;
-
-	UPROPERTY(Category = "Stage3", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		int Stage3DeathMonster2Cnt = 0;
 
 	UPROPERTY()
 		UDataTable* MeshDatas;

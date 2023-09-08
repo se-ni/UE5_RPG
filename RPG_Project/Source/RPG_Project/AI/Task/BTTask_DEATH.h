@@ -36,16 +36,15 @@ private:
 	UPROPERTY(Category = "Monster2", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	int Deathcnt2 = 0;
 
-	UPROPERTY(Category = "Monster1", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		int Stage3DeathMonster1cnt = 0;
 	UPROPERTY(Category = "Monster2", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		int Stage3DeathMonster2cnt = 0;
+		int Deathcnt3 = 0;
 
 	bool SpawnBPCoin;
 	/*FVector ActorLoc;*/
 
 	float hp1;
 	float hp2;
+	float hp3;
 
 	//UFUNCTION()
 	//	void MainPlayer1Attack(UBehaviorTreeComponent& OwnerComp);

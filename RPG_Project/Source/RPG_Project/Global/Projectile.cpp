@@ -3,6 +3,7 @@
 
 #include "Projectile.h"
 #include "../AI/Monster2.h"
+#include "../AI/Monster3.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 // Sets default values
@@ -43,21 +44,42 @@ void AProjectile::Tick(float DeltaTime)
 void AProjectile::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	
-	AMonster2* Mons = Cast<AMonster2>(OtherActor);
-
-	// 몬스터2의 블랙보드 컴포넌트 가져오기
-	UBlackboardComponent* BlackboardComp = Mons->GetBlackboardComponent();
-
-	if (BlackboardComp)
+	AMonster2* Mons2 = Cast<AMonster2>(OtherActor);
+	if ((nullptr!= Mons2) && (OtherActor == Mons2))
 	{
-		// 블랙보드 변수 bIsDeath를 true로 설정
-		BlackboardComp->SetValueAsBool(TEXT("bIsDeath"), true);	
-		// AMonster2 클래스의 Setbdeathfalse 함수를 호출하기 위해 람다 함수 사용
-		FTimerManager& TimerManager = GetWorld()->GetTimerManager();
-		TimerManager.SetTimer(bdeathTimerHandle, [Mons]()
-			{
-				Mons->Setbdeathfalse();
-			}, 2.0f, false);
+		// 몬스터2의 블랙보드 컴포넌트 가져오기
+		UBlackboardComponent* BlackboardComp = Mons2->GetBlackboardComponent();
+
+		if (BlackboardComp)
+		{
+			// 블랙보드 변수 bIsDeath를 true로 설정
+			BlackboardComp->SetValueAsBool(TEXT("bIsDeath"), true);
+			// AMonster2 클래스의 Setbdeathfalse 함수를 호출하기 위해 람다 함수 사용
+			FTimerManager& TimerManager = GetWorld()->GetTimerManager();
+			TimerManager.SetTimer(bdeathTimerHandle, [Mons2]()
+				{
+					Mons2->Setbdeathfalse();
+				}, 2.0f, false);
+		}
+	}
+
+	AMonster3* Mons3 = Cast<AMonster3>(OtherActor);
+	if ((nullptr != Mons3) && (OtherActor == Mons3))
+	{
+		int a = 0;
+		// 몬스터3의 블랙보드 컴포넌트 가져오기
+		UBlackboardComponent* BlackboardComp = Mons3->GetBlackboardComponent();
+
+		if (BlackboardComp)
+		{
+			// 블랙보드 변수 bIsDeath를 true로 설정
+			BlackboardComp->SetValueAsBool(TEXT("bIsDeath"), true);
+			// AMonster2 클래스의 Setbdeathfalse 함수를 호출하기 위해 람다 함수 사용
+			FTimerManager& TimerManager = GetWorld()->GetTimerManager();
+			TimerManager.SetTimer(bdeathTimerHandle, [Mons3]()
+				{
+					Mons3->Setbdeathfalse();
+				}, 2.0f, false);
+		}
 	}
 }
