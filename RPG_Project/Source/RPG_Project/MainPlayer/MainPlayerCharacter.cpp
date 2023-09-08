@@ -48,7 +48,9 @@ void AMainPlayerCharacter::BeginPlay()
 	MainPlayerAnimInstance->OnPlayMontageNotifyBegin.AddDynamic(this, &AMainPlayerCharacter::AnimNotifyBegin);
 
 	PlayerATT = 0.3f;
+	isWeapon1 = true;
 	isWeapon2 = false;
+	isWeapon3 = false;
 }
 
 void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)
@@ -57,7 +59,6 @@ void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPoi
 		UGlobalGameInstance* Inst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
 		TSubclassOf<UObject> Effect = Inst->GetSubClass(TEXT("Effect"));
-		TSubclassOf<UObject> ProjectileAttack = Inst->GetSubClass(TEXT("Projectile"));
 
 		TArray<UActorComponent*> StaticMeshs = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponMesh"));
 		TArray<UActorComponent*> MeshEffects = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponEffect"));
@@ -66,24 +67,38 @@ void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPoi
 		FVector Pos = EffectCom->GetComponentToWorld().GetLocation();
 		if (nullptr != Effect)
 		{
-	
+			if (true == isWeapon1)
 			{ // 이펙트 만들기
 				AttackEffect = GetWorld()->SpawnActor<AActor>(Effect);
-				FVector effectloc = FVector(200.f, 0.f, 0.f) + GetActorLocation();
+				FVector effectloc = FVector(1000.f, 0.f, 0.f) + GetActorLocation();
 				AttackEffect->SetActorLocation(Pos);
-				// Actor->SetActorScale3D(FVector(0.2f,0.2f,0.2f));
+				AttackEffect->SetActorScale3D(FVector(0.1f, 0.1f, 0.1f));
 				GetWorld()->GetTimerManager().SetTimer(EffectDestroyTimerHandle, this, &AMainPlayerCharacter::DestroyAttackEffect, 3.0f, false);
 			}
-			if(true == isWeapon2)
-			{ // 발사체 만들기
-				AActor* Actor = GetWorld()->SpawnActor<AActor>(ProjectileAttack);
-				AProjectile* Projectile = Cast<AProjectile>(Actor);
+		}
 
-				Projectile->SetActorLocation(Pos);
-				Projectile->SetActorRotation(GetActorRotation());
-				Projectile->Tags.Add(FName("PlayerAttack"));
-				Projectile->GetSphereComponent()->SetCollisionProfileName(TEXT("PlayerAttack"), true);
-			}
+		TSubclassOf<UObject> ProjectileAttack = Inst->GetSubClass(TEXT("Projectile"));
+		TSubclassOf<UObject> Projectile2Attack = Inst->GetSubClass(TEXT("Projectile2"));
+
+		if(true == isWeapon2)
+		{ // 발사체 만들기
+			AActor* Actor = GetWorld()->SpawnActor<AActor>(ProjectileAttack);
+			AProjectile* Projectile = Cast<AProjectile>(Actor);
+
+			Projectile->SetActorLocation(Pos);
+			Projectile->SetActorRotation(GetActorRotation());
+			Projectile->Tags.Add(FName("PlayerAttack"));
+			Projectile->GetSphereComponent()->SetCollisionProfileName(TEXT("PlayerAttack"), true);
+		}
+		if (true == isWeapon3)
+		{
+			AActor* Actor = GetWorld()->SpawnActor<AActor>(Projectile2Attack);
+			AProjectile* Projectile2 = Cast<AProjectile>(Actor);
+
+			Projectile2->SetActorLocation(Pos);
+			Projectile2->SetActorRotation(GetActorRotation());
+			Projectile2->Tags.Add(FName("PlayerAttack"));
+			Projectile2->GetSphereComponent()->SetCollisionProfileName(TEXT("PlayerAttack"), true);
 		}
 
 }
@@ -240,19 +255,25 @@ void AMainPlayerCharacter::SetWeapon1()
 {
 	WeaponMesh->SetStaticMesh(WeaponArrays[0]);
 	PlayerATT = 0.3f;
+	isWeapon1 = true;
 	isWeapon2 = false;
+	isWeapon3 = false;
 }
 void AMainPlayerCharacter::SetWeapon2()
 {
 	WeaponMesh->SetStaticMesh(WeaponArrays[1]);
 	PlayerATT = 0.5f;
+	isWeapon1 = false;
 	isWeapon2 = true;
+	isWeapon3 = false;
 }
 void AMainPlayerCharacter::SetWeapon3()
 {
 	WeaponMesh->SetStaticMesh(WeaponArrays[2]);
 	PlayerATT = 0.7f;
+	isWeapon1 = false;
 	isWeapon2 = false;
+	isWeapon3 = true;
 }
 
 

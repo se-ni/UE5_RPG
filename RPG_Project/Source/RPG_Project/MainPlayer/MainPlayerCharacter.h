@@ -102,9 +102,9 @@ public:
 		MP = _MP;
 	}
 
+	bool isWeapon1 = false;
 	bool isWeapon2 = false;
-	TSubclassOf<UUserWidget> ShopWidgetClass;
-	UTesShopWidget* ShopUIWidget;
+	bool isWeapon3 = false;
 
 	// 함수를 통해 애님 인스턴스를 가져옵니다.
 	UFUNCTION(BlueprintPure, Category = "Animation")
