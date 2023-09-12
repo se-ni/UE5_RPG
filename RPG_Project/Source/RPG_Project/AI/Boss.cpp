@@ -50,7 +50,7 @@ void ABoss::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsBool(TEXT("SpawnCoin"), false);
 
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("BossMonsterHP"), 4.0f); // 블랙보드 BossHP SET
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("BossMonsterHP"), 0.5f); // 블랙보드 BossHP SET
 
 	GlobalAnimInstance->OnPlayMontageNotifyBegin.AddDynamic(this, &ABoss::AnimNotifyBegin);
 }
