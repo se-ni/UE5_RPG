@@ -59,6 +59,16 @@ public:
 		DeathMonster3 = _int;
 	}
 
+	int GetDeathMonster4()
+	{
+		return DeathMonster4;
+	}
+	UFUNCTION()
+		void SetDeathMonster4(int _int)
+	{
+		DeathMonster4 = _int;
+	}
+
 
 
 
@@ -77,11 +87,18 @@ private:
 	UPROPERTY(Category = "Monster2", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int Monster2Cnt = 2;
 
-	UPROPERTY(Category = "Monster2", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = "Monster3", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int DeathMonster3 = 0;
 
-	UPROPERTY(Category = "Monster2", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = "Monster3", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int Monster3Cnt = 2;
+
+	UPROPERTY(Category = "BossMonster", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int DeathMonster4 = 0;
+
+	UPROPERTY(Category = "BossMonster", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int Monster4Cnt = 1;
+
 
 
 	UPROPERTY()

@@ -38,8 +38,8 @@ void ABoss::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Idle));
 	GetBlackboardComponent()->SetValueAsString(TEXT("TargetTag"), TEXT("Player"));
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 1500.0f);
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 3000.0f);
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 1000.0f);
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 2000.0f);
 
 	GetBlackboardComponent()->SetValueAsVector(TEXT("OriginPos"), GetActorLocation());
 
@@ -50,7 +50,7 @@ void ABoss::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsBool(TEXT("SpawnCoin"), false);
 
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("Boss1HP"), 0.3f); // 블랙보드 BossHP SET
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("BossMonsterHP"), 4.0f); // 블랙보드 BossHP SET
 
 	GlobalAnimInstance->OnPlayMontageNotifyBegin.AddDynamic(this, &ABoss::AnimNotifyBegin);
 }
@@ -64,6 +64,7 @@ void ABoss::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	// 플레이어의 총알에 맞았을경우. hp 감소
+	GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true); // 보스몬스터 death로
 }
 void ABoss::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)
 {
@@ -97,4 +98,9 @@ void ABoss::DestroyAttackEffect()
 		AttackEffect->Destroy();
 		AttackEffect = nullptr;
 	}
+}
+
+void ABoss::Setbdeathfalse()
+{
+	GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), false);
 }
