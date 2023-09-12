@@ -17,5 +17,6 @@ enum class EAniState : uint8
 	Attack, //6
 	Patrol, 
 	Death,
+	Hit,
 	Return,
 };

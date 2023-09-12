@@ -250,7 +250,6 @@ void AMainPlayerCharacter::PlayerDeathOnOff()
     }
 }
 
-
 void AMainPlayerCharacter::SetWeapon1()
 {
 	WeaponMesh->SetStaticMesh(WeaponArrays[0]);
@@ -283,6 +282,7 @@ void AMainPlayerCharacter::MoveRight(float Val)
 	{
 		return;
 	}
+
 
 	if (Val != 0.f)
 	{
@@ -399,3 +399,4 @@ void AMainPlayerCharacter::PauseGame()
 {
 	UGameplayStatics::SetGamePaused(GetWorld(), true);
 }
+

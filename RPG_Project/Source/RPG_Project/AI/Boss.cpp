@@ -70,20 +70,17 @@ void ABoss::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload
 	UGlobalGameInstance* Inst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
 	TSubclassOf<UObject> Fire = Inst->GetSubClass(TEXT("Fire"));
-	//TArray<UActorComponent*> StaticMeshs = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponMesh"));
 
 	TArray<UActorComponent*> FireEffects = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("FireEffect"));
 	USceneComponent* FireCom = Cast<USceneComponent>(FireEffects[0]);
 
 	FVector Pos = FireCom->GetComponentToWorld().GetLocation();
 
-	//TArray<UActorComponent*> StaticMeshs = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponMesh"));
 	if (nullptr != Fire)
 	{
-
 		{	// 발사체 만들기
 			AActor* Actor = GetWorld()->SpawnActor<AActor>(Fire);
-			AFire* FireActor = Cast<AFire>(Actor);
+			FireActor = Cast<AFire>(Actor);
 
 			FireActor->SetActorLocation(Pos);
 			FireActor->SetActorRotation(GetActorRotation());

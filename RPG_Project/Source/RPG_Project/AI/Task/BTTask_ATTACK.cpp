@@ -65,12 +65,12 @@ EBTNodeResult::Type UBTTask_ATTACK::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	}
 
 	AMonster3* Mons3 = Cast<AMonster3>(GetGlobalCharacter(OwnerComp));
+	// UGamplayStatics를 이용해서 MainPlayerCharacter 가져오는 법
+	AMainPlayerCharacter3* Player3 = Cast<AMainPlayerCharacter3>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	if (nullptr != Mons3)
 	{
 		if (Mons3->isoverlap3) // 플레이어와 몬스터2가 overlap 됐을때
-		{
-			// UGamplayStatics를 이용해서 MainPlayerCharacter 가져오는 법
-			AMainPlayerCharacter3* Player3 = Cast<AMainPlayerCharacter3>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		{		
 			if (Player3)
 			{
 				float playhp = Player3->GetPlayerHP(); // 플레이어의 hp 가져와서
@@ -81,8 +81,17 @@ EBTNodeResult::Type UBTTask_ATTACK::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 		}
 	}
 
-	// ABoss* bossMons = Cast<ABoss>(GetGlobalCharacter(OwnerComp));
-	// 플레이어가 fire에 맞았다. 그 변수를 가져와서 몬스터가 player hp를 깎게 만들어야한다.
+	//ABoss* bossMons = Cast<ABoss>(GetGlobalCharacter(OwnerComp));
+	//// 플레이어가 fire에 맞았다. 그 변수를 가져와서 몬스터가 player hp를 깎게 만들어야한다.
+	//if (nullptr != bossMons)
+	//{
+	//	if (true == Player3->isfireattack)
+	//	{
+	//		float playhp = Player3->GetPlayerHP(); // 플레이어의 hp 가져와서
+	//		playhp = playhp - 0.4; // 0.3만큼 감소시키고
+	//		Player3->SetPlayerHP(playhp); // hp로 set 해준다
+	//	}
+	//}
 
 	return EBTNodeResult::Type::InProgress;
 }

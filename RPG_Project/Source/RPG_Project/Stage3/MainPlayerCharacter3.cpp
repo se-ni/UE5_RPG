@@ -6,7 +6,9 @@
 #include "../UI/MainHUD.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "../Global/GlobalGameInstance.h"
+#include "../Global/Fire.h"
 
 void AMainPlayerCharacter3::BeginPlay()
 {
@@ -16,7 +18,9 @@ void AMainPlayerCharacter3::BeginPlay()
 	SetPlayerATT(0.7f);
 	isWeapon2 = false;
 	isWeapon3 = true;
-	int a = 0;
+
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainPlayerCharacter3::BeginOverlap);
+	GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &AMainPlayerCharacter3::EndOverlap);
 }
 
 void AMainPlayerCharacter3::Tick(float DeltaTime)
@@ -24,12 +28,12 @@ void AMainPlayerCharacter3::Tick(float DeltaTime)
 	float HP2 = GetPlayerHP();
 	if (HP2 <= 0.0f)
 	{
-		int a = 0;
 		// 여기서 player2deathuionoff 호출
 		AMainPlayerCharacter::PauseGame();
 		AMainPlayerCharacter3::Player3DeathOnOff();
 	}
 }
+
 void AMainPlayerCharacter3::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -82,11 +86,25 @@ void AMainPlayerCharacter3::Player3DeathOnOff()
 void AMainPlayerCharacter3::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	int a = 0;
-	TArray<AActor*> FireEffects;
-	UGameplayStatics::GetAllActorsWithTag(GetWorld(), TEXT("MonsterAttack"), FireEffects);
-	if (OtherActor == FireEffects[0])
+	AFire* fire = Cast<AFire>(OtherActor);
+	if (fire)
 	{
-		isfireattack = true;
+		isoverlap = true;
+		if (isoverlap)
+		{
+			MainPlayerAniState = EAniState::Hit;
+		}
+		float playerhp = GetPlayerHP();
+		playerhp -= 0.4; // 0.4만큼 감소시키고
+		SetPlayerHP(playerhp);
 	}
+}
+
+void AMainPlayerCharacter3::EndOverlap(UPrimitiveComponent* OverlappedComponent,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex)
+{
+	isoverlap = false;
+	MainPlayerAniState = EAniState::Idle;
 }

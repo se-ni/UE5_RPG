@@ -11,6 +11,7 @@
 #include "../AI/MonsterPatrolData.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "../Global/GlobalCoin.h"
+#include "../Global/Fire.h"
 #include "Boss.generated.h"
 
 /**
@@ -70,6 +71,7 @@ public:
 	}
 	bool isoverlapboss; // 플레이어와 보스몬스터가 오버랩 됐음을 판단하는 bool 변수 
 
+	AFire* FireActor;
 private:
 
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

@@ -59,13 +59,6 @@ public:
 	UPROPERTY(Category = "AnimationValue", EditAnywhere, BlueprintReadWrite)
 		TMap<EAniState, class UAnimMontage*> MainPlayerAllAnimations ;
 
-	//UFUNCTION()
-	//	void MontageEnd(UAnimMontage* Anim, bool _Inter);
-
-	//UFUNCTION()
-	//	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-	//		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
 	UFUNCTION()
 	bool GetIsDeath()
 	{
@@ -126,6 +119,9 @@ public:
 
 	float destroyTime = 3.0f;
 	AActor* AttackEffect;
+
+	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -166,8 +162,6 @@ private:
 	/*UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		double Exp = 1000;*/
 
-	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	// const struct FPlayerWeaponData* CurWeaponData;
 	
 	UFUNCTION()
