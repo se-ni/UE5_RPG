@@ -32,10 +32,6 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		USphereComponent* SphereComp;
 
-	UFUNCTION()
-		void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
 	bool GetFireOverlap()
 	{
 		return FireOverlap;
@@ -53,4 +49,7 @@ private:
 
 	void Setdeathbool();
 	FTimerHandle bdeathTimerHandle;
+
+	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

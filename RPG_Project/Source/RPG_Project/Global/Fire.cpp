@@ -4,6 +4,7 @@
 #include "Fire.h"
 #include "../AI/Boss.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "../Stage3/MainPlayerCharacter3.h"
 
 // Sets default values
 AFire::AFire()
@@ -21,7 +22,6 @@ void AFire::BeginPlay()
 	Super::BeginPlay();
 	
 	SphereComp = GetSphereComponent();
-	SphereComp->OnComponentBeginOverlap.AddDynamic(this, &AFire::BeginOverlap);
 }
 
 // Called every frame
@@ -37,11 +37,14 @@ void AFire::Tick(float DeltaTime)
 	}
 
 	AddActorWorldOffset(GetActorForwardVector() * DeltaTime * Speed);
-
 }
 
 void AFire::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	int a = 0;
+	AMainPlayerCharacter3* player3 = Cast<AMainPlayerCharacter3>(OtherActor);
+	if ((nullptr != player3) && (OtherActor == player3))
+	{
+		int a = 0;
+	}
 }

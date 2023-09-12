@@ -8,7 +8,9 @@
 #include "../Monster3.h"
 #include "../Boss.h"
 #include "../../MainPlayer/MainPlayerCharacter.h"
+#include "../../Stage3/MainPlayerCharacter3.h"
 #include "../../Global/GlobalEnums.h"
+#include "../../Global/Fire.h"
 #include "Kismet/GameplayStatics.h"
 
 UBTTask_ATTACK::UBTTask_ATTACK()
@@ -68,16 +70,19 @@ EBTNodeResult::Type UBTTask_ATTACK::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 		if (Mons3->isoverlap3) // 플레이어와 몬스터2가 overlap 됐을때
 		{
 			// UGamplayStatics를 이용해서 MainPlayerCharacter 가져오는 법
-			AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-			if (Player)
+			AMainPlayerCharacter3* Player3 = Cast<AMainPlayerCharacter3>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			if (Player3)
 			{
-				float playhp = Player->GetPlayerHP(); // 플레이어의 hp 가져와서
+				float playhp = Player3->GetPlayerHP(); // 플레이어의 hp 가져와서
 				playhp = playhp - 0.3; // 0.3만큼 감소시키고
-				Player->SetPlayerHP(playhp); // hp로 set 해준다
+				Player3->SetPlayerHP(playhp); // hp로 set 해준다
 			}
 			Mons3->isoverlap3 = false; // overlap bool 변수는 다시 false로.
 		}
 	}
+
+	// ABoss* bossMons = Cast<ABoss>(GetGlobalCharacter(OwnerComp));
+	// 플레이어가 fire에 맞았다. 그 변수를 가져와서 몬스터가 player hp를 깎게 만들어야한다.
 
 	return EBTNodeResult::Type::InProgress;
 }
@@ -94,13 +99,6 @@ void UBTTask_ATTACK::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 	{
 		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
 		StateTime = 0.0f;
-	}
-	
-	//보스 몬스터 일 때 , 공격중이면 effect 만들기
-	ABoss* Boss = Cast<ABoss>(GetGlobalCharacter(OwnerComp));
-	if (nullptr != Boss)
-	{
-		int a = 0;
 	}
 }
 

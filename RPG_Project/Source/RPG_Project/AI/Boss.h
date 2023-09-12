@@ -68,7 +68,7 @@ public:
 	{
 		hp = _hp;
 	}
-	bool isoverlap; // 플레이어와 몬스터가 오버랩 됐음을 판단하는 bool 변수 
+	bool isoverlapboss; // 플레이어와 보스몬스터가 오버랩 됐음을 판단하는 bool 변수 
 
 private:
 

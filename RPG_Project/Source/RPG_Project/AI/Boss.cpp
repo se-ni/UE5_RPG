@@ -9,8 +9,9 @@
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "../MainPlayer/MainPlayerCharacter.h"
+#include "../Stage3/MainPlayerCharacter3.h"
 #include "../Global/Projectile.h"
+#include "../Global/Fire.h"
 
 ABoss::ABoss()
 {
@@ -37,7 +38,7 @@ void ABoss::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Idle));
 	GetBlackboardComponent()->SetValueAsString(TEXT("TargetTag"), TEXT("Player"));
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 700.0f);
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 1500.0f);
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 3000.0f);
 
 	GetBlackboardComponent()->SetValueAsVector(TEXT("OriginPos"), GetActorLocation());
@@ -62,29 +63,32 @@ void ABoss::Tick(float DeltaSecond)
 void ABoss::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	int a = 0;
+	// 플레이어의 총알에 맞았을경우. hp 감소
 }
 void ABoss::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)
 {
-	int a = 0;
 	UGlobalGameInstance* Inst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
 	TSubclassOf<UObject> Fire = Inst->GetSubClass(TEXT("Fire"));
 	//TArray<UActorComponent*> StaticMeshs = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponMesh"));
 
 	TArray<UActorComponent*> FireEffects = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("FireEffect"));
-
 	USceneComponent* FireCom = Cast<USceneComponent>(FireEffects[0]);
+
 	FVector Pos = FireCom->GetComponentToWorld().GetLocation();
+
+	//TArray<UActorComponent*> StaticMeshs = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponMesh"));
 	if (nullptr != Fire)
 	{
 
-		{ // 이펙트 만들기
-			AttackEffect = GetWorld()->SpawnActor<AActor>(Fire);
-			FVector effectloc = FVector(20.f, 0.f, 0.f) + GetActorLocation();
-			AttackEffect->SetActorLocation(Pos);
-			// Actor->SetActorScale3D(FVector(0.2f,0.2f,0.2f));
-			// GetWorld()->GetTimerManager().SetTimer(EffectDestroyTimerHandle, this, &ABoss::DestroyAttackEffect, 5.0f, false);
+		{	// 발사체 만들기
+			AActor* Actor = GetWorld()->SpawnActor<AActor>(Fire);
+			AFire* FireActor = Cast<AFire>(Actor);
+
+			FireActor->SetActorLocation(Pos);
+			FireActor->SetActorRotation(GetActorRotation());
+			FireActor->Tags.Add(FName("MonsterAttack"));
+			FireActor->GetSphereComponent()->SetCollisionProfileName(TEXT("MonsterAttack"), true);
 		}
 	}
 }

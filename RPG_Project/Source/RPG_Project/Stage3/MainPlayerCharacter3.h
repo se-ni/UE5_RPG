@@ -13,7 +13,8 @@ UCLASS()
 class RPG_PROJECT_API AMainPlayerCharacter3 : public AMainPlayerCharacter
 {
 	GENERATED_BODY()
-
+public:
+	bool isfireattack = false;
 protected:
 	void BeginPlay();
 	virtual void Tick(float DeltaTime) override;
@@ -24,4 +25,7 @@ protected:
 
 	void Minimap3OnOff();
 	void Player3DeathOnOff();
+
+	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
