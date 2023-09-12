@@ -9,7 +9,8 @@
 #include "../Global/GlobalGameInstance.h"
 #include "../AI/MonsterPatrolData.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "../Global/GlobalCoin.h"
+#include "../Global/GlobalCherry.h"
+#include "../Global/GlobalPot.h"
 #include "Monster3.generated.h"
 
 /**
@@ -47,11 +48,19 @@ public:
 	UGlobalGameInstance* GetGlobalGameInstance();
 
 	UFUNCTION(BlueprintCallable)
-	void SpawnCoinActor(FVector _Loc)
+		void SpawnCherryActor(FVector _Loc)
 	{
 		FTransform Trans;
 		Trans.SetLocation(_Loc);
-		AActor* SpawnedActor0 = GetWorld()->SpawnActor<AActor>(CoinActor, Trans);
+		AActor* SpawnedActor0 = GetWorld()->SpawnActor<AActor>(CherryActor, Trans);
+	}
+
+	UFUNCTION(BlueprintCallable)
+		void SpawnPotActor(FVector _Loc)
+	{
+		FTransform Trans;
+		Trans.SetLocation(_Loc);
+		AActor* SpawnedActor0 = GetWorld()->SpawnActor<AActor>(PotActor, Trans);
 	}
 	bool isoverlap3;
 
@@ -69,7 +78,10 @@ private:
 
 	UCharacterMovementComponent* CharacterMovementComponent;
 
-	UPROPERTY(Category = "Coin", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<AGlobalCoin> CoinActor;
+	UPROPERTY(Category = "Cherry", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TSubclassOf<AGlobalCherry> CherryActor;
+
+	UPROPERTY(Category = "Cherry", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TSubclassOf<AGlobalPot> PotActor;
 };
 

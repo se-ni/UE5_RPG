@@ -10,6 +10,7 @@
 #include "../Boss.h"
 #include "../../Global/GlobalEnums.h"
 #include "../../Global/GlobalCoin.h"
+#include "../../Global/GlobalData.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "../../MainPlayer/MainPlayerCharacter.h"
 #include "../../Stage3/MainPlayerCharacter3.h"
@@ -122,11 +123,19 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 					GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster1HP"), hp2); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
 					// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
 					GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
-					// SpawnCoin을 GET 해준다
+					int randCount = UGlobalData::MainRandom.RandRange(1, 3);
+					// Coin을 spawn 한다
 					bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
-					if (b)
+					if (b) // 랜덤으로 아이템 드롭
 					{
-						Monster2->SpawnCoinActor(Monster2->GetActorLocation());
+						if (randCount == 1)
+						{
+							Monster2->SpawnCherryActor(Monster2->GetActorLocation());
+						}
+						if (randCount == 2)
+						{
+							Monster2->SpawnCoinActor(Monster2->GetActorLocation());
+						}
 					}
 					++Deathcnt2;
 					GetGlobalGameInstance()->SetDeathMonster2(Deathcnt2);
@@ -161,11 +170,19 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 					GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster3HP"), hp3); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
 					// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
 					GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
-					// SpawnCoin을 GET 해준다
+					int randCount = UGlobalData::MainRandom.RandRange(1, 3);
+					
 					bool b = GetBlackboardComponent(OwnerComp)->GetValueAsBool(TEXT("SpawnCoin"));
-					if (b)
+					if (b) // 랜덤으로 아이템 드롭
 					{
-						Monster3->SpawnCoinActor(Monster3->GetActorLocation());
+						if (randCount == 1)
+						{
+							Monster3->SpawnCherryActor(Monster3->GetActorLocation());
+						}
+						if (randCount == 2)
+						{
+							Monster3->SpawnPotActor(Monster3->GetActorLocation());
+						}
 					}
 					++Deathcnt3;
 					GetGlobalGameInstance()->SetDeathMonster3(Deathcnt3);

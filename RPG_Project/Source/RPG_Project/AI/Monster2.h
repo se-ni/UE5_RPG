@@ -10,6 +10,7 @@
 #include "../AI/MonsterPatrolData.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "../Global/GlobalCoin.h"
+#include "../Global/GlobalCherry.h"
 #include "Monster2.generated.h"
 
 /**
@@ -53,6 +54,15 @@ public:
 		Trans.SetLocation(_Loc);
 		AActor* SpawnedActor0 = GetWorld()->SpawnActor<AActor>(CoinActor, Trans);
 	}
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnCherryActor(FVector _Loc)
+	{
+		FTransform Trans;
+		Trans.SetLocation(_Loc);
+		AActor* SpawnedActor0 = GetWorld()->SpawnActor<AActor>(CherryActor, Trans);
+	}
+
 	bool isoverlap2;
 
 	void Setbdeathfalse();
@@ -71,5 +81,8 @@ private:
 
 	UPROPERTY(Category = "Coin", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AGlobalCoin> CoinActor;
+
+	UPROPERTY(Category = "Cherry", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TSubclassOf<AGlobalCherry> CherryActor;
 };
 
