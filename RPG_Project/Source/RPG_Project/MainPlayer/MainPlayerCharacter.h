@@ -45,6 +45,8 @@ public:
 
 	void OptionOnOff();
 
+	void InvenOnOff();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pawn")
 		float BaseTurnRate;
 
