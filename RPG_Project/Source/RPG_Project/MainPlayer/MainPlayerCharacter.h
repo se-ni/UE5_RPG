@@ -43,6 +43,8 @@ public:
 
 	void StatusOnOff();
 
+	void OptionOnOff();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pawn")
 		float BaseTurnRate;
 

@@ -51,6 +51,11 @@ public:
 		StatusUIOnOff = StatusUIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
 	}
 
+	void SetOptionUIOnOffSwitch()
+	{
+		OptionUIOnOff = OptionUIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
+	}
+
 private:
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		ESlateVisibility PlayerStateOnOff = ESlateVisibility::Visible; // State UI
@@ -72,4 +77,7 @@ private:
 
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		ESlateVisibility StatusUIOnOff = ESlateVisibility::Hidden; // Status UI
+
+	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		ESlateVisibility OptionUIOnOff = ESlateVisibility::Hidden;
 };
