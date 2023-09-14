@@ -167,7 +167,7 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("OptionUI"), EKeys::Q));
 
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("InteractionKey"), EKeys::E));
-		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("InventoryKey"), EKeys::I));
+		// UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("InventoryKey"), EKeys::I));
 	}
 
 	// 키와 함수를 연결합니다.
@@ -194,7 +194,7 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("MinimapUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::MinimapOnOff);
 	PlayerInputComponent->BindAction("StatusUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::StatusOnOff);
 	PlayerInputComponent->BindAction("OptionUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::OptionOnOff);
-	PlayerInputComponent->BindAction("InventoryKey", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::InvenOnOff); 
+	// PlayerInputComponent->BindAction("InventoryKey", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::InvenOnOff); 
 }
 
 void AMainPlayerCharacter::InvenOnOff()
