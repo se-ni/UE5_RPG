@@ -206,7 +206,7 @@ void AMainPlayerCharacter::InvenOnOff()
 	{
 		return;
 	}
-	HUD->GetMainWidget()->SetInvenUIOnOffSwitch();
+	HUD->GetUIMainWidget()->SetInvenUIOnOffSwitch();
 }
 
 void AMainPlayerCharacter::OptionOnOff()
@@ -218,7 +218,7 @@ void AMainPlayerCharacter::OptionOnOff()
 	{
 		return;
 	}
-	HUD->GetMainWidget()->SetOptionUIOnOffSwitch();
+	HUD->GetUIMainWidget()->SetOptionUIOnOffSwitch();
 }
 
 void AMainPlayerCharacter::PlayerStateOnOff()
@@ -230,7 +230,7 @@ void AMainPlayerCharacter::PlayerStateOnOff()
 	{
 		return;
 	}
-	HUD->GetMainWidget()->SetPlayerStateUIOnOffSwitch();
+	HUD->GetUIMainWidget()->SetPlayerStateUIOnOffSwitch();
 }
 
 void AMainPlayerCharacter::StatusOnOff()
@@ -242,7 +242,7 @@ void AMainPlayerCharacter::StatusOnOff()
 	{
 		return;
 	}
-	HUD->GetMainWidget()->SetStatusUIOnOffSwitch();
+	HUD->GetUIMainWidget()->SetStatusUIOnOffSwitch();
 }
 
 
@@ -256,7 +256,7 @@ void AMainPlayerCharacter::MinimapOnOff()
 	{
 		return;
 	}
-	HUD->GetMainWidget()->SetMinimapUIOnOffSwitch();
+	HUD->GetUIMainWidget()->SetMinimapUIOnOffSwitch();
 }
 void AMainPlayerCharacter::PlayerDeathOnOff()
 {
@@ -268,7 +268,7 @@ void AMainPlayerCharacter::PlayerDeathOnOff()
 		return;
 	}
 
-	HUD->GetMainWidget()->SetPlayerDeathUIOnOffSwitch();
+	HUD->GetUIMainWidget()->SetPlayerDeathUIOnOffSwitch();
 
 	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 

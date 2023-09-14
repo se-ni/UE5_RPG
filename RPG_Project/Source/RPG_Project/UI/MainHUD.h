@@ -16,9 +16,10 @@ class RPG_PROJECT_API AMainHUD : public AHUD
 	GENERATED_BODY()
 	
 public:
-	UMainWidget* GetMainWidget()
+	UFUNCTION(BlueprintCallable)
+	UMainWidget* GetUIMainWidget()
 	{
-		return MainWidget;
+		return UIMainWidget;
 	}
 
 protected:
@@ -26,6 +27,6 @@ protected:
 	void Tick(float _Delta) override;
 
 private:
-
-	UMainWidget* MainWidget = nullptr;
+		UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+			UMainWidget* UIMainWidget = nullptr;
 };

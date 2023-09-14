@@ -61,7 +61,7 @@ void AMainPlayerCharacter3::Minimap3OnOff()
 	{
 		return;
 	}
-	HUD->GetMainWidget()->SetMinimap3UIOnOffSwitch();
+	HUD->GetUIMainWidget()->SetMinimap3UIOnOffSwitch();
 }
 void AMainPlayerCharacter3::Player3DeathOnOff()
 {
@@ -73,7 +73,7 @@ void AMainPlayerCharacter3::Player3DeathOnOff()
 		return;
 	}
 
-	HUD->GetMainWidget()->SetPlayerDeathUIOnOffSwitch();
+	HUD->GetUIMainWidget()->SetPlayerDeathUIOnOffSwitch();
 
 	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 

@@ -16,4 +16,7 @@ class RPG_PROJECT_API UGlobalData : public UBlueprintFunctionLibrary
 
 public:
 	static FRandomStream MainRandom;
+
+	UFUNCTION(BlueprintCallable, Category = "Global", meta = (DefaultToSelf = "_Object"))
+		static void UIMainWidgetOnOff(APlayerController* PlayerController, ESlateVisibility _Value);
 };
