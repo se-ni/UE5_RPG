@@ -50,7 +50,7 @@ void AMainPlayerCharacter3::SetupPlayerInputComponent(class UInputComponent* Pla
 	if (!bBindingsAdded)
 	{
 		bBindingsAdded = true;
-		// UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("MinimapUI"), EKeys::M));
+		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("ShopUI"), EKeys::Insert));
 
 	}
 	PlayerInputComponent->BindAction("Weapon1", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::SetWeapon1);
@@ -58,7 +58,20 @@ void AMainPlayerCharacter3::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAction("Weapon3", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::SetWeapon3);
 
 	PlayerInputComponent->BindAction("MinimapUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter3::Minimap3OnOff);
+	PlayerInputComponent->BindAction("ShopUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter3::ShopOnOff);
+}
 
+
+void AMainPlayerCharacter3::ShopOnOff()
+{
+	APlayerController* MainCon = Cast<APlayerController>(GetController());
+	AMainHUD* HUD = MainCon->GetHUD<AMainHUD>();
+
+	if (nullptr == HUD && false == HUD->IsValidLowLevel())
+	{
+		return;
+	}
+	HUD->GetUIMainWidget()->SetShopUIOnOffSwitch();
 }
 
 void AMainPlayerCharacter3::Minimap3OnOff()
