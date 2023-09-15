@@ -14,6 +14,8 @@ class RPG_PROJECT_API AMainPlayerCharacter3 : public AMainPlayerCharacter
 {
 	GENERATED_BODY()
 public:
+	AMainPlayerCharacter3();
+
 	bool isoverlap = false;
 	UFUNCTION()
 	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -24,7 +26,7 @@ public:
 			AActor* OtherActor,
 			UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex);
-	
+
 protected:
 	void BeginPlay();
 	virtual void Tick(float DeltaTime) override;

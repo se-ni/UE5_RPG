@@ -68,36 +68,40 @@ public:
 	{
 		return isDeath;
 	}
+
 	UFUNCTION()
 	float GetPlayerATT()
 	{
 		return PlayerATT;
 	}
-
+	UFUNCTION()
 	void SetPlayerATT(float _ATT)
 	{
 		PlayerATT = _ATT;
 	}
+
 	UFUNCTION()
 	float GetPlayerHP()
 	{
-		return HP;
+		return PlayerHP;
 	}
 
+	UFUNCTION()
 	void SetPlayerHP(float _HP)
 	{
-		HP = _HP;
-	}
-	UFUNCTION()
-	float GetPlayerMP()
-	{
-		return MP;
+		PlayerHP = _HP;
 	}
 
-	void SetPlayerMP(float _MP)
-	{
-		MP = _MP;
-	}
+	//UFUNCTION()
+	//float GetPlayerMP()
+	//{
+	//	return MP;
+	//}
+
+	//void SetPlayerMP(float _MP)
+	//{
+	//	MP = _MP;
+	//}
 
 	bool isWeapon1 = false;
 	bool isWeapon2 = false;
@@ -147,6 +151,8 @@ protected:
 	
 	void DestroyAttackEffect();
 
+	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		float PlayerHP = 1.f;
 private:
 	FTimerHandle EffectDestroyTimerHandle; // 타이머 핸들변수
 	bool AxisJump = false;
@@ -158,8 +164,7 @@ private:
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		/*int PlayerATT = 10;*/
 		float PlayerATT ; 
-	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		float HP = 1.f;
+
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		float MP = 1.f;
 

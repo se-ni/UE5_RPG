@@ -120,7 +120,7 @@ void AMainPlayerCharacter::Tick(float DeltaTime)
 	UCharacterMovementComponent* Move = Cast<UCharacterMovementComponent>(GetMovementComponent());
 	Move->MaxWalkSpeed = 1000.0f;
 
-	if (HP <= 0.0f)
+	if (PlayerHP <= 0.0f)
 	{
 		int a = 0;
 		// 여기서 playerdeathuionoff 호출
