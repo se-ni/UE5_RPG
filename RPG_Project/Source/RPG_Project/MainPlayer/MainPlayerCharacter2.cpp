@@ -23,6 +23,8 @@ void AMainPlayerCharacter2::BeginPlay()
 
 void AMainPlayerCharacter2::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
+
 	float HP2 = GetPlayerHP();
 	if (HP2 <= 0.0f)
 	{
