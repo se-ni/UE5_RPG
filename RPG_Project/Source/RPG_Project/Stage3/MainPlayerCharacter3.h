@@ -37,6 +37,4 @@ protected:
 
 	void Minimap3OnOff();
 	void Player3DeathOnOff();
-
-	void ShopOnOff();
 };
