@@ -53,6 +53,34 @@ void AMainPlayerCharacter::BeginPlay()
 	isWeapon3 = false;
 }
 
+// Called every frame
+void AMainPlayerCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	UCharacterMovementComponent* Move = Cast<UCharacterMovementComponent>(GetMovementComponent());
+	Move->MaxWalkSpeed = 1000.0f;
+
+	if (MainPlayerAniState == EAniState::Attack)
+	{
+		nowAttack = true;
+	}
+	else
+	{
+		nowAttack = false;
+	}
+
+
+	if (PlayerHP <= 0.0f)
+	{
+		int a = 0;
+		// 여기서 playerdeathuionoff 호출
+		AMainPlayerCharacter::PauseGame();
+		AMainPlayerCharacter::PlayerDeathOnOff();
+	}
+}
+
+
 void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)
 {
 		int a = 0;
@@ -112,23 +140,6 @@ void AMainPlayerCharacter::DestroyAttackEffect()
 	}
 }
 
-// Called every frame
-void AMainPlayerCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	UCharacterMovementComponent* Move = Cast<UCharacterMovementComponent>(GetMovementComponent());
-	Move->MaxWalkSpeed = 1000.0f;
-
-	if (PlayerHP <= 0.0f)
-	{
-		int a = 0;
-		// 여기서 playerdeathuionoff 호출
-		AMainPlayerCharacter::PauseGame();
-		AMainPlayerCharacter::PlayerDeathOnOff();
-	}
-}
-
 
 void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -150,22 +161,18 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("PlayerLookUp", EKeys::MouseY, -1.f));
 
-		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("PlayerJumpAxis", EKeys::J, -1.f));
-
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("Weapon1"), EKeys::One));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("Weapon2"), EKeys::Two));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("Weapon3"), EKeys::Three));
 
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAttack"), EKeys::LeftMouseButton));
+		
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerJumpAction"), EKeys::SpaceBar));
 
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerStateUI"), EKeys::Tab));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("MinimapUI"), EKeys::M));
-
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("StatusUI"), EKeys::LeftControl));
-
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("OptionUI"), EKeys::Q));
-
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("InteractionKey"), EKeys::E));
 		// UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("InventoryKey"), EKeys::I));
 	}
@@ -179,7 +186,7 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAxis("PlayerTurnRate", this, &AMainPlayerCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("PlayerLookUp", this, &AMainPlayerCharacter::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("PlayerLookUpRate", this, &AMainPlayerCharacter::LookUpAtRate);
-	PlayerInputComponent->BindAxis("PlayerJumpAxis", this, &AMainPlayerCharacter::JumpAxis);
+	//PlayerInputComponent->BindAxis("PlayerJumpAxis", this, &AMainPlayerCharacter::JumpAxis);
 
 
 	// Weapon Keys
@@ -245,8 +252,6 @@ void AMainPlayerCharacter::StatusOnOff()
 	HUD->GetUIMainWidget()->SetStatusUIOnOffSwitch();
 }
 
-
-
 void AMainPlayerCharacter::MinimapOnOff()
 {
 	APlayerController* MainCon = Cast<APlayerController>(GetController());
@@ -258,6 +263,7 @@ void AMainPlayerCharacter::MinimapOnOff()
 	}
 	HUD->GetUIMainWidget()->SetMinimapUIOnOffSwitch();
 }
+
 void AMainPlayerCharacter::PlayerDeathOnOff()
 {
 	APlayerController* MainCon = Cast<APlayerController>(GetController());
@@ -306,7 +312,8 @@ void AMainPlayerCharacter::SetWeapon3()
 
 void AMainPlayerCharacter::MoveRight(float Val)
 {
-	if (MainPlayerAniState == EAniState::Attack || MainPlayerAniState == EAniState::JumpStart)
+
+	if (MainPlayerAniState == EAniState::Attack || MainPlayerAniState == EAniState::JumpStart || true == nowAttack)
 	{
 		return;
 	}
@@ -323,7 +330,7 @@ void AMainPlayerCharacter::MoveRight(float Val)
 			AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::Y), Val);
 
 			MainPlayerAniState = Val > 0.f ? EAniState::LeftMove : EAniState::RightMove;
-	
+			nowAttack = false;
 			return;
 		}
 	}
@@ -334,11 +341,14 @@ void AMainPlayerCharacter::MoveRight(float Val)
 			MainPlayerAniState = EAniState::Idle;
 		}
 	}
+
+
 }
 
 void AMainPlayerCharacter::MoveForward(float Val)
 {
-	if (MainPlayerAniState == EAniState::Attack || MainPlayerAniState == EAniState::JumpStart)
+
+	if (MainPlayerAniState == EAniState::Attack || MainPlayerAniState == EAniState::JumpStart || true == nowAttack)
 	{
 		return;
 	}
@@ -384,34 +394,42 @@ void AMainPlayerCharacter::MoveForward(float Val)
 
 void AMainPlayerCharacter::TurnAtRate(float Rate)
 {
+
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation);
 }
 
 void AMainPlayerCharacter::LookUpAtRate(float Rate)
 {
+
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation);
 }
 
 
-void AMainPlayerCharacter::JumpAxis(float Rate)
-{
-	if (0.0f == Rate)
-	{
-		if (true == AxisJump)
-		{
-			StopJumping();
-			AxisJump = false;
-		}
-		return;
-	}
-	AxisJump = true;
-	Jump();
-}
+//void AMainPlayerCharacter::JumpAxis(float Rate)
+//{
+//	if (0.0f == Rate)
+//	{
+//		if (true == AxisJump)
+//		{
+//			StopJumping();
+//			AxisJump = false;
+//		}
+//		return;
+//	}
+//	AxisJump = true;
+//	Jump();
+//}
 
 void AMainPlayerCharacter::JumpAction()
 {
+	if (true == nowAttack)
+	{
+		return;
+	}
+		
+
 	//UE_LOG(LogTemp, Log, TEXT("%S(%u)> %d"), __FUNCTION__, __LINE__, JumpCurrentCount);
 	Jump();
 
@@ -420,6 +438,7 @@ void AMainPlayerCharacter::JumpAction()
 
 void AMainPlayerCharacter::AttackAction()
 {
+
 	MainPlayerAniState = EAniState::Attack;
 }
 

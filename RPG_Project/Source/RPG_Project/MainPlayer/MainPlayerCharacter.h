@@ -113,18 +113,6 @@ public:
 
 	void PauseGame();
 
-	// bool isweapon2 = false;
-
-	//bool Getisweapon2()
-	//{
-	//	return isweapon2;
-	//}
-
-	//void Setisweapon2(bool _b)
-	//{
-	//	isweapon2 = _b;
-	//}
-
 	float destroyTime = 3.0f;
 	AActor* AttackEffect;
 
@@ -159,7 +147,9 @@ private:
 	bool isOverlap = false;
 
 
-		bool isDeath = false; // 몬스터의 죽음 판별할 변수
+	bool isDeath = false; // 몬스터의 죽음 판별할 변수
+
+	bool nowAttack = false;
 
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		/*int PlayerATT = 10;*/
