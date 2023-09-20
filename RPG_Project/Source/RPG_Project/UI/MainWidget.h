@@ -21,6 +21,16 @@ public:
 		PlayerStateOnOff = PlayerStateOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
 	}
 
+	void SetPlayer2StateUIOnOffSwitch()
+	{
+		Player2StateOnOff = Player2StateOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
+	}
+
+	void SetPlayer3StateUIOnOffSwitch()
+	{
+		Player3StateOnOff = Player3StateOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
+	}
+
 	void SetMinimapUIOnOffSwitch()
 	{
 		MinimapUIOnOff = MinimapUIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
@@ -68,7 +78,13 @@ public:
 
 private:
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		ESlateVisibility PlayerStateOnOff = ESlateVisibility::Visible; // State UI
+		ESlateVisibility PlayerStateOnOff = ESlateVisibility::Hidden; // State UI
+
+	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		ESlateVisibility Player2StateOnOff = ESlateVisibility::Hidden; // State UI
+
+	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		ESlateVisibility Player3StateOnOff = ESlateVisibility::Hidden; // State UI
 
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		ESlateVisibility MinimapUIOnOff = ESlateVisibility::Hidden;

@@ -20,7 +20,7 @@ protected:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
-	
+	void Player2StateOnOff();
 	void Minimap2OnOff();
 	void Player2DeathOnOff();
 

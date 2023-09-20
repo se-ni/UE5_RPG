@@ -58,6 +58,19 @@ void AMainPlayerCharacter3::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAction("Weapon3", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::SetWeapon3);
 
 	PlayerInputComponent->BindAction("MinimapUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter3::Minimap3OnOff);
+	PlayerInputComponent->BindAction("PlayerStateUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter3::Player3StateOnOff);
+}
+
+void AMainPlayerCharacter3::Player3StateOnOff()
+{
+	APlayerController* MainCon = Cast<APlayerController>(GetController());
+	AMainHUD* HUD = MainCon->GetHUD<AMainHUD>();
+
+	if (nullptr == HUD && false == HUD->IsValidLowLevel())
+	{
+		return;
+	}
+	HUD->GetUIMainWidget()->SetPlayer3StateUIOnOffSwitch();
 }
 
 void AMainPlayerCharacter3::Minimap3OnOff()

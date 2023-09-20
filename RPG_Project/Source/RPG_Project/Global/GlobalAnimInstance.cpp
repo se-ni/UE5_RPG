@@ -11,7 +11,7 @@ void UGlobalAnimInstance::NativeBeginPlay()
 	OnMontageBlendingOut.AddDynamic(this, &UGlobalAnimInstance::MontageEnd);
 
 	// 나를 가진 액터를 여기서 가져옵니다.
-	// TPS캐릭터에게 다 세팅을 해줬다.
+	// 캐릭터에 디테일에 다 세팅을 해줬다.
 
 	AGlobalCharacter* Chracter = Cast<AGlobalCharacter>(GetOwningActor());
 

@@ -35,6 +35,7 @@ protected:
 
 	void AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload);
 
+	void Player3StateOnOff();
 	void Minimap3OnOff();
 	void Player3DeathOnOff();
 };
