@@ -70,7 +70,6 @@ void AMainPlayerCharacter::Tick(float DeltaTime)
 		nowAttack = false;
 	}
 
-
 	if (PlayerHP <= 0.0f)
 	{
 		int a = 0;
