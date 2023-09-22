@@ -55,12 +55,6 @@ void AProjectile::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor*
 		{
 			// 블랙보드 변수 bIsDeath를 true로 설정
 			BlackboardComp->SetValueAsBool(TEXT("bIsDeath"), true);
-			// AMonster2 클래스의 Setbdeathfalse 함수를 호출하기 위해 람다 함수 사용
-			FTimerManager& TimerManager = GetWorld()->GetTimerManager();
-			TimerManager.SetTimer(bdeathTimerHandle, [Mons2]()
-				{
-					Mons2->Setbdeathfalse();
-				}, 2.0f, false);
 		}
 	}
 
@@ -75,31 +69,20 @@ void AProjectile::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor*
 		{
 			// 블랙보드 변수 bIsDeath를 true로 설정
 			BlackboardComp->SetValueAsBool(TEXT("bIsDeath"), true);
-			// AMonster2 클래스의 Setbdeathfalse 함수를 호출하기 위해 람다 함수 사용
-			FTimerManager& TimerManager = GetWorld()->GetTimerManager();
-			TimerManager.SetTimer(bdeathTimerHandle, [Mons3]()
-				{
-					Mons3->Setbdeathfalse();
-				}, 2.0f, false);
 		}
 	}
 
-	ABoss* BossMons = Cast<ABoss>(OtherActor);
-	if ((nullptr != BossMons) && (OtherActor == BossMons))
-	{
-		// 몬스터3의 블랙보드 컴포넌트 가져오기
-		UBlackboardComponent* BlackboardComp = BossMons->GetBlackboardComponent();
-
-		if (BlackboardComp)
+		ABoss* BossMons = Cast<ABoss>(OtherActor);
+		if ((nullptr != BossMons) && (OtherActor == BossMons))
 		{
-			// 블랙보드 변수 bIsDeath를 true로 설정
-			BlackboardComp->SetValueAsBool(TEXT("bIsDeath"), true);
-			// AMonster2 클래스의 Setbdeathfalse 함수를 호출하기 위해 람다 함수 사용
-			FTimerManager& TimerManager = GetWorld()->GetTimerManager();
-			TimerManager.SetTimer(bdeathTimerHandle, [BossMons]()
-				{
-					BossMons->Setbdeathfalse();
-				}, 1.0f, false);
+			// 몬스터3의 블랙보드 컴포넌트 가져오기
+			UBlackboardComponent* BlackboardComp = BossMons->GetBlackboardComponent();
+
+			if (BlackboardComp)
+			{
+				// 블랙보드 변수 bIsDeath를 true로 설정
+				BlackboardComp->SetValueAsBool(TEXT("bIsDeath"), true);
+			}
 		}
-	}
 }
+

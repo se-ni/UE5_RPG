@@ -20,15 +20,15 @@ void AMainPlayerCharacter3::BeginPlay()
 {
 	Super::BeginPlay();
 
-
-
 	WeaponMesh->SetStaticMesh(WeaponArrays[2]);
 	SetPlayerATT(0.7f);
-	isWeapon2 = false;
-	isWeapon3 = true;
 
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainPlayerCharacter3::BeginOverlap);
 	GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &AMainPlayerCharacter3::EndOverlap);
+
+	isWeapon1 = false;
+	isWeapon2 = false;
+	isWeapon3 = true;
 }
 
 void AMainPlayerCharacter3::Tick(float DeltaTime)

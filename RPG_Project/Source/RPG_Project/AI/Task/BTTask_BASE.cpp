@@ -10,20 +10,6 @@ void UBTTask_BASE::OnGameplayTaskActivated(class UGameplayTask&)
 
 }
 
-void UBTTask_BASE::SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State)
-{
-	UBlackboardComponent* BlackBoard = OwnerComp.GetBlackboardComponent();
-
-	if (nullptr == BlackBoard)
-	{
-		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
-		return;
-	}
-
-	BlackBoard->SetValueAsEnum(TEXT("AIAniState"), _State);
-
-	FinishLatentTask(OwnerComp, EBTNodeResult::Type::Succeeded);
-}
 void UBTTask_BASE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
@@ -36,6 +22,21 @@ void UBTTask_BASE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory
 		return;
 	}
 }
+
+void UBTTask_BASE::SetStateChange(UBehaviorTreeComponent& OwnerComp, uint8 _State)
+{
+	UBlackboardComponent* BlackBoard = OwnerComp.GetBlackboardComponent();
+
+	if (nullptr == BlackBoard)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
+		return;
+	}
+
+	BlackBoard->SetValueAsEnum(TEXT("AIAniState"), _State);
+	FinishLatentTask(OwnerComp, EBTNodeResult::Type::Succeeded);
+}
+
 AGlobalCharacter* UBTTask_BASE::GetGlobalCharacter(UBehaviorTreeComponent& OwnerComp)
 {
 	AMyAIController* AiCon = OwnerComp.GetOwner<AMyAIController>(); // 컨트롤러를 가져오고
@@ -66,18 +67,3 @@ UBlackboardComponent* UBTTask_BASE::GetBlackboardComponent(UBehaviorTreeComponen
 	
 	return blackboard;
 }
-
-//float UBTTask_BASE::GetStateTime(UBehaviorTreeComponent& OwnerComp)
-//{
-//	UBlackboardComponent* BlockBoard = OwnerComp.GetBlackboardComponent();
-//
-//	if (nullptr == BlockBoard)
-//	{
-//		UE_LOG(LogTemp, Error, TEXT("if (nullptr == BlockBoard)"), __FUNCTION__, __LINE__);
-//		return 0.0f;
-//	}
-//
-//	StateTime = BlockBoard->GetValueAsFloat(TEXT("StateTime"));
-//
-//	return StateTime;
-//}
