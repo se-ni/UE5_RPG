@@ -69,7 +69,6 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 
 				if (hp1 > 0.0f) // 아직 Hp가 0보다 크다면
 				{
-
 					StateTime = 0.0f;
 					SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
 					return;
@@ -77,7 +76,6 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 
 				else if (hp1 <= 0.0f) // Hp가 0보다 작다면
 				{
-
 					hp1 = 0.0f;
 					GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster1HP"), hp1); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
 					// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
@@ -118,8 +116,8 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 
 				else if (hp2 <= 0.0f) // Hp가 0보다 작다면
 				{
-
 					hp2 = 0.0f;
+					StateTime = 0.0f;
 					GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster1HP"), hp2); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
 					// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
 					GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
@@ -141,7 +139,7 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 					GetGlobalGameInstance()->SetDeathMonster2(Deathcnt2);
 					Monster2->Destroy();
 				}
-				StateTime = 0.0f;
+				
 			}
 		}
 
