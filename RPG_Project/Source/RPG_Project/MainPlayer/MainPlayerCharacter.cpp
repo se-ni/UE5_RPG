@@ -72,7 +72,6 @@ void AMainPlayerCharacter::Tick(float DeltaTime)
 
 	if (PlayerHP <= 0.0f)
 	{
-		int a = 0;
 		// 여기서 playerdeathuionoff 호출
 		AMainPlayerCharacter::PauseGame();
 		AMainPlayerCharacter::PlayerDeathOnOff();
@@ -172,8 +171,6 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("MinimapUI"), EKeys::M));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("StatusUI"), EKeys::LeftControl));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("OptionUI"), EKeys::Q));
-		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("InteractionKey"), EKeys::E));
-		// UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("InventoryKey"), EKeys::I));
 	}
 
 	// 키와 함수를 연결합니다.
@@ -200,7 +197,7 @@ void AMainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("MinimapUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::MinimapOnOff);
 	PlayerInputComponent->BindAction("StatusUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::StatusOnOff);
 	PlayerInputComponent->BindAction("OptionUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::OptionOnOff);
-	// PlayerInputComponent->BindAction("InventoryKey", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter::InvenOnOff); 
+	
 }
 
 void AMainPlayerCharacter::InvenOnOff()
