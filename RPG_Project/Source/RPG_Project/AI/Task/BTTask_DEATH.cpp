@@ -138,8 +138,7 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 					++Deathcnt2;
 					GetGlobalGameInstance()->SetDeathMonster2(Deathcnt2);
 					Monster2->Destroy();
-				}
-				
+				}	
 			}
 		}
 
@@ -165,6 +164,7 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 				else if (hp3 <= 0.0f) // Hp가 0보다 작다면
 				{
 					hp3 = 0.0f;
+					StateTime = 0.0f;
 					GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster3HP"), hp3); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
 					// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
 					GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
@@ -186,7 +186,6 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 					GetGlobalGameInstance()->SetDeathMonster3(Deathcnt3);
 					Monster3->Destroy();
 				}
-				StateTime = 0.0f;
 			}
 		}
 		else if (nullptr != BossMons)
@@ -210,6 +209,7 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 				else if (bosshp <= 0.0f) // Hp가 0보다 작다면
 				{
 					bosshp = 0.0f;
+					StateTime = 0.0f;
 					GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("BossMonsterHP"), bosshp); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
 					// 몬스터가 death 할때 코인을 스폰해줄 bool 함수를 true로
 					GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("SpawnCoin"), true);
@@ -223,10 +223,8 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 					GetGlobalGameInstance()->SetDeathMonster4(Deathcnt4);
 					BossMons->Destroy();
 				}
-				StateTime = 0.0f;
 			}
-		}
-		
+		}	
 	}
 }
 
