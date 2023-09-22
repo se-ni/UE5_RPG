@@ -9,7 +9,7 @@
 #include "Components/CapsuleComponent.h"
 #include "../Global/GlobalGameInstance.h"
 #include "../Global/Fire.h"
-
+#include "../UI/MainHUD.h"
 
 AMainPlayerCharacter3::AMainPlayerCharacter3()
 {
@@ -34,8 +34,8 @@ void AMainPlayerCharacter3::BeginPlay()
 void AMainPlayerCharacter3::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	float HP2 = GetPlayerHP();
-	if (HP2 <= 0.0f)
+	float HP3 = GetPlayerHP();
+	if (HP3 <= 0.0f)
 	{
 		// 여기서 player2deathuionoff 호출
 		AMainPlayerCharacter::PauseGame();
@@ -61,6 +61,26 @@ void AMainPlayerCharacter3::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAction("PlayerStateUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter3::Player3StateOnOff);
 }
 
+void AMainPlayerCharacter3::Player3DeathOnOff()
+{
+	APlayerController* MainCon = Cast<APlayerController>(GetController());
+	AMainHUD* HUD = MainCon->GetHUD<AMainHUD>();
+
+	if (nullptr == HUD && false == HUD->IsValidLowLevel())
+	{
+		return;
+	}
+
+	HUD->GetUIMainWidget()->SetPlayer3DeathUIOnOffSwitch();
+
+	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+
+	if (PlayerController)
+	{
+		PlayerController->SetShowMouseCursor(true);
+	}
+}
+
 void AMainPlayerCharacter3::Player3StateOnOff()
 {
 	APlayerController* MainCon = Cast<APlayerController>(GetController());
@@ -84,25 +104,7 @@ void AMainPlayerCharacter3::Minimap3OnOff()
 	}
 	HUD->GetUIMainWidget()->SetMinimap3UIOnOffSwitch();
 }
-void AMainPlayerCharacter3::Player3DeathOnOff()
-{
-	APlayerController* MainCon = Cast<APlayerController>(GetController());
-	AMainHUD* HUD = MainCon->GetHUD<AMainHUD>();
 
-	if (nullptr == HUD && false == HUD->IsValidLowLevel())
-	{
-		return;
-	}
-
-	HUD->GetUIMainWidget()->SetPlayerDeathUIOnOffSwitch();
-
-	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
-
-	if (PlayerController)
-	{
-		PlayerController->SetShowMouseCursor(true);
-	}
-}
 
 void AMainPlayerCharacter3::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

@@ -84,7 +84,7 @@ void AMainPlayerCharacter2::Player2DeathOnOff()
 		return;
 	}
 
-	HUD->GetUIMainWidget()->SetPlayerDeathUIOnOffSwitch();
+	HUD->GetUIMainWidget()->SetPlayer2DeathUIOnOffSwitch();
 
 	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 
