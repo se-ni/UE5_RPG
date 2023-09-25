@@ -49,6 +49,19 @@ void AMainPlayerCharacter2::SetupPlayerInputComponent(class UInputComponent* Pla
 		
 		PlayerInputComponent->BindAction("MinimapUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter2::Minimap2OnOff);
 		PlayerInputComponent->BindAction("PlayerStateUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter2::Player2StateOnOff);
+		PlayerInputComponent->BindAction("StatusUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter2::Status2OnOff);
+}
+
+void AMainPlayerCharacter2::Status2OnOff()
+{
+	APlayerController* MainCon = Cast<APlayerController>(GetController());
+	AMainHUD* HUD = MainCon->GetHUD<AMainHUD>();
+
+	if (nullptr == HUD && false == HUD->IsValidLowLevel())
+	{
+		return;
+	}
+	HUD->GetUIMainWidget()->SetStatus2UIOnOffSwitch();
 }
 
 void AMainPlayerCharacter2::Player2StateOnOff()

@@ -23,6 +23,7 @@ protected:
 	void Player2StateOnOff();
 	void Minimap2OnOff();
 	void Player2DeathOnOff();
+	void Status2OnOff();
 
 private:
 

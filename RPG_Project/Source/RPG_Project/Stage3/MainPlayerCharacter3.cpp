@@ -59,6 +59,20 @@ void AMainPlayerCharacter3::SetupPlayerInputComponent(class UInputComponent* Pla
 
 	PlayerInputComponent->BindAction("MinimapUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter3::Minimap3OnOff);
 	PlayerInputComponent->BindAction("PlayerStateUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter3::Player3StateOnOff);
+	PlayerInputComponent->BindAction("StatusUI", EInputEvent::IE_Pressed, this, &AMainPlayerCharacter3::Status3OnOff);
+
+}
+
+void AMainPlayerCharacter3::Status3OnOff()
+{
+	APlayerController* MainCon = Cast<APlayerController>(GetController());
+	AMainHUD* HUD = MainCon->GetHUD<AMainHUD>();
+
+	if (nullptr == HUD && false == HUD->IsValidLowLevel())
+	{
+		return;
+	}
+	HUD->GetUIMainWidget()->SetStatus3UIOnOffSwitch();
 }
 
 void AMainPlayerCharacter3::Player3DeathOnOff()

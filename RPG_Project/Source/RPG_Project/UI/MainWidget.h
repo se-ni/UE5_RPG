@@ -66,6 +66,16 @@ public:
 		StatusUIOnOff = StatusUIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
 	}
 
+	void SetStatus2UIOnOffSwitch()
+	{
+		Status2UIOnOff = Status2UIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
+	}
+
+	void SetStatus3UIOnOffSwitch()
+	{
+		Status3UIOnOff = Status3UIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
+	}
+
 	void SetOptionUIOnOffSwitch()
 	{
 		OptionUIOnOff = OptionUIOnOff == ESlateVisibility::Hidden ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
@@ -110,7 +120,13 @@ private:
 		ESlateVisibility Player3DeathUIOnOff = ESlateVisibility::Hidden;
 
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		ESlateVisibility StatusUIOnOff = ESlateVisibility::Hidden; // Status UI
+		ESlateVisibility StatusUIOnOff = ESlateVisibility::Hidden; // Player Status UI\
+
+	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		ESlateVisibility Status2UIOnOff = ESlateVisibility::Hidden; // Player2 Status UI
+
+	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		ESlateVisibility Status3UIOnOff = ESlateVisibility::Hidden; // Player3 Status UI
 
 	UPROPERTY(Category = "UI", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		ESlateVisibility OptionUIOnOff = ESlateVisibility::Hidden;

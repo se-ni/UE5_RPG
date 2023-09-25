@@ -38,4 +38,5 @@ protected:
 	void Player3StateOnOff();
 	void Minimap3OnOff();
 	void Player3DeathOnOff();
+	void Status3OnOff();
 };
