@@ -10,6 +10,7 @@
 #include "Components/CapsuleComponent.h"
 #include "../Global/Projectile.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/AudioComponent.h"
 
 // Sets default values
 AMainPlayerCharacter::AMainPlayerCharacter()
@@ -29,7 +30,8 @@ AMainPlayerCharacter::AMainPlayerCharacter()
 // Called when the game starts or when spawned
 void AMainPlayerCharacter::BeginPlay()
 {
-	
+	SetAllSound(MapSound);
+
 	JumpMaxCount = 2; // Jump Max Count = 2
 
 	MainPlayerAnimInstance = Cast<UMainPlayerAnimInstance>(GetMesh()->GetAnimInstance());
@@ -47,10 +49,19 @@ void AMainPlayerCharacter::BeginPlay()
 	// GetMainPlayerAnimInstance()->OnPlayMontageNotifyBegin.AddDynamic(this, &AMainPlayerCharacter::AnimNotifyBegin);
 	MainPlayerAnimInstance->OnPlayMontageNotifyBegin.AddDynamic(this, &AMainPlayerCharacter::AnimNotifyBegin);
 
+	if (nullptr == AudioComponent)
+	{
+		// 비긴플레이에서 한번만 찾는게 가장 좋다.
+		AudioComponent = Cast<UAudioComponent>(GetComponentByClass(UAudioComponent::StaticClass()));
+		AudioComponent->Stop();
+	}
+
 	PlayerATT = 0.3f;
 	isWeapon1 = true;
 	isWeapon2 = false;
 	isWeapon3 = false;
+
+
 }
 
 // Called every frame
@@ -434,8 +445,10 @@ void AMainPlayerCharacter::JumpAction()
 
 void AMainPlayerCharacter::AttackAction()
 {
-
 	MainPlayerAniState = EAniState::Attack;
+
+	AudioComponent->SetSound(MapSound[EAniState::Attack]);
+	AudioComponent->Play();
 }
 
 void AMainPlayerCharacter::PauseGame()

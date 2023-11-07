@@ -20,6 +20,25 @@ public:
 	// Sets default values for this character's properties
 	AMainPlayerCharacter();
 
+	template<typename EnumType>
+	void SetAllSound(const TMap<EnumType, class USoundBase*>& _MapSound)
+	{
+		for (TPair<EnumType, USoundBase*> Pair : _MapSound)
+		{
+			AllSound.Add(static_cast<int>(Pair.Key), Pair.Value);
+		}
+	}
+
+	template<typename EnumType>
+	class USoundBase* GetSound(EnumType _Index)
+	{
+		if (false == AllSound.Contains(static_cast<int>(_Index)))
+		{
+			return nullptr;
+		}
+
+		return AllSound[static_cast<int>(_Index)];
+	}
 
 	void AttackAction();
 	void JumpAction();
@@ -137,6 +156,25 @@ protected:
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		bool ATTbuff = false;
 
+	UPROPERTY(Category = "Components", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TMap<EAniState, class USoundBase*> MapSound;
+
+	template<typename EnumType>
+	void PushSound(EnumType _Index, class USoundBase* _Montage)
+	{
+		PushSound(static_cast<int>(_Index), _Montage);
+	}
+
+	void PushSound(int _Index, class USoundBase* _Montage)
+	{
+		if (true == AllSound.Contains(_Index))
+		{
+			return;
+		}
+
+		AllSound.Add(_Index, _Montage);
+	}
+
 private:
 	FTimerHandle EffectDestroyTimerHandle; // 타이머 핸들변수
 	bool AxisJump = false;
@@ -151,12 +189,13 @@ private:
 
 	UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		float MP = 1.f;
-
-	/*UPROPERTY(Category = "PlayerValue", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		double Exp = 1000;*/
-
-	// const struct FPlayerWeaponData* CurWeaponData;
 	
 	UFUNCTION()
 		void AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload);
+
+	UPROPERTY()
+		class UAudioComponent* AudioComponent = nullptr;
+
+	UPROPERTY(Category = "GlobalChracterValue", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TMap<int, class USoundBase*> AllSound;
 };
