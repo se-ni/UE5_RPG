@@ -451,8 +451,24 @@ void AMainPlayerCharacter::AttackAction()
 {
 	MainPlayerAniState = EAniState::Attack;
 
-	AudioComponent->SetSound(MapSound[EAniState::Attack]);
-	AudioComponent->Play();
+	//AudioComponent->SetSound(MapSound[EAniState::Attack]);
+	//AudioComponent->Play();
+	if(isWeapon1)
+	{
+		AudioComponent->SetSound(WeaponSound[EWeaponState::Weapon1]);
+		AudioComponent->Play();
+	}
+	if(isWeapon2)
+	{
+		AudioComponent->SetSound(WeaponSound[EWeaponState::Weapon2]);
+		AudioComponent->Play();
+	}
+	if(isWeapon3)
+	{
+		AudioComponent->SetSound(WeaponSound[EWeaponState::Weapon3]);
+		AudioComponent->Play();
+	}
+
 }
 
 void AMainPlayerCharacter::PauseGame()

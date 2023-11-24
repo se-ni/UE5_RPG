@@ -20,3 +20,12 @@ enum class EAniState : uint8
 	Hit,
 	Return,
 };
+
+UENUM(BlueprintType)
+enum class EWeaponState : uint8
+{
+	None,
+	Weapon1,
+	Weapon2,
+	Weapon3,
+};

@@ -158,6 +158,9 @@ protected:
 
 	UPROPERTY(Category = "Components", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		TMap<EAniState, class USoundBase*> MapSound;
+	
+	UPROPERTY(Category = "Components", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TMap<EWeaponState, class USoundBase*> WeaponSound;
 
 	template<typename EnumType>
 	void PushSound(EnumType _Index, class USoundBase* _Montage)
