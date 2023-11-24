@@ -74,6 +74,27 @@ public:
 	AFire* FireActor;
 
 	void Setbdeathfalse();
+
+	template<typename EnumType>
+	void SetAllSound(const TMap<EnumType, class USoundBase*>& _MapSound)
+	{
+		for (TPair<EnumType, USoundBase*> Pair : _MapSound)
+		{
+			AllSound.Add(static_cast<int>(Pair.Key), Pair.Value);
+		}
+	}
+
+	template<typename EnumType>
+	class USoundBase* GetSound(EnumType _Index)
+	{
+		if (false == AllSound.Contains(static_cast<int>(_Index)))
+		{
+			return nullptr;
+		}
+
+		return AllSound[static_cast<int>(_Index)];
+	}
+
 private:
 
 	UPROPERTY(Category = "Animation", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -97,5 +118,14 @@ private:
 	void DestroyAttackEffect();
 
 	AActor* AttackEffect = nullptr;
+
+	UPROPERTY()
+		class UAudioComponent* AudioComponent = nullptr;
+
+	UPROPERTY(Category = "Components", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TMap<EAniState, class USoundBase*> MapSound;
+
+	UPROPERTY(Category = "GlobalChracterValue", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TMap<int, class USoundBase*> AllSound;
 };
 

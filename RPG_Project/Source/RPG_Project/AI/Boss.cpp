@@ -12,6 +12,7 @@
 #include "../Stage3/MainPlayerCharacter3.h"
 #include "../Global/Projectile.h"
 #include "../Global/Fire.h"
+#include "Components/AudioComponent.h"
 
 ABoss::ABoss()
 {
@@ -21,6 +22,14 @@ ABoss::ABoss()
 void ABoss::BeginPlay()
 {	
 	// Super::BeginPlay();
+	SetAllSound(MapSound);
+
+	if (nullptr == AudioComponent)
+	{
+		// 비긴플레이에서 한번만 찾는게 가장 좋다.
+		AudioComponent = Cast<UAudioComponent>(GetComponentByClass(UAudioComponent::StaticClass()));
+		AudioComponent->Stop();
+	}
 
 	GlobalAnimInstance = Cast<UGlobalAnimInstance>(GetMesh()->GetAnimInstance());
 
@@ -66,8 +75,12 @@ void ABoss::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other
 	// 플레이어의 총알에 맞았을경우. hp 감소
 	GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true); // 보스몬스터 death로
 }
+
 void ABoss::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)
 {
+	AudioComponent->SetSound(MapSound[EAniState::Attack]);
+	AudioComponent->Play();
+
 	UGlobalGameInstance* Inst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
 	TSubclassOf<UObject> Fire = Inst->GetSubClass(TEXT("Fire"));
