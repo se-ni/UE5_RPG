@@ -338,6 +338,7 @@ void AMainPlayerCharacter::MoveRight(float Val)
 
 			MainPlayerAniState = Val > 0.f ? EAniState::LeftMove : EAniState::RightMove;
 			nowAttack = false;
+
 			return;
 		}
 	}
@@ -376,13 +377,13 @@ void AMainPlayerCharacter::MoveForward(float Val)
 			// AddMovementInput(GetActorForwardVector(), Val);
 
 			MainPlayerAniState = Val > 0.f ? EAniState::ForwardMove : EAniState::BackwardMove ;
+	
 
 			if (MainPlayerAniState == EAniState::BackwardMove)
 			{
-				UCharacterMovementComponent* Move = Cast<UCharacterMovementComponent>(GetMovementComponent());
-				
+				UCharacterMovementComponent* Move = Cast<UCharacterMovementComponent>(GetMovementComponent());	
 				Move->MaxWalkSpeed = 500.0f;
-				UE_LOG(LogTemp, Log, TEXT("%f"), Move->MaxWalkSpeed);
+				// UE_LOG(LogTemp, Log, TEXT("%f"), Move->MaxWalkSpeed);
 			}
 			//UE_LOG(LogTemp, Log, TEXT("%S(%u) %d"), __FUNCTION__, __LINE__, MainPlayerAniState);
 			return;
@@ -440,7 +441,10 @@ void AMainPlayerCharacter::JumpAction()
 	//UE_LOG(LogTemp, Log, TEXT("%S(%u)> %d"), __FUNCTION__, __LINE__, JumpCurrentCount);
 	Jump();
 
+	AudioComponent->SetSound(MapSound[EAniState::JumpStart]);
+	AudioComponent->Play();
 	MainPlayerAniState = EAniState::JumpStart;
+
 }
 
 void AMainPlayerCharacter::AttackAction()
