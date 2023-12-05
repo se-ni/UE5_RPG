@@ -173,7 +173,7 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 					StateTime = 0.0f;
 					GetBlackboardComponent(OwnerComp)->SetValueAsFloat(TEXT("Monster3HP"), hp3); // 무기에 따른 플레이어의 공격력 만큼 hp 감소
 
-					int randCount = UGlobalData::MainRandom.RandRange(1, 3);
+					int randCount = UGlobalData::MainRandom.RandRange(1, 2);
 					if (randCount == 1)
 					{
 						Monster3->SpawnCherryActor(Monster3->GetActorLocation());
