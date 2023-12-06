@@ -8,6 +8,12 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "../Global/GlobalGameInstance.h"
 
+
+AMainPlayerCharacter2::AMainPlayerCharacter2()
+{
+	PrimaryActorTick.bCanEverTick = true;
+}
+
 void AMainPlayerCharacter2::BeginPlay()
 {
 	Super::BeginPlay();
@@ -24,16 +30,16 @@ void AMainPlayerCharacter2::BeginPlay()
 void AMainPlayerCharacter2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 	float HP2 = GetPlayerHP();
-	if (HP2 <= 0.0f)
+	if (HP2 - 0.2f <= 0.0f)
 	{
-		int a = 0;
 		// 여기서 player2deathuionoff 호출
-		AMainPlayerCharacter::PauseGame();
+		//AMainPlayerCharacter::PauseGame();
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
 		AMainPlayerCharacter2::Player2DeathOnOff();
 	}
 }
+
 void AMainPlayerCharacter2::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);

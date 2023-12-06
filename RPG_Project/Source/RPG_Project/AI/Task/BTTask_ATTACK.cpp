@@ -8,6 +8,7 @@
 #include "../Monster3.h"
 #include "../Boss.h"
 #include "../../MainPlayer/MainPlayerCharacter.h"
+#include "../../MainPlayer/MainPlayerCharacter2.h"
 #include "../../Stage3/MainPlayerCharacter3.h"
 #include "../../Global/GlobalEnums.h"
 #include "../../Global/Fire.h"
@@ -48,17 +49,17 @@ EBTNodeResult::Type UBTTask_ATTACK::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	}
 
 	AMonster2* Mons2 = Cast<AMonster2>(GetGlobalCharacter(OwnerComp));
+	// UGamplayStatics를 이용해서 MainPlayerCharacter 가져오는 법
+	AMainPlayerCharacter2* Player2 = Cast<AMainPlayerCharacter2>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	if (nullptr != Mons2)
 	{
 		if (Mons2->isoverlap2) // 플레이어와 몬스터2가 overlap 됐을때
 		{
-			// UGamplayStatics를 이용해서 MainPlayerCharacter 가져오는 법
-			AMainPlayerCharacter* Player = Cast<AMainPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-			if (Player)
+			if (Player2)
 			{
-				float playhp = Player->GetPlayerHP(); // 플레이어의 hp 가져와서
+				float playhp = Player2->GetPlayerHP(); // 플레이어의 hp 가져와서
 				playhp = playhp - 0.2; // 0.3만큼 감소시키고
-				Player->SetPlayerHP(playhp); // hp로 set 해준다
+				Player2->SetPlayerHP(playhp); // hp로 set 해준다
 			}
 			Mons2->isoverlap2 = false; // overlap bool 변수는 다시 false로.
 		}

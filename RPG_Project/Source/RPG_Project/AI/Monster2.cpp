@@ -17,14 +17,14 @@ AMonster2::AMonster2()
 }
 
 void AMonster2::BeginPlay()
-{	
+{
 	// Super::BeginPlay();
 
 
 	UGlobalGameInstance* GameInst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
 	if (nullptr != GameInst) // 글로벌게임인스턴스를 통해서
-								// 애니스테이트와 애니메이션을 세팅해준다
+		// 애니스테이트와 애니메이션을 세팅해준다
 	{
 		CurMonsterData = GameInst->GetMonsterData(DataName); // 현재 몬스터데이터에 내용 넣어주고
 
@@ -36,7 +36,7 @@ void AMonster2::BeginPlay()
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Idle));
 	GetBlackboardComponent()->SetValueAsString(TEXT("TargetTag"), TEXT("Player"));
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 100.0f);
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 500.0f);
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 700.0f);
 
 	GetBlackboardComponent()->SetValueAsVector(TEXT("OriginPos"), GetActorLocation());
 
@@ -48,8 +48,8 @@ void AMonster2::BeginPlay()
 	GetBlackboardComponent()->SetValueAsBool(TEXT("SpawnCoin"), false);
 
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("Monster2HP"), 1.0f); // 블랙보드 Monster2HP SET
-	
-}	
+
+}
 
 void AMonster2::Tick(float DeltaSecond)
 {
@@ -64,7 +64,7 @@ void AMonster2::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 		AMainPlayerCharacter2* Player2 = Cast<AMainPlayerCharacter2>(OtherActor);
 		if (Player2)
 		{
-			
+
 			// 플레이어의 애님 인스턴스 가져오기
 			UMainPlayerAnimInstance* PlayerAnimInstance = Player2->GetMainPlayerAnimInstance();
 			if (PlayerAnimInstance)
@@ -89,7 +89,6 @@ UGlobalGameInstance* AMonster2::GetGlobalGameInstance()
 	UGlobalGameInstance* inst = Cast<UGlobalGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	if (nullptr != inst)
 	{
-		int a = 0;
 		return inst;
 	}
 	return nullptr;

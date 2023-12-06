@@ -83,6 +83,7 @@ void AMainPlayerCharacter::Tick(float DeltaTime)
 
 	if (PlayerHP <= 0.0f)
 	{
+		int a = 0;
 		// 여기서 playerdeathuionoff 호출
 		AMainPlayerCharacter::PauseGame();
 		AMainPlayerCharacter::PlayerDeathOnOff();

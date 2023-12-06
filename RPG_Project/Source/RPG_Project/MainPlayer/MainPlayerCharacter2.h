@@ -13,6 +13,8 @@ UCLASS()
 class RPG_PROJECT_API AMainPlayerCharacter2 : public AMainPlayerCharacter
 {
 	GENERATED_BODY()
+public:
+	AMainPlayerCharacter2();
 
 protected:
 	void BeginPlay();
