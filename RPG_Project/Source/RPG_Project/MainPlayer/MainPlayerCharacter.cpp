@@ -11,7 +11,8 @@
 #include "../Global/Projectile.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/AudioComponent.h"
-
+#include "../AI/Monster.h"
+  
 // Sets default values
 AMainPlayerCharacter::AMainPlayerCharacter()
 {
@@ -46,6 +47,9 @@ void AMainPlayerCharacter::BeginPlay()
 
 	Super::BeginPlay();
 
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMainPlayerCharacter::BeginOverlap);
+	GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &AMainPlayerCharacter::EndOverlap);
+
 	// GetMainPlayerAnimInstance()->OnPlayMontageNotifyBegin.AddDynamic(this, &AMainPlayerCharacter::AnimNotifyBegin);
 	MainPlayerAnimInstance->OnPlayMontageNotifyBegin.AddDynamic(this, &AMainPlayerCharacter::AnimNotifyBegin);
 
@@ -72,6 +76,8 @@ void AMainPlayerCharacter::Tick(float DeltaTime)
 	UCharacterMovementComponent* Move = Cast<UCharacterMovementComponent>(GetMovementComponent());
 	Move->MaxWalkSpeed = 1000.0f;
 
+
+
 	if (MainPlayerAniState == EAniState::Attack)
 	{
 		nowAttack = true;
@@ -85,22 +91,45 @@ void AMainPlayerCharacter::Tick(float DeltaTime)
 	{
 		int a = 0;
 		// 여기서 playerdeathuionoff 호출
-		AMainPlayerCharacter::PauseGame();
-		AMainPlayerCharacter::PlayerDeathOnOff();
+		APlayerController* PlayerController = GetController() ? Cast<APlayerController>(GetController()) : nullptr;
+		if (PlayerController)
+		{
+			// UIMainWidgetOnOff 함수 호출
+			AMainPlayerCharacter::PauseGame();
+			AMainPlayerCharacter::PlayerDeathOnOff();
+		}
 	}
 }
-
+void AMainPlayerCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	AMonster* Mon = Cast<AMonster>(OtherActor);
+	if (Mon)
+	{
+		if(MainPlayerAniState != EAniState::Attack)
+			MainPlayerAniState = EAniState::Hit;
+	}
+}
+void AMainPlayerCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex)
+{
+		
+	MainPlayerAniState = EAniState::Idle;
+}
 
 void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)
 {
-		int a = 0;
+	if (NotifyName == FName("AttackEvent"))
+	{
 		UGlobalGameInstance* Inst = GetWorld()->GetGameInstance<UGlobalGameInstance>();
 
 		TSubclassOf<UObject> Effect = Inst->GetSubClass(TEXT("Effect"));
 
 		TArray<UActorComponent*> StaticMeshs = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponMesh"));
 		TArray<UActorComponent*> MeshEffects = GetComponentsByTag(USceneComponent::StaticClass(), TEXT("WeaponEffect"));
-		
+
 		USceneComponent* EffectCom = Cast<USceneComponent>(MeshEffects[0]);
 		FVector Pos = EffectCom->GetComponentToWorld().GetLocation();
 		if (nullptr != Effect)
@@ -118,7 +147,7 @@ void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPoi
 		TSubclassOf<UObject> ProjectileAttack = Inst->GetSubClass(TEXT("Projectile"));
 		TSubclassOf<UObject> Projectile2Attack = Inst->GetSubClass(TEXT("Projectile2"));
 
-		if(true == isWeapon2)
+		if (true == isWeapon2)
 		{ // 발사체 만들기
 			AActor* Actor = GetWorld()->SpawnActor<AActor>(ProjectileAttack);
 			AProjectile* Projectile = Cast<AProjectile>(Actor);
@@ -138,6 +167,7 @@ void AMainPlayerCharacter::AnimNotifyBegin(FName NotifyName, const FBranchingPoi
 			Projectile2->Tags.Add(FName("PlayerAttack"));
 			Projectile2->GetSphereComponent()->SetCollisionProfileName(TEXT("PlayerAttack"), true);
 		}
+	}
 
 }
 

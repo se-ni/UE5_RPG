@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "../Global/GlobalGameInstance.h"
+#include "../AI/Monster2.h"
 
 
 AMainPlayerCharacter2::AMainPlayerCharacter2()
@@ -25,6 +26,24 @@ void AMainPlayerCharacter2::BeginPlay()
 	isWeapon1 = false;
 	isWeapon2 = true;
 	isWeapon3 = false;
+}
+
+void AMainPlayerCharacter2::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	AMonster2* Mon2 = Cast<AMonster2>(OtherActor);
+	if (Mon2)
+	{
+		MainPlayerAniState = EAniState::Hit;
+	}
+}
+
+void AMainPlayerCharacter2::EndOverlap(UPrimitiveComponent* OverlappedComponent,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex)
+{
+	MainPlayerAniState = EAniState::Idle;
 }
 
 void AMainPlayerCharacter2::Tick(float DeltaTime)

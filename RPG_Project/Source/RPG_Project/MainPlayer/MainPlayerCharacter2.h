@@ -16,6 +16,14 @@ class RPG_PROJECT_API AMainPlayerCharacter2 : public AMainPlayerCharacter
 public:
 	AMainPlayerCharacter2();
 
+	virtual void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
+
+
+	virtual void EndOverlap(UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex) override;
 protected:
 	void BeginPlay();
 	virtual void Tick(float DeltaTime) override;
