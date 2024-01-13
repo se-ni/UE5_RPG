@@ -88,9 +88,7 @@ EBTNodeResult::Type UBTTask_ATTACK::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	//{
 	//	if (true == Player3->isfireattack)
 	//	{
-	//		float playhp = Player3->GetPlayerHP(); // 플레이어의 hp 가져와서
-	//		playhp = playhp - 0.4; // 0.3만큼 감소시키고
-	//		Player3->SetPlayerHP(playhp); // hp로 set 해준다
+
 	//	}
 	//}
 

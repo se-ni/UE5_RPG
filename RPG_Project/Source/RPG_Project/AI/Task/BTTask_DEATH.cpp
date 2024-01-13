@@ -47,6 +47,12 @@ EBTNodeResult::Type UBTTask_DEATH::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 		Monster3->Setbdeathfalse();
 	}
 
+	ABoss* Boss = Cast<ABoss>(OwnerComp.GetAIOwner()->GetPawn());
+	if (nullptr != Boss)
+	{
+		Boss->Setbdeathfalse();
+	}
+
 	return EBTNodeResult::Type::InProgress;
 }
 
@@ -82,6 +88,7 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 				{
 					StateTime = 0.0f;
 					SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
+					FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 					return;
 				}
 
@@ -206,6 +213,8 @@ void UBTTask_DEATH::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemor
 				{
 					StateTime = 0.0f;
 					SetStateChange(OwnerComp, static_cast<uint8>(EAniState::ForwardMove));
+					GetBlackboardComponent(OwnerComp)->SetValueAsBool(TEXT("bIsDeath"), false);
+					FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 					return;
 				}
 

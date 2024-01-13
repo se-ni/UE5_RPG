@@ -19,6 +19,7 @@ void UBTTask_BASE::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory
 	if (isDeath)
 	{
 		SetStateChange(OwnerComp, static_cast<uint8>(EAniState::Death));
+		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 		return;
 	}
 }

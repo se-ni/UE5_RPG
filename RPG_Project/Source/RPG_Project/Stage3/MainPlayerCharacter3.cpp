@@ -8,8 +8,9 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "../Global/GlobalGameInstance.h"
-#include "../Global/Fire.h"
+#include "../AI/Monster3.h"
 #include "../UI/MainHUD.h"
+#include "../Global/Fire.h"
 
 AMainPlayerCharacter3::AMainPlayerCharacter3()
 {
@@ -120,17 +121,11 @@ void AMainPlayerCharacter3::Minimap3OnOff()
 void AMainPlayerCharacter3::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	AFire* fire = Cast<AFire>(OtherActor);
-	if (fire)
+	AFire* Fire = Cast<AFire>(OtherActor);
+	if (Fire)
 	{
-		isoverlap = true;
-		if (isoverlap)
-		{
-			MainPlayerAniState = EAniState::Hit;
-		}
-		float playerhp = GetPlayerHP();
-		playerhp -= 0.4; // 0.4만큼 감소시키고
-		SetPlayerHP(playerhp);
+		MainPlayerAniState = EAniState::Hit;
+		PlayerHP = PlayerHP - 0.4;
 	}
 }
 
@@ -139,6 +134,6 @@ void AMainPlayerCharacter3::EndOverlap(UPrimitiveComponent* OverlappedComponent,
 	UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex)
 {
-	isoverlap = false;
 	MainPlayerAniState = EAniState::Idle;
+	isfireattack = true;
 }

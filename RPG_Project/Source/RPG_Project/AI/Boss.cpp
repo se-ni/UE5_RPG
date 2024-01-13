@@ -11,8 +11,8 @@
 #include "Components/CapsuleComponent.h"
 #include "../Stage3/MainPlayerCharacter3.h"
 #include "../Global/Projectile.h"
-#include "../Global/Fire.h"
 #include "Components/AudioComponent.h"
+#include "../Global/Projectile.h"
 
 ABoss::ABoss()
 {
@@ -47,7 +47,7 @@ void ABoss::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsEnum(TEXT("AIAniState"), static_cast<uint8>(EAniState::Idle));
 	GetBlackboardComponent()->SetValueAsString(TEXT("TargetTag"), TEXT("Player"));
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 1000.0f);
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackRange"), 1500.0f);
 	GetBlackboardComponent()->SetValueAsFloat(TEXT("SearchRange"), 2000.0f);
 
 	GetBlackboardComponent()->SetValueAsVector(TEXT("OriginPos"), GetActorLocation());
@@ -59,7 +59,7 @@ void ABoss::BeginPlay()
 
 	GetBlackboardComponent()->SetValueAsBool(TEXT("SpawnCoin"), false);
 
-	GetBlackboardComponent()->SetValueAsFloat(TEXT("BossMonsterHP"), 0.5f); // 블랙보드 BossHP SET
+	GetBlackboardComponent()->SetValueAsFloat(TEXT("BossMonsterHP"), 4.0f); // 블랙보드 BossHP SET
 
 	GlobalAnimInstance->OnPlayMontageNotifyBegin.AddDynamic(this, &ABoss::AnimNotifyBegin);
 }
@@ -72,9 +72,23 @@ void ABoss::Tick(float DeltaSecond)
 void ABoss::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	int a = 0;
 	// 플레이어의 총알에 맞았을경우. hp 감소
-	GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true); // 보스몬스터 death로
+	AProjectile* Projectile = Cast<AProjectile>(OtherActor);
+	if (Projectile != nullptr)
+	{
+		GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), true); // 보스몬스터 death로
+	}
 }
+//void ABoss::EndOverlap(UPrimitiveComponent* OverlappedComponent,
+//	AActor* OtherActor,
+//	UPrimitiveComponent* OtherComp,
+//	int32 OtherBodyIndex)
+//{
+//	int a = 0;
+//	GetBlackboardComponent()->SetValueAsBool(TEXT("bIsDeath"), false); // 보스몬스터 death false로
+//}
+
 
 void ABoss::AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)
 {
