@@ -86,5 +86,20 @@ M : 미니맵 / Q : 옵션 / I : 인벤토리 (Stage3) / S : 상점 (Stage3)
 \- 인벤토리 구현 : 인벤토리에 대한 지식이나 정보가 매우 부족해서, 외국 유튜브를 보고 따라했기 때문에 정확한 개념 습득을 하지 못함        
 \- UI의 디자인적인 퀄리티 : 개인 프로젝트다 보니 기능 구현에 집중을 해야했기 때문에 UI의 퀄리티가 아쉬움
 
-<h2>참고 문서</h2>        
-[셀바이뮤직](https://www.googleadservices.com/pagead/aclk?sa=L&ai=DChcSEwjSsqiKzeGDAxWhEXsHHXNZDpoYABAAGgJ0bQ&ae=2&gclid=CjwKCAiA75itBhA6EiwAkho9e5TGCQQNHG0KAY9I_dikanm3Q1JTHrjZUuuNmRL50ziBNhqqweVKYRoCokUQAvD_BwE&ohost=www.google.com&cid=CAESVuD23nuAbw7r4Fx6t63WrhSjLfBQUz37gV3zSX6fVKAePUREypMHKFbbfG7EqJg7Eplpk2hO-RQnHLdfKJXkrbAUFGrD4CqPRzUJ0nrwlEp0M4YItg77&sig=AOD64_0f4fTuErbIW1nvovjOV-2d-rGc7A&q&adurl&ved=2ahUKEwimhZ-KzeGDAxVeoK8BHTHFAWEQ0Qx6BAgJEAE&nis=2&dct=1)
+
+
+
+<h2>참고 문서</h2>
+
+
+
+
+[[Ryan Laley] - How to Make an Inventory System in Unreal Engine 5](https://youtube.com/playlist?list=PL4G2bSPE_8umjCYXbq0v5IoV-Wi_WAxC3&feature=shared)
+
+
+
+
+
+[셀바이뮤직](https://www.googleadservices.com/pagead/aclk?sa=L&ai=DChcSEwjP8piw0eGDAxVsXQ8CHYCiCFAYABAAGgJ0Yg&ae=2&gclid=CjwKCAiA75itBhA6EiwAkho9e2C9tOg1FYten09pewbk7oIfknrQ6FsMfXtNyBwpEI77x4JInFgoEBoCwW4QAvD_BwE&ohost=www.google.com&cid=CAESVuD2ZSE6yuVmYNy1L91Kr6N2sUiDUija3DnioIHCsM6B7L2UaaKZEmmozsEgU-HzPa9r2kDJt6cRwh60QTiX6Qx7VPpriavA60uZTTnsdnc3khnowRDD&sig=AOD64_3cnNFmKzeYoAUlE-Ce0wkZJqZFMA&q&adurl&ved=2ahUKEwimpJSw0eGDAxWXcfUHHQyyAa0Q0Qx6BAgJEAE)
+
+
